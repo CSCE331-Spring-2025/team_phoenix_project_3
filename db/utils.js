@@ -10,8 +10,9 @@ import { pool } from "./config";
 export async function query(text, params) {
 	try {
 		const res = await pool.query(text, params);
-		return res.rows;
+		return { success: true, data: res.rows };
 	} catch (err) {
 		console.error("Database operation failed:", err.stack);
+        return { success: false, error: err.message };
 	}
 }
