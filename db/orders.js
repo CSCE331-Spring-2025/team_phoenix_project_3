@@ -8,7 +8,7 @@ import { query } from "./utils";
  */
 export async function createNewOrder(employeeId) {
 	const statement = "INSERT INTO orders (employee_id) VALUES ($1) RETURNING id";
-	const { success, data, error } = await query(statement, [employeeId]);
+	const { success, data, error } = await query(statement, employeeId);
 	if (success && data.length > 0) {
 		return data[0].id;
 	}
@@ -25,6 +25,6 @@ export async function createNewOrder(employeeId) {
  */
 export async function addToOrder(orderId, menuId) {
 	const statement = "INSERT INTO items_in_order (order_id, menu_id) VALUES ($1, $2)";
-	const result = await query(statement, [orderId, menuId]);
+	const result = await query(statement, orderId, menuId);
 	return result.success;
 }

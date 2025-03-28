@@ -7,7 +7,7 @@ import { pool } from "./config";
  * @param {*} params
  * @returns A list of rows as column name mapped to value or sends an error message to console.
  */
-export async function query(text, params) {
+export async function query(text, ...params) {
 	try {
 		const res = await pool.query(text, params);
 		return { success: true, data: res.rows };
