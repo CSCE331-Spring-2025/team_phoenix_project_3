@@ -13,8 +13,13 @@ const __dirname = path.dirname(__filename);
 // deliver static files from customer_ui directory to the browser. 
 app.use(express.static(path.join(__dirname, 'customer_ui')));
 
+// index.js
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'customer_ui', 'customer_ui.html'));
+    if (req.user) {
+        res.redirect('/customer_ui/customer_ui.html');
+    } else {
+        res.redirect('/auth/google');
+    }
 });
 
 
