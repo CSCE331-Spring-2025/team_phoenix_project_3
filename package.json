@@ -2,8 +2,8 @@
   "name": "team_phoenix_project_3",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "customer_ui/customer_ui.html",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
