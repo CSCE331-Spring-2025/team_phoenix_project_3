@@ -1,0 +1,56 @@
+body {
+    display: flex; /* Use flexbox for horizontal layout */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: antiquewhite;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+}
+
+nav {
+    width: 200px; /* Set a fixed width for the navigation bar */
+    background-color: #ffaa00; /* Optional: Set a background color */
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 10px 0; /* Add vertical spacing between items */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333; /* Optional: Set the link color */
+    font-weight: bold; /* Optional: Make the text bold */
+}
+
+main {
+    flex-grow: 1; /* Allow the main content to take up remaining space */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start; /* Align content to the top */
+    position: relative; /* Enable positioning for the checkout button */
+}
+
+button.checkout {
+    position: absolute;
+    bottom: 10px; /* Position the button at the bottom */
+    right: 10px; /* Position the button at the right */
+    padding: 10px 20px;
+    background-color: #ffaa00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button.checkout:hover {
+    background-color: #e69900; /* Optional: Add a hover effect */
+}
