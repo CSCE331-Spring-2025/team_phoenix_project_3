@@ -1,4 +1,4 @@
-import { query } from "./utils";
+import { query } from "./utils.js";
 
 /**
  * Pull all item names from menu items table.

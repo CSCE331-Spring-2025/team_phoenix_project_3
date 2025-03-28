@@ -1,4 +1,4 @@
-import * as db from "../../db/menu-items";
+import * as db from "../../db/menu-items.js";
 
 const items = db.getMenuItems();
 

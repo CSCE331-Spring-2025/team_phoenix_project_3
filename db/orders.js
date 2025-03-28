@@ -1,4 +1,4 @@
-import { query } from "./utils";
+import { query } from "./utils.js";
 
 /**
  * Creates a new empty order in orders table.
