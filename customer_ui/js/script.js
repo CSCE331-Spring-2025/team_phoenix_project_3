@@ -5,8 +5,9 @@ fetch('/menu/items')
             var newButton = document.createElement("button");
             newButton.innerHTML = data[i].item_name;
             newButton.className += "allButtons"
-            
-            document.getElementById("allDrinks").appendChild(newButton);
+            if(document.getElementById("allDrinks") !== null) {
+                document.getElementById("allDrinks").appendChild(newButton);
+            }
         }
     })
     .catch((error) => console.error('Error:', error));
