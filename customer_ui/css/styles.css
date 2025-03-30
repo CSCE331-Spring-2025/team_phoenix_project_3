@@ -18,7 +18,7 @@ body {
     text-align: center;
 }
 
-button {
+a.button {
     margin: 5px;
     padding: 10px 20px;
     border: none;
@@ -26,8 +26,297 @@ button {
     background-color: #3498db;
     color: white;
     cursor: pointer;
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
 }
 
-button:hover {
+a.button:hover {
     background-color: #2980b9;
+}
+
+.customerSidebar{
+    background-color: rgb(177, 177, 177);
+    width: 200px;
+    height: 5000px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    text-align: center; 
+    vertical-align: middle; 
+    padding: 0px;
+}
+
+.sidebarButtons{
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 40px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+.sidebarButtons:hover{
+    background-color: #994500;
+}
+
+.allDrinks{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.allButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.allButtons:hover{
+    background-color: #994500;
+}
+
+.limitedTimeOffers{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.ltoButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.ltoButtons:hover{
+    background-color: #994500;
+}
+
+.teas{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.teaButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.teaButtons:hover{
+    background-color: #994500;
+}
+
+.coffee{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.coffeeButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.coffeeButtons:hover{
+    background-color: #994500;
+}
+
+.smoothies{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.smoothieButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.smoothieButtons:hover{
+    background-color: #994500;
+}
+
+.milkshakes{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 550px;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 220px;
+}
+
+.milkshakeButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.milkshakeButtons:hover{
+    background-color: #994500;
+}
+
+.subtotal{
+    position: fixed;
+    width: 30%;
+    height: 100%;
+    right: 0%;
+    background-color: rgb(177, 177, 177);
+}
+
+#finalTotal{
+    left: 0%;
+    right: auto;
+}
+
+.bottomBar{
+    height: 40px; 
+    position: fixed; 
+    bottom:0%;
+    width:100%; 
+    background-color: #393838; 
+}
+
+.back{
+    position: fixed;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.back:hover{
+    background-color: #994500;
+}
+
+.checkout{
+    position: fixed;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    right: 0%;
+    text-decoration: none;
+}
+
+.checkout:hover{
+    background-color: #994500;
+}
+
+.backCheckout{
+    position: fixed;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.backCheckout:hover{
+    background-color: #994500;
+}
+
+.finishOrder{
+    position: fixed;
+    border: none;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    right: 0%;
+    text-decoration: none;
+}
+
+.finishOrder:hover{
+    background-color: #994500;
 }
