@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// deliver static files from customer_ui directory to the browser. 
+// deliver static files from customer_ui directory to the browser.
 app.use(express.static(path.join(__dirname, 'customer_ui')));
 
 // index.js
@@ -22,6 +22,11 @@ app.get('/', (req, res) => {
     }
 });
 
+app.use(express.json());
+
+// Using routers to access query calls
+import menuRouter from './db/menu.mjs';
+app.use('/menu', menuRouter);
 
 // starts server
 app.listen(PORT, () => {
