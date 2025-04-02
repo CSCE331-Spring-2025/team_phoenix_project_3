@@ -1,5 +1,9 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import 'dotenv/config';
+
+//console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+//console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
 
 const callbackURL = process.env.NODE_ENV === 'production' 
   ? "https://your-app-name.onrender.com/auth/google/callback"

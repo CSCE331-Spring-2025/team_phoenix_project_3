@@ -4,15 +4,15 @@ import passport from './passport.js';
 const router = express.Router();
 
 // start the Google login
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // handle Google OAuth callback
-router.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
-        res.redirect('/customer_ui/customer_ui.html');
-    }
-);
+router.get('/google/callback',
+    passport.authenticate('google', {
+      successRedirect: '/customer_ui.html',
+      failureRedirect: '/'
+    })
+  );
 
 // Route to get user info
 router.get('/auth/user', (req, res) => {
