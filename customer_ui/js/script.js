@@ -9,6 +9,22 @@ fetch('/menu/items')
                 document.getElementById("allDrinks").appendChild(newButton);
             }
         }
+
+        for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("allButtons")[i].innerHTML));
+        }
+        for(let i = 0; i < document.getElementsByClassName("ltoButtons").length; i++){
+            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("ltoButtons")[i].innerHTML));
+        }
+        for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
+            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("teaButtons")[i].innerHTML));
+        }
+        for(let i = 0; i < document.getElementsByClassName("coffeeButtons").length; i++){
+            document.getElementsByClassName("coffeeButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("coffeeButtons")[i].innerHTML));
+        }
+        for(let i = 0; i < document.getElementsByClassName("smoothieButtons").length; i++){
+            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
+        }
     })
     .catch((error) => console.error('Error:', error));
 
@@ -18,7 +34,6 @@ function ShowLTO(id){
     var teaElement = document.getElementById("teas");
     var coffeeElement = document.getElementById("coffee");
     var smoothieElement = document.getElementById("smoothies");
-    var milkshakeElement = document.getElementById("milkshakes");
 
     if(id === "allDrinks"){
         allElement.style.display = "inline-block";
@@ -26,7 +41,6 @@ function ShowLTO(id){
         teaElement.style.display = "none";
         coffeeElement.style.display = "none";
         smoothieElement.style.display = "none";
-        milkshakeElement.style.display = "none";
     }
     else if(id === "lto"){
         allElement.style.display = "none";
@@ -34,7 +48,6 @@ function ShowLTO(id){
         teaElement.style.display = "none";
         coffeeElement.style.display = "none";
         smoothieElement.style.display = "none";
-        milkshakeElement.style.display = "none";
     }
     else if(id === "teas"){
         allElement.style.display = "none";
@@ -42,7 +55,6 @@ function ShowLTO(id){
         teaElement.style.display = "inline-block";
         coffeeElement.style.display = "none";
         smoothieElement.style.display = "none";
-        milkshakeElement.style.display = "none";
     }
     else if(id === "coffee"){
         allElement.style.display = "none";
@@ -50,7 +62,6 @@ function ShowLTO(id){
         teaElement.style.display = "none";
         coffeeElement.style.display = "inline-block";
         smoothieElement.style.display = "none";
-        milkshakeElement.style.display = "none";
     }
     else if(id === "smoothies"){
         allElement.style.display = "none";
@@ -58,15 +69,6 @@ function ShowLTO(id){
         teaElement.style.display = "none";
         coffeeElement.style.display = "none";
         smoothieElement.style.display = "inline-block";
-        milkshakeElement.style.display = "none";
-    }
-    else if(id === "milkshakes"){
-        allElement.style.display = "none";
-        ltoElement.style.display = "none";
-        teaElement.style.display = "none";
-        coffeeElement.style.display = "none";
-        smoothieElement.style.display = "none";
-        milkshakeElement.style.display = "inline-block";
     }
 }
 
@@ -76,14 +78,9 @@ if(document.getElementsByClassName("sidebarButtons").length > 0){
     document.getElementById("teaBtn").addEventListener('click', event => ShowLTO("teas"));
     document.getElementById("coffeeBtn").addEventListener('click', event => ShowLTO("coffee"));
     document.getElementById("smoothieBtn").addEventListener('click', event => ShowLTO("smoothies"));
-    document.getElementById("milkshakeBtn").addEventListener('click', event => ShowLTO("milkshakes"));
 }
 
 let subtotalArray = ["Total:"];
-
-for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
-    document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("teaButtons")[i].innerHTML));
-}
 
 function subtotalAppend(text){
     subtotalArray.push(text);
