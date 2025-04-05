@@ -17,15 +17,15 @@ const __dirname = path.dirname(__filename);
 // deliver static files from customer_ui directory to the browser.
 app.use(express.static(path.join(__dirname, 'customer_ui')));
 
-
 app.use(express.json());
 
 // Session setup BEFORE passport
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
-}));
+		saveUninitialized: false,
+	})
+);
 
 // initialize Passport
 app.use(passport.initialize());
@@ -39,10 +39,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
   });
   
-
+/**
+ * @author Miles
+ */
 // Using routers to access query calls
 import menuRouter from './db/menu.mjs';
 app.use('/menu', menuRouter);
+import orderRouter from './db/orders.mjs';
+app.use('/order', orderRouter);
 
 console.log('Auth routes mounted at /auth');
 
