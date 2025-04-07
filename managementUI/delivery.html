@@ -6,7 +6,6 @@
     <title>Phoenix Manager</title>
     <link rel="stylesheet" href="managerStyle.css">
 </head>
-<!--logo.png-->
 <body>
     <header>
         <h1>Phoenix Boba Shop</h1>
@@ -23,9 +22,12 @@
     </nav>
     <main>
         <h2>Delivery</h2>
-        <p>Placeholder text</p>
+        <p>Select a Supplier: </p>
+        <select id="supplierDropdown" onchange="fetchAndDisplayInventory()">
+            <option value="">--Select a Supplier--</option>
+        </select>
         <div id="inventoryContainer"></div>
     </main>
-    <script src="placeholder.js"></script>
+    <script type="module" src="get-inventory.js"></script>
 </body>
 </html>
