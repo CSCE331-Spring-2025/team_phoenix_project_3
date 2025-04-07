@@ -28,7 +28,7 @@ const router = express.Router();
  *    3. Returns the full order row (from the 'orders' table) on success.
  *
  * @example Call:
- *    POST /order/create
+ *    POST ./order/create
  *    Body:
  *    {
  *      "employee_id": 2,
@@ -99,7 +99,7 @@ router.post('/create', async (req, res) => {
  *              Each item is returned as a full JSON object. This endpoint is used to display the contents of an order.
  *
  * @example Call:
- *    GET /order/items/120
+ *    GET ./order/items/120
  *    Response:
  *    [
  *      { "menu_id": 1, "item_name": "Strawberry Lemonade Smoothie", "price": 6.00 },
@@ -135,7 +135,7 @@ router.get('/items/:id', async (req, res) => {
  *              The response will include the deleted row if it existed, or be empty if no order matched the ID.
  *
  * @example Call:
- *    DELETE /order/delete/42
+ *    DELETE ./order/delete/42
  *    Response (if found):
  *    [
  *      { "id": 42, "employee_id": 3, "order_time": "2024-04-05T14:21:00.000Z" }

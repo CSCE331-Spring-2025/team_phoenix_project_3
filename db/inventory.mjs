@@ -46,8 +46,8 @@ router.get('/items', async (req, res) => {
  */
 router.post('/create', async (req, res) => {
 	if (!req.body.item_name) {
-        return res.status(400).send('item_name is required.');
-    }
+		return res.status(400).send('item_name is required.');
+	}
 
 	const result = await insertData('inventory', req.body);
 	if (result.success) {
@@ -71,7 +71,7 @@ router.post('/create', async (req, res) => {
  *              Front-end can use this to modify item data such as quantity or supplier.
  *
  * @example Call:
- *    PATCH /inventory/update/8
+ *    PATCH ./inventory/update/8
  *    Body:
  *    { "quantity": 50 }
  *    Response:
@@ -111,7 +111,7 @@ router.patch('/update/:id', async (req, res) => {
  *              The item remains in the database but is flagged as deleted.
  *
  * @example Call:
- *    DELETE /inventory/delete/8
+ *    DELETE ./inventory/delete/8
  *    Response:
  *    {
  *      "id": 8,
