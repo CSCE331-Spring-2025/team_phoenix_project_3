@@ -11,19 +11,23 @@ fetch('/menu/items')
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
-            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("allButtons")[i].innerHTML));
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("allButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("ltoButtons").length; i++){
-            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("ltoButtons")[i].innerHTML));
+            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("ltoButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
-            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("teaButtons")[i].innerHTML));
+            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("teaButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("coffeeButtons").length; i++){
-            document.getElementsByClassName("coffeeButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("coffeeButtons")[i].innerHTML));
+            document.getElementsByClassName("coffeeButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("coffeeButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("smoothieButtons").length; i++){
-            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => subtotalAppend(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
+            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
+        }
+
+        for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', showCustomization);
         }
     })
     .catch((error) => console.error('Error:', error));
@@ -113,4 +117,59 @@ if(document.getElementById("finishOrder") !== null){
 }
 if(document.getElementById("back") !== null){
     document.getElementById("back").addEventListener('click', clearLocalStorage);
+}
+
+function boba(choice){
+    if(choice === true){
+        document.getElementsByClassName("bobaStatus")[0].innerHTML = "Boba: Yes";
+    }
+    else{
+        document.getElementsByClassName("bobaStatus")[0].innerHTML = "Boba: No";
+    }
+}
+
+if(document.getElementsByClassName("withoutBoba")[0] !== null){
+    document.getElementsByClassName("withoutBoba")[0].addEventListener('click', event => boba(false));
+}
+if(document.getElementsByClassName("withBoba")[0] !== null){
+    document.getElementsByClassName("withBoba")[0].addEventListener('click', event => boba(true));
+}
+
+function sugar(level){
+    document.getElementsByClassName("sugarStatus")[0].innerHTML = "Sugar level: " + level + "%";
+}
+
+if(document.getElementsByClassName("sugar").length > 0){
+    document.getElementsByClassName("sugar")[0].addEventListener('click', event => sugar(0));
+    document.getElementsByClassName("sugar")[1].addEventListener('click', event => sugar(50));
+    document.getElementsByClassName("sugar")[2].addEventListener('click', event => sugar(100));
+    document.getElementsByClassName("sugar")[3].addEventListener('click', event => sugar(150));
+}
+
+function showCustomization(){
+    document.getElementById("customization").style.display = "inline-block";
+    document.getElementsByClassName("subtotal")[0].style.display = "none";
+}
+
+function hideCustomization(){
+    document.getElementById("customization").style.display = "none";
+    document.getElementsByClassName("subtotal")[0].style.display = "inline-block";
+}
+
+if(document.getElementsByClassName("cancel").length > 0){
+    document.getElementsByClassName("cancel")[0].addEventListener('click', hideCustomization);
+    document.getElementsByClassName("cancel")[0].addEventListener('click', event => updateCurrentDrink("none"));
+    
+}
+
+var currentDrink;
+
+function updateCurrentDrink(drink){
+    currentDrink = drink;
+}
+
+if(document.getElementsByClassName("addDrink").length > 0){
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', hideCustomization);
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(currentDrink));
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => updateCurrentDrink("none"));
 }

@@ -36,6 +36,8 @@ a.button:hover {
     background-color: #2980b9;
 }
 
+/* This is the beginning of the elements for customer_ui.html */
+
 .customerSidebar{
     background-color: #c87129;
     width: 15%;
@@ -202,6 +204,140 @@ a.button:hover {
     background-color: #994500;
 }
 
+.customization{
+    display: none;
+    position: fixed;
+    width: 30%;
+    height: 100%;
+    right: 0%;
+    background-color: #c87129;
+}
+
+.drinkName{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.withoutBoba{
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 10%;
+    left: 10%
+}
+
+.withBoba{
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 10%;
+    right: 10%
+}
+
+.bobaStatus{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 20%;
+}
+
+#sugar0{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    left: 10%
+}
+
+#sugar50{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    left: 30%
+}
+
+#sugar100{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    right: 30%
+}
+
+#sugar150{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    right: 10%
+}
+
+.sugarStatus{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 40%;
+}
+
+.cancel{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    bottom: 10%;
+    left: 10%
+}
+
+.addDrink{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    bottom: 10%;
+    right: 10%
+}
+
+/* note: subtotal is shared between customer_ui.html and checkout.html, while finalTotal is checkout.html specific */
 .subtotal{
     position: fixed;
     width: 30%;
@@ -215,6 +351,7 @@ a.button:hover {
     right: auto;
 }
 
+/* bottomBar is also shared between customer_ui.html and checkout.html */
 .bottomBar{
     height: 40px; 
     position: fixed; 
@@ -257,6 +394,8 @@ a.button:hover {
 .checkout:hover{
     background-color: #994500;
 }
+
+/* This is the beginning of the elements for checkout.html */
 
 .backCheckout{
     position: fixed;
