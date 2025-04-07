@@ -20,9 +20,10 @@ app.use(express.static(path.join(__dirname, 'customer_ui')));
 app.use(express.json());
 
 // Session setup BEFORE passport
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
 		saveUninitialized: false,
 	})
 );
@@ -36,13 +37,15 @@ console.log('Auth routes mounted at /auth');
 
 // landing page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  });
-  
+	res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 /**
  * @author Miles
  */
 // Using routers to access query calls
+import inventoryRouter from './db/inventory.mjs';
+app.use('/inventory', inventoryRouter);
 import menuRouter from './db/menu.mjs';
 app.use('/menu', menuRouter);
 import orderRouter from './db/orders.mjs';
@@ -52,5 +55,5 @@ console.log('Auth routes mounted at /auth');
 
 // starts server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+	console.log(`Server running on http://localhost:${PORT}`);
 });
