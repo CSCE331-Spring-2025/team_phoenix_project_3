@@ -150,7 +150,7 @@ a.button:hover {
     background-color: #994500;
 }
 
-.coffee{
+.milkTea{
     display: none;
     background-color: rgb(255, 225, 193);
     width: 55%;
@@ -161,7 +161,7 @@ a.button:hover {
     left: 15%;
 }
 
-.coffeeButtons{
+.milkTeaButtons{
     width: 100px;
     height: 100px;
     float: left;
@@ -173,7 +173,7 @@ a.button:hover {
     cursor: pointer;
 }
 
-.coffeeButtons:hover{
+.milkTeaButtons:hover{
     background-color: #994500;
 }
 

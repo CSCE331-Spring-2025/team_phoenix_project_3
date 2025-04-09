@@ -19,8 +19,8 @@ fetch('/menu/items')
         for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
             document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("teaButtons")[i].innerHTML));
         }
-        for(let i = 0; i < document.getElementsByClassName("coffeeButtons").length; i++){
-            document.getElementsByClassName("coffeeButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("coffeeButtons")[i].innerHTML));
+        for(let i = 0; i < document.getElementsByClassName("milkTeaButtons").length; i++){
+            document.getElementsByClassName("milkTeaButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("milkTeaButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("smoothieButtons").length; i++){
             document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
@@ -32,46 +32,54 @@ fetch('/menu/items')
     })
     .catch((error) => console.error('Error:', error));
 
+
+const currentDrink = {
+    id: -1,
+    boba: false,
+    sugar: 0,
+    name: "none"
+};
+
 function ShowLTO(id){
     var allElement = document.getElementById("allDrinks");
     var ltoElement = document.getElementById("lto");
     var teaElement = document.getElementById("teas");
-    var coffeeElement = document.getElementById("coffee");
+    var milkTeaElement = document.getElementById("milkTeas");
     var smoothieElement = document.getElementById("smoothies");
 
     if(id === "allDrinks"){
         allElement.style.display = "inline-block";
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
-        coffeeElement.style.display = "none";
+        milkTeaElement.style.display = "none";
         smoothieElement.style.display = "none";
     }
     else if(id === "lto"){
         allElement.style.display = "none";
         ltoElement.style.display = "inline-block";
         teaElement.style.display = "none";
-        coffeeElement.style.display = "none";
+        milkTeaElement.style.display = "none";
         smoothieElement.style.display = "none";
     }
     else if(id === "teas"){
         allElement.style.display = "none";
         ltoElement.style.display = "none";
         teaElement.style.display = "inline-block";
-        coffeeElement.style.display = "none";
+        milkTeaElement.style.display = "none";
         smoothieElement.style.display = "none";
     }
-    else if(id === "coffee"){
+    else if(id === "milkTeas"){
         allElement.style.display = "none";
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
-        coffeeElement.style.display = "inline-block";
-        smoothieElement.style.display = "none";
+        milkTeaElement.style.display = "inline-block";
+        smoothieElement.style.displsay = "none";
     }
     else if(id === "smoothies"){
         allElement.style.display = "none";
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
-        coffeeElement.style.display = "none";
+        milkTeaElement.style.display = "none";
         smoothieElement.style.display = "inline-block";
     }
 }
@@ -80,7 +88,7 @@ if(document.getElementsByClassName("sidebarButtons").length > 0){
     document.getElementById("allBtn").addEventListener('click', event => ShowLTO("allDrinks"));
     document.getElementById("ltoBtn").addEventListener('click', event => ShowLTO("lto"));
     document.getElementById("teaBtn").addEventListener('click', event => ShowLTO("teas"));
-    document.getElementById("coffeeBtn").addEventListener('click', event => ShowLTO("coffee"));
+    document.getElementById("milkTeaBtn").addEventListener('click', event => ShowLTO("milkTeas"));
     document.getElementById("smoothieBtn").addEventListener('click', event => ShowLTO("smoothies"));
 }
 
@@ -162,10 +170,10 @@ if(document.getElementsByClassName("cancel").length > 0){
     
 }
 
-var currentDrink;
+
 
 function updateCurrentDrink(drink){
-    currentDrink = drink;
+    currentDrink.name = drink;
 }
 
 if(document.getElementsByClassName("addDrink").length > 0){
