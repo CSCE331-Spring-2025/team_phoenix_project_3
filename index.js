@@ -14,9 +14,6 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// deliver static files from customer_ui directory to the browser.
-app.use(express.static(path.join(__dirname, 'customer_ui')));
-
 app.use(express.json());
 
 // Session setup BEFORE passport
@@ -24,13 +21,18 @@ app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: false,
+		saveUninitialized: true,
 	})
 );
 
 // initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// deliver static files from the 3 UI directories to the browser.
+app.use(express.static(path.join(__dirname, 'customer_ui')));
+app.use(express.static(path.join(__dirname, 'managementUI')));
+app.use(express.static(path.join(__dirname, 'cashier_ui')));
 
 app.use('/auth', authRoutes);
 console.log('Auth routes mounted at /auth');
