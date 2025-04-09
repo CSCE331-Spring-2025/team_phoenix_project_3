@@ -134,6 +134,7 @@ function boba(choice){
     else{
         document.getElementsByClassName("bobaStatus")[0].innerHTML = "Boba: No";
     }
+    currentDrink.boba = choice;
 }
 
 if(document.getElementsByClassName("withoutBoba")[0] !== null){
@@ -145,6 +146,7 @@ if(document.getElementsByClassName("withBoba")[0] !== null){
 
 function sugar(level){
     document.getElementsByClassName("sugarStatus")[0].innerHTML = "Sugar level: " + level + "%";
+    currentDrink.sugar = level;
 }
 
 if(document.getElementsByClassName("sugar").length > 0){
@@ -178,6 +180,13 @@ function updateCurrentDrink(drink){
 
 if(document.getElementsByClassName("addDrink").length > 0){
     document.getElementsByClassName("addDrink")[0].addEventListener('click', hideCustomization);
-    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(currentDrink));
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(currentDrink.name));
+    if(currentDrink.name === true){
+        document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - With boba"));
+    }
+    else{
+        document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - No boba"));
+    }
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - " + currentDrink.sugar + "% sugar"));
     document.getElementsByClassName("addDrink")[0].addEventListener('click', event => updateCurrentDrink("none"));
 }
