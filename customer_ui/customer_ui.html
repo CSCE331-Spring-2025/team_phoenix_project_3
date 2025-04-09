@@ -8,6 +8,9 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body>
+    <!-- LOG IN STATUS MSG -->
+    <p id="login-status" style="text-align: right; padding: 10px;"></p>
+
     <div class="customerSidebar">
         <button class="sidebarButtons" id="allBtn">All</button>
         <button class="sidebarButtons" id="ltoBtn">Limited Time Offers</button>
@@ -43,5 +46,24 @@
     </div>
 
     <script type="module" src="js/script.js"></script>
+
+
+    <!-- GOOGLE AUTH CONNECTION -->
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const res = await fetch('/auth/user');
+            const data = await res.json();
+            const message = data.name === "Guest"
+            ? "You are not logged in."
+            : `Logged in as: ${data.name}`;
+            document.getElementById('login-status').textContent = message;
+        } catch (err) {
+            console.error("Failed to fetch user info:", err);
+            document.getElementById('login-status').textContent = "Login status unknown.";
+        }
+        });
+    </script>
 </body>
 </html>
+
