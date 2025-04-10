@@ -15,7 +15,10 @@ const router = express.Router();
  * @route POST /order/create
  * @param {express.Request} req - Should contain:
  *    - body.employee_id (integer): Required. The ID of the employee placing the order.
- *    - body.menu_ids (integer[]): Required. An array of menu item IDs to include in the order.
+ *    - body.order_items (json[]): Required. An array of objects that contain:
+ * 			- menu item IDs
+ * 			- boba boolean
+ * 			- sugar integer
  * @param {express.Response} res - Returns a JSON object of the newly created order:
  *    - id (integer): The order ID.
  *    - total_cost (number): Total price of all menu items in the order.
@@ -31,13 +34,16 @@ const router = express.Router();
  *    POST ./order/create
  *    Body:
  *    {
- *      "employee_id": 2,
- *      "menu_ids": [1, 4, 7]
- *    }
+ * 		"employee_id": 30,
+ *		"order_items": [
+ *		  {"id": 2, "boba": true, "sugar": 0},
+ *		  {"id": 5, "boba": true, "sugar": 50}
+ *		]
+ *	  }
  *    Response:
  *    {
  *      "id": 105,
- *      "total_cost": 18.00,
+ *      "total_cost": 12.00,
  *      "employee_id": 2,
  *      "time_placed": "2024-04-05T15:32:12.000Z"
  *    }
@@ -46,11 +52,11 @@ const router = express.Router();
  */
 router.post('/create', async (req, res) => {
 	try {
-		const { employee_id, menu_ids } = req.body;
+		const { employee_id, order_items } = req.body;
 
-		if (!employee_id || !Array.isArray(menu_ids)) {
+		if (!employee_id || !Array.isArray(order_items)) {
 			console.log(
-				`Invalid input to /order/create. employee_id: ${employee_id}, menu_ids: ${menu_ids}`
+				`Invalid input to /order/create. employee_id: ${employee_id}, order_items: ${order_items}`
 			);
 			return res.status(400).send('Invalid input');
 		}
@@ -62,22 +68,16 @@ router.post('/create', async (req, res) => {
 		}
 
 		const { id } = result.data[0];
-		const insertResult = await bulkInsert(
-			'items_in_order',
-			'order_id',
+		const insertResult = await callSqlFunction('add_items_to_order', [
 			id,
-			'menu_id',
-			menu_ids
-		);
+			JSON.stringify(order_items),
+		]);
 
 		if (!insertResult.success) {
 			return res.status(500).send('Unable to insert into order.');
 		}
-
-		const orderResult = await fetchData('orders', { key: 'id', value: id });
-		return orderResult.success
-			? res.status(200).json(orderResult.data)
-			: res.status(500).send('Server-side Error');
+		const { add_items_to_order } = insertResult.data[0];
+		return res.status(200).json(add_items_to_order);
 	} catch (err) {
 		console.error('POST /create failed:', err);
 		res.status(500).send('Server error');
