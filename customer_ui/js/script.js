@@ -73,7 +73,7 @@ function ShowLTO(id){
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
         milkTeaElement.style.display = "inline-block";
-        smoothieElement.style.displsay = "none";
+        smoothieElement.style.display = "none";
     }
     else if(id === "smoothies"){
         allElement.style.display = "none";
