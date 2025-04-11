@@ -6,7 +6,7 @@ import 'dotenv/config';
 //console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
 
 const callbackURL = process.env.NODE_ENV === 'production' 
-  ? "https://your-app-name.onrender.com/auth/google/callback"
+  ? "https://team-phoenix-project-3.onrender.com/auth/google/callback"
   : "http://localhost:3000/auth/google/callback";
 
 passport.use(new GoogleStrategy({
