@@ -60,7 +60,7 @@ router.post('/create', async (req, res) => {
 /**
  * Updates one or more fields of an inventory item by ID.
  *
- * @route PATCH /inventory/update/:id
+ * @route PATCH /inventory/edit/:id
  * @param {express.Request} req - Should contain:
  *    - params.id (integer): Required. The ID of the inventory item to update.
  *    - body (object): Required. At least one key:value pair matching a column in the 'inventory' table.
@@ -71,7 +71,7 @@ router.post('/create', async (req, res) => {
  *              Front-end can use this to modify item data such as quantity or supplier.
  *
  * @example Call:
- *    PATCH ./inventory/update/8
+ *    PATCH ./inventory/edit/8
  *    Body:
  *    { "quantity": 50 }
  *    Response:
@@ -86,7 +86,7 @@ router.post('/create', async (req, res) => {
  *
  * @returns {void}
  */
-router.patch('/update/:id', async (req, res) => {
+router.patch('/edit/:id', async (req, res) => {
 	const result = await updateData('inventory', req.body, {
 		id: parseInt(req.params.id, 10),
 	});

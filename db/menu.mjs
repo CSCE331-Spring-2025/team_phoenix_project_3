@@ -56,9 +56,10 @@ router.get('/items', async (req, res) => {
  * @returns {void}
  */
 router.post('/create', async (req, res) => {
-	const result = await insertData('menu_items', req.body);
+	const result = await callSqlFunction('create_menu_item', [req.body]);
 	if (result.success) {
-		res.status(201).json(result.data[0]);
+		const { create_menu_item } = result.data[0];
+		res.status(201).json(create_menu_item);
 	} else {
 		res.status(400).send('Unable to add menu item.');
 	}
@@ -67,7 +68,7 @@ router.post('/create', async (req, res) => {
 /**
  * Updates a menu item by ID.
  *
- * @route PATCH /menu/items/:id
+ * @route PATCH /menu/edit/:id
  * @param {express.Request} req - Should contain:
  *    - params.id (integer): Required. The ID of the menu item to update.
  *    - body (object): Required. One or more key:value pairs matching columns in the 'menu_items' table.
@@ -78,7 +79,7 @@ router.post('/create', async (req, res) => {
  *              Only the fields provided in the request body will be changed.
  *
  * @example Call:
- *    PATCH ./menu/items/2
+ *    PATCH ./menu/edit/2
  *    Body:
  *    {
  *      "price": 6.50
@@ -92,7 +93,7 @@ router.post('/create', async (req, res) => {
  *
  * @returns {void}
  */
-router.patch('/items/:id', async (req, res) => {
+router.patch('/edit/:id', async (req, res) => {
 	const result = await updateData('menu_items', req.body, {
 		id: req.params.id,
 	});
@@ -106,7 +107,7 @@ router.patch('/items/:id', async (req, res) => {
 /**
  * Deletes a menu item by ID.
  *
- * @route DELETE /menu/items/:id
+ * @route DELETE /menu/delete/:id
  * @param {express.Request} req - Should contain:
  *    - params.id (integer): Required. The ID of the menu item to delete.
  *    - body is NOT used.
@@ -116,7 +117,7 @@ router.patch('/items/:id', async (req, res) => {
  *              This action cannot be undone.
  *
  * @example Call:
- *    DELETE ./menu/items/7
+ *    DELETE ./menu/delete/7
  *    Response:
  *    {
  *      "menu_id": 7,
@@ -126,7 +127,7 @@ router.patch('/items/:id', async (req, res) => {
  *
  * @returns {void}
  */
-router.delete('/items/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
 	const result = await deleteData('menu_items', { id: req.params.id });
 	if (result.success) {
 		res.status(200).json(result.data[0]);
