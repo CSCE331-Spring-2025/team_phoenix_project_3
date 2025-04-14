@@ -1,100 +1,86 @@
-import { fetchData, updateData } from "./utils.js";
+let inventoryData = [];
+let suppliersSet = new Set();
+let currentSupplier = null;
 
-// Fetch suppliers from the database
-async function fetchSuppliers() {
-    const { success, data, error } = await fetchData("suppliers");
+const supplierDropdown = document.getElementById('supplierDropdown');
+const inventoryContainer = document.getElementById('inventoryContainer');
 
-    if (success && data.length > 0) {
-        return data; // Return the list of suppliers
-    } else {
-        console.error("Failed to retrieve suppliers:", error);
-        return [];
-    }
-}
+// Fetch all inventory items and populate supplier dropdown
+fetch('/inventory/items')
+  .then((response) => response.json())
+  .then((data) => {
+    inventoryData = data;
 
-// Fetch inventory items for a specific supplier
-async function fetchInventoryBySupplier(supplierId) {
-    const { success, data, error } = await fetchData("inventory", { key: "supplier_id", value: supplierId });
-
-    if (success && data.length > 0) {
-        return data; // Return the inventory items
-    } else {
-        console.error("Failed to retrieve inventory items:", error);
-        return [];
-    }
-}
-
-// Populate the supplier dropdown
-async function populateSupplierDropdown() {
-    const supplierDropdown = document.getElementById("supplierDropdown");
-    const suppliers = await fetchSuppliers();
-
-    suppliers.forEach((supplier) => {
-        const option = document.createElement("option");
-        option.value = supplier.id; // Supplier ID
-        option.textContent = supplier.supplier_name; // Supplier Name
-        supplierDropdown.appendChild(option);
+    data.forEach(item => {
+      if (!item.is_deleted && item.supplier_id) {
+        suppliersSet.add(item.supplier_id);
+      }
     });
-}
 
-// Fetch and display inventory items for the selected supplier
-async function fetchAndDisplayInventory() {
-    const supplierDropdown = document.getElementById("supplierDropdown");
-    const supplierId = supplierDropdown.value; // Get selected supplier ID
-    const inventoryContainer = document.getElementById("inventoryContainer");
-
-    // Clear the inventory container
-    inventoryContainer.innerHTML = "";
-
-    if (!supplierId) {
-        inventoryContainer.innerHTML = "<p>Please select a supplier to view inventory.</p>";
-        return;
+    for (let supplier of suppliersSet) {
+      const option = document.createElement('option');
+      option.value = supplier;
+      option.textContent = `Supplier ${supplier}`;
+      supplierDropdown.appendChild(option);
     }
+  })
+  .catch((err) => console.error("Error loading inventory:", err));
 
-    const inventory = await fetchInventoryBySupplier(supplierId);
-
-    if (inventory.length === 0) {
-        inventoryContainer.innerHTML = "<p>No inventory items found for this supplier.</p>";
-        return;
-    }
-
-    inventory.forEach((item) => {
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "inventory-item";
-
-        itemDiv.innerHTML = `
-            <p><strong>${item.name}</strong> (Current Quantity: ${item.quantity})</p>
-            <input type="number" id="input-${item.id}" placeholder="Enter new quantity">
-            <button onclick="updateItem(${item.id})">Update</button>
-        `;
-
-        inventoryContainer.appendChild(itemDiv);
-    });
-}
-
-// Handle updating an inventory item
-async function updateItem(itemId) {
-    const inputField = document.getElementById(`input-${itemId}`);
-    const newQuantity = inputField.value;
-
-    if (newQuantity === "") {
-        alert("Please enter a quantity.");
-        return;
-    }
-
-    const { success, data, error } = await updateData("inventory", { quantity: newQuantity }, { id: itemId });
-
-    if (success) {
-        alert(`Item updated successfully! New quantity: ${data[0].quantity}`);
-    } else {
-        console.error("Failed to update item:", error);
-        alert("Failed to update item.");
-    }
-}
-
-// Initialize the page
-document.addEventListener("DOMContentLoaded", () => {
-    populateSupplierDropdown();
+supplierDropdown.addEventListener('change', () => {
+  currentSupplier = supplierDropdown.value;
+  displayItemsBySupplier(currentSupplier);
 });
+
+function displayItemsBySupplier(supplierId) {
+  inventoryContainer.innerHTML = '';
+
+  const filteredItems = inventoryData.filter(item => item.supplier_id == supplierId && !item.is_deleted);
+
+  filteredItems.forEach(item => {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = "inventoryCard";
+
+    itemDiv.innerHTML = `
+      <p><strong>${item.item_name}</strong> (Current: ${item.quantity})</p>
+      <input type="number" id="input-${item.id}" placeholder="Quantity to add" min="0" />
+      <button class="deliverBtn" onclick="updateQuantity(${item.id})">Deliver</button>
+    `;
+
+    inventoryContainer.appendChild(itemDiv);
+  });
+}
+
+window.updateQuantity = async function (itemId) {
+  const input = document.getElementById(`input-${itemId}`);
+  const addQty = parseInt(input.value);
+
+  if (isNaN(addQty) || addQty < 0) {
+    alert("Enter a valid number to deliver.");
+    return;
+  }
+
+  const item = inventoryData.find(i => i.id === itemId);
+  const newQty = item.quantity + addQty;
+
+  try {
+    const res = await fetch(`/inventory/edit/${itemId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ quantity: newQty })
+    });
+
+    if (!res.ok) throw new Error("Update failed");
+
+    const updated = await res.json();
+    alert(`${updated[0].item_name} updated to quantity ${updated[0].quantity}`);
+
+    // Update in memory and re-render
+    item.quantity = updated[0].quantity;
+    displayItemsBySupplier(currentSupplier);
+  } catch (err) {
+    console.error("Failed to update:", err);
+    alert("Failed to update item quantity.");
+  }
+};
 
 
