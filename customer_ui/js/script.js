@@ -11,19 +11,19 @@ fetch('/menu/items')
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
-            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("allButtons")[i].innerHTML));
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("allButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("ltoButtons").length; i++){
-            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("ltoButtons")[i].innerHTML));
+            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("ltoButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
-            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("teaButtons")[i].innerHTML));
+            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("teaButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("milkTeaButtons").length; i++){
-            document.getElementsByClassName("milkTeaButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("milkTeaButtons")[i].innerHTML));
+            document.getElementsByClassName("milkTeaButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("milkTeaButtons")[i].innerHTML));
         }
         for(let i = 0; i < document.getElementsByClassName("smoothieButtons").length; i++){
-            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => updateCurrentDrink(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
+            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
@@ -32,15 +32,24 @@ fetch('/menu/items')
     })
     .catch((error) => console.error('Error:', error));
 
+var currentSugar = 0;
+var currentBoba = false;
+var currentName = "";
+var currentId = -1;
 
-const currentDrink = {
-    id: -1,
-    boba: false,
-    sugar: 0,
-    name: "none"
-};
+function Drink(id, boba, sugar, name){
+    this.id = id;
+    this.boba = boba;
+    this.sugar = sugar;
+    this.name = name;
+}
 
-function ShowLTO(id){
+const order = {
+    employee_id: 30,
+    drinks: []
+}
+
+function ShowButtons(id){
     var allElement = document.getElementById("allDrinks");
     var ltoElement = document.getElementById("lto");
     var teaElement = document.getElementById("teas");
@@ -73,7 +82,7 @@ function ShowLTO(id){
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
         milkTeaElement.style.display = "inline-block";
-        smoothieElement.style.display = "none";
+        smoothieElement.style.displsay = "none";
     }
     else if(id === "smoothies"){
         allElement.style.display = "none";
@@ -85,32 +94,58 @@ function ShowLTO(id){
 }
 
 if(document.getElementsByClassName("sidebarButtons").length > 0){
-    document.getElementById("allBtn").addEventListener('click', event => ShowLTO("allDrinks"));
-    document.getElementById("ltoBtn").addEventListener('click', event => ShowLTO("lto"));
-    document.getElementById("teaBtn").addEventListener('click', event => ShowLTO("teas"));
-    document.getElementById("milkTeaBtn").addEventListener('click', event => ShowLTO("milkTeas"));
-    document.getElementById("smoothieBtn").addEventListener('click', event => ShowLTO("smoothies"));
+    document.getElementById("allBtn").addEventListener('click', event => ShowButtons("allDrinks"));
+    document.getElementById("ltoBtn").addEventListener('click', event => ShowButtons("lto"));
+    document.getElementById("teaBtn").addEventListener('click', event => ShowButtons("teas"));
+    document.getElementById("milkTeaBtn").addEventListener('click', event => ShowButtons("milkTeas"));
+    document.getElementById("smoothieBtn").addEventListener('click', event => ShowButtons("smoothies"));
 }
 
-let subtotalArray = ["Total:"];
-
-function subtotalAppend(text){
-    subtotalArray.push(text);
-
+function displaySubtotal(){
     document.getElementById("subtotal").innerHTML = "";
-    for(let i = 0; i < subtotalArray.length; i++){
-        document.getElementById("subtotal").insertAdjacentText('beforeend', subtotalArray[i]);
+    document.getElementById("subtotal").insertAdjacentText('beforeend', "Subtotal:");
+    document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+    for(let i = 0; i < order.drinks.length; i++){
+        document.getElementById("subtotal").insertAdjacentText('beforeend', order.drinks[i].name);
+        document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+        if(order.drinks[i].boba === true){
+            document.getElementById("subtotal").insertAdjacentText('beforeend', " - With Boba");
+        }
+        else{
+            document.getElementById("subtotal").insertAdjacentText('beforeend', " - Without Boba");
+        }
+        document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+        document.getElementById("subtotal").insertAdjacentText('beforeend', " - Sugar:" + order.drinks[i].sugar + "%");
         document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
     }
-    localStorage.setItem("savedSubtotal", JSON.stringify(subtotalArray));
+    localStorage.setItem("savedSubtotal", JSON.stringify(order));
 }
+
+function orderAppend(){
+    const newDrink = new Drink(-1, currentBoba, currentSugar, currentName);
+    order.drinks.push(newDrink);
+}
+
+let drinksArray = [];
+let orderItem;
 
 window.onload = function reloadSubtotal(){
     if(localStorage.getItem("savedSubtotal") !== null){
-        subtotalArray = JSON.parse(localStorage.getItem("savedSubtotal"));
-        document.getElementsByClassName("subtotal")[0].innerHTML = "";
-        for(let i = 0; i < subtotalArray.length; i++){
-            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', subtotalArray[i]);
+        orderItem = JSON.parse(localStorage.getItem("savedSubtotal"));
+        drinksArray = orderItem.drinks;
+        document.getElementsByClassName("subtotal")[0].innerHTML = "Subtotal:";
+        document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+        for(let i = 0; i < drinksArray.length; i++){
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', drinksArray[i].name);
+            document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+            if(drinksArray[i].boba === true){
+                document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - With Boba");
+            }
+            else{
+                document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Without Boba");
+            }
+            document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Sugar:" + drinksArray[i].sugar + "%");
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
         }
     }
@@ -134,7 +169,7 @@ function boba(choice){
     else{
         document.getElementsByClassName("bobaStatus")[0].innerHTML = "Boba: No";
     }
-    currentDrink.boba = choice;
+    currentBoba = choice;
 }
 
 if(document.getElementsByClassName("withoutBoba")[0] !== null){
@@ -146,7 +181,7 @@ if(document.getElementsByClassName("withBoba")[0] !== null){
 
 function sugar(level){
     document.getElementsByClassName("sugarStatus")[0].innerHTML = "Sugar level: " + level + "%";
-    currentDrink.sugar = level;
+    currentSugar = level;
 }
 
 if(document.getElementsByClassName("sugar").length > 0){
@@ -168,25 +203,44 @@ function hideCustomization(){
 
 if(document.getElementsByClassName("cancel").length > 0){
     document.getElementsByClassName("cancel")[0].addEventListener('click', hideCustomization);
-    document.getElementsByClassName("cancel")[0].addEventListener('click', event => updateCurrentDrink("none"));
+    document.getElementsByClassName("cancel")[0].addEventListener('click', event => drinkName("none"));
     
 }
 
-
-
-function updateCurrentDrink(drink){
-    currentDrink.name = drink;
+function drinkName(name){
+    currentName = name;
 }
 
 if(document.getElementsByClassName("addDrink").length > 0){
     document.getElementsByClassName("addDrink")[0].addEventListener('click', hideCustomization);
-    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(currentDrink.name));
-    if(currentDrink.name === true){
-        document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - With boba"));
-    }
-    else{
-        document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - No boba"));
-    }
-    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => subtotalAppend(" - " + currentDrink.sugar + "% sugar"));
-    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => updateCurrentDrink("none"));
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => orderAppend());
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => displaySubtotal());
+    document.getElementsByClassName("addDrink")[0].addEventListener('click', event => drinkName("none"));
+}
+
+if(document.getElementById("finishOrder") === true){
+    document.getElementById("finishOrder").addEventListener('click', event => createOrder(order));
+}
+
+function createOrder(order){
+    fetch('/order/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            employee_id: order.employee_id,
+            order_items: order.drinks,
+        }),
+    })
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            // easiest way to get the values from the data
+            const { id, subtotal, time_placed } = data;
+            console.log('Order created:', data);
+        })
+        .catch((err) => {
+            console.error('Failed to create order:', err);
+        });
+    
 }
