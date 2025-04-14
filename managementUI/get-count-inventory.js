@@ -54,7 +54,7 @@ window.updateQuantity = async function (itemId) {
   const input = document.getElementById(`input-${itemId}`);
   const countedQty = parseInt(input.value);
 
-  if (isNaN(countedQtyQty) || countedQty < 0) {
+  if (isNaN(countedQty) || countedQty < 0) {
     alert("Enter a valid number to count the number of items.");
     return;
   }

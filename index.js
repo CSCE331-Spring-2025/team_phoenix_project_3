@@ -33,6 +33,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'customer_ui')));
 app.use(express.static(path.join(__dirname, 'managementUI')));
 app.use(express.static(path.join(__dirname, 'cashier_ui')));
+app.use(express.static(path.join(__dirname, 'images')));
 
 app.use('/auth', authRoutes);
 console.log('Auth routes mounted at /auth');
