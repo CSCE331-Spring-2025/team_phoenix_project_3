@@ -8,6 +8,7 @@ fetch('/menu/items')
             if(document.getElementById("allDrinks") !== null) {
                 document.getElementById("allDrinks").appendChild(newButton);
             }
+            newButton.addEventListener('click', event => drinkID(data[i].id));
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
@@ -37,16 +38,16 @@ var currentBoba = false;
 var currentName = "";
 var currentId = -1;
 
-function Drink(id, boba, sugar, name){
+function Drink(id, boba, sugar){
     this.id = id;
     this.boba = boba;
     this.sugar = sugar;
-    this.name = name;
 }
 
 const order = {
     employee_id: 30,
-    drinks: []
+    drinks: [],
+    drinkNames: []
 }
 
 function ShowButtons(id){
@@ -106,7 +107,7 @@ function displaySubtotal(){
     document.getElementById("subtotal").insertAdjacentText('beforeend', "Subtotal:");
     document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
     for(let i = 0; i < order.drinks.length; i++){
-        document.getElementById("subtotal").insertAdjacentText('beforeend', order.drinks[i].name);
+        document.getElementById("subtotal").insertAdjacentText('beforeend', order.drinkNames[i]);
         document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
         if(order.drinks[i].boba === true){
             document.getElementById("subtotal").insertAdjacentText('beforeend', " - With Boba");
@@ -122,30 +123,33 @@ function displaySubtotal(){
 }
 
 function orderAppend(){
-    const newDrink = new Drink(-1, currentBoba, currentSugar, currentName);
+    const newDrink = new Drink(currentId, currentBoba, currentSugar);
     order.drinks.push(newDrink);
+    order.drinkNames.push(currentName);
 }
 
 let drinksArray = [];
 let orderItem;
+let namesArray = [];
 
 window.onload = function reloadSubtotal(){
     if(localStorage.getItem("savedSubtotal") !== null){
         orderItem = JSON.parse(localStorage.getItem("savedSubtotal"));
-        drinksArray = orderItem.drinks;
+        order.drinks = orderItem.drinks;
+        order.drinkNames = orderItem.drinkNames;
         document.getElementsByClassName("subtotal")[0].innerHTML = "Subtotal:";
         document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
-        for(let i = 0; i < drinksArray.length; i++){
-            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', drinksArray[i].name);
+        for(let i = 0; i < order.drinks.length; i++){
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', order.drinkNames[i]);
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
-            if(drinksArray[i].boba === true){
+            if(order.drinks[i].boba === true){
                 document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - With Boba");
             }
             else{
                 document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Without Boba");
             }
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
-            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Sugar:" + drinksArray[i].sugar + "%");
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Sugar:" + order.drinks[i].sugar + "%");
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
         }
     }
@@ -172,10 +176,10 @@ function boba(choice){
     currentBoba = choice;
 }
 
-if(document.getElementsByClassName("withoutBoba")[0] !== null){
+if(document.getElementsByClassName("withoutBoba").length > 0){
     document.getElementsByClassName("withoutBoba")[0].addEventListener('click', event => boba(false));
 }
-if(document.getElementsByClassName("withBoba")[0] !== null){
+if(document.getElementsByClassName("withBoba").length > 0){
     document.getElementsByClassName("withBoba")[0].addEventListener('click', event => boba(true));
 }
 
@@ -211,6 +215,10 @@ function drinkName(name){
     currentName = name;
 }
 
+function drinkID(id){
+    currentId = id;
+}
+
 if(document.getElementsByClassName("addDrink").length > 0){
     document.getElementsByClassName("addDrink")[0].addEventListener('click', hideCustomization);
     document.getElementsByClassName("addDrink")[0].addEventListener('click', event => orderAppend());
@@ -219,16 +227,16 @@ if(document.getElementsByClassName("addDrink").length > 0){
 }
 
 if(document.getElementById("finishOrder") === true){
-    document.getElementById("finishOrder").addEventListener('click', event => createOrder(order));
+    document.getElementById("finishOrder").addEventListener('click',  event => console.log("test"));
 }
 
-function createOrder(order){
+function createOrder(employeeId, items){
     fetch('/order/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             employee_id: order.employee_id,
-            order_items: order.drinks,
+            order_items: order.drinks,    
         }),
     })
         .then((res) => {
