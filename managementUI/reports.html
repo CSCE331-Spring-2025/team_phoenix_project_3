@@ -8,6 +8,7 @@
 </head>
 <body>
     <header>
+        <li><a href="index.html">Log Out</a></li>
         <h1>Phoenix Boba Shop</h1>
         <img src="images/logo.png" alt="Phoenix Boba Shop Logo" class="logo">
     </header>
@@ -23,7 +24,7 @@
             const data = await res.json();
             const message = data.name === "Guest"
             ? "You are not logged in."
-            : `Logged in as: ${data.name}`;
+            : 'Logged in as: ${data.name}';
             document.getElementById('login-status').textContent = message;
         } catch (err) {
             console.error("Failed to fetch user info:", err);
