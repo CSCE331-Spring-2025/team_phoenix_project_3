@@ -42,8 +42,8 @@ function displayItemsBySupplier(supplierId) {
 
     itemDiv.innerHTML = `
       <p><strong>${item.item_name}</strong> (Current: ${item.quantity})</p>
-      <input type="number" id="input-${item.id}" placeholder="Quantity to add" min="0" />
-      <button class="deliverBtn" onclick="updateQuantity(${item.id})">Deliver</button>
+      <input type="number" id="input-${item.id}" placeholder="Quantity to count" min="0" />
+      <button class="countBtn" onclick="updateQuantity(${item.id})">Count</button>
     `;
 
     inventoryContainer.appendChild(itemDiv);
@@ -54,7 +54,7 @@ window.updateQuantity = async function (itemId) {
   const input = document.getElementById(`input-${itemId}`);
   const countedQty = parseInt(input.value);
 
-  if (isNaN(addQty) || addQty < 0) {
+  if (isNaN(countedQtyQty) || countedQty < 0) {
     alert("Enter a valid number to count the number of items.");
     return;
   }
