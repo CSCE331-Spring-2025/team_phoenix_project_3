@@ -6,7 +6,7 @@
         <title>Boba Tea POS</title>
         <link rel="stylesheet" href="css/styles.css">
     </head>
-    <body>
+    <body style="display: flex; flex-direction: column; align-items: center;">
         <div class="container">
             <h2>Welcome to the Team Phoenix Boba POS</h2>
             <p>Which one are you:</p>
@@ -28,7 +28,12 @@
             <h3 style="margin: 0 0 8px 0;">Weather in Galveston</h3>
             <p id="weather-data" style="margin: 0;">Loading...</p>
         </div>
+
+
         </div>
+
+        <div id="google_translate_element" style="margin-top: 20px;"></div>
+
 
         <script>
             async function fetchWeather() {
@@ -45,6 +50,19 @@
         
             fetchWeather();
         </script>
+
+
+        <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            //includedLanguages: 'en,es,zh,vi,hi', // add more as needed
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+        }, 'google_translate_element');
+        }
+        </script>
+
+        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
     </body>
