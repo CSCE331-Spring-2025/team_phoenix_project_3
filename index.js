@@ -6,6 +6,8 @@ import session from 'express-session'; // for session management
 import passport from './auth/passport.js'; // import passport configuration
 import authRoutes from './auth/routes.js'; // import auth routes
 
+import weatherRoutes from './weather/routes.js'; // import weather routes
+
 const app = express();
 
 // use environment variable or default to localhost:3000
@@ -36,7 +38,10 @@ app.use(express.static(path.join(__dirname, 'cashier_ui')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/auth', authRoutes);
-console.log('Auth routes mounted at /auth');
+console.log('Google Login API: routes mounted at /auth');
+
+app.use('/weather', weatherRoutes);
+console.log('Weather API: routes mounted at /weather');
 
 // landing page
 app.get('/', (req, res) => {
@@ -53,8 +58,6 @@ import menuRouter from './db/menu.mjs';
 app.use('/menu', menuRouter);
 import orderRouter from './db/orders.mjs';
 app.use('/order', orderRouter);
-
-console.log('Auth routes mounted at /auth');
 
 // starts server
 app.listen(PORT, () => {
