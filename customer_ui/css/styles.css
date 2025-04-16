@@ -367,7 +367,7 @@ a.button:hover {
     background-color: #ad4e00;
     color: white;
     cursor: pointer;
-    width: 150px;
+    width: 10%;
     line-height: 40px;
     text-align: center;
     text-decoration: none;
@@ -384,7 +384,7 @@ a.button:hover {
     background-color: #ad4e00;
     color: white;
     cursor: pointer;
-    width: 150px;
+    width: 10%;
     line-height: 40px;
     text-align: center;
     right: 0%;
@@ -393,6 +393,31 @@ a.button:hover {
 
 .checkout:hover{
     background-color: #994500;
+}
+
+.remove{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 10%;
+    line-height: 40px;
+    text-align: center;
+    right: 30%;
+    text-decoration: none;
+}
+
+.remove:hover{
+    background-color: #994500;
+}
+
+.removeText{
+    position:fixed;
+    width: 10%;
+    line-height: 40px;
+    right: 19.5%;
 }
 
 /* This is the beginning of the elements for checkout.html */
@@ -431,9 +456,3 @@ a.button:hover {
 .finishOrder:hover{
     background-color: #994500;
 }
-
-.goog-te-gadget {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }

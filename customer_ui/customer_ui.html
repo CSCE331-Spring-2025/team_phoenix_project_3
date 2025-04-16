@@ -8,7 +8,8 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body>
-
+    <!-- LOG IN STATUS MSG -->
+    <p id="login-status" style="text-align: right; padding: 10px;"></p>
     
     <div class="customerSidebar">
         <button class="sidebarButtons" id="allBtn">All</button>
@@ -52,13 +53,11 @@
         Total: <br/>
     </div>
 
-    <div class="bottomBar" style="display: flex; justify-content: space-between; align-items: center; padding: 0 10px;">
-        <a href="customer_landing.html" class="back" id="back">Back</a>z
-
-        <!-- LOG IN STATUS MSG -->
-        <p id="login-status" style="margin: 0; color: white; text-align: center; flex: 1;">Logged in as: ...</p>
-
+    <div class="bottomBar">
+        <a href="customer_landing.html" class="back" id="back">Back</a>
         <a href="checkout.html" class="checkout">To Checkout</a>
+        <button class="remove">Remove from order:</button>
+        <input class="removeText"></input>
     </div>
 
     <script type="module" src="js/script.js"></script>
@@ -80,19 +79,5 @@
         }
         });
     </script>
-
-    <!-- GOOGLE TRANSLATE -->
-    <div id="google_translate_element" style="position: fixed; bottom: 50px; left: 10px; z-index: 999;"></div>
-
-    <script>
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-        }, 'google_translate_element');
-    }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>

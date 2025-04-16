@@ -28,7 +28,7 @@ fetch('/menu/items')
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
-            document.getElementsByClassName("allButtons")[i].addEventListener('click', showCustomization);
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => showCustomization(document.getElementsByClassName("allButtons")[i].innerHTML));
         }
     })
     .catch((error) => console.error('Error:', error));
@@ -107,7 +107,8 @@ function displaySubtotal(){
     document.getElementById("subtotal").insertAdjacentText('beforeend', "Subtotal:");
     document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
     for(let i = 0; i < order.order_items.length; i++){
-        document.getElementById("subtotal").insertAdjacentText('beforeend', order.drinkNames[i]);
+        let tempNum = i+1;
+        document.getElementById("subtotal").insertAdjacentText('beforeend', tempNum + ". " + order.drinkNames[i]);
         document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
         if(order.order_items[i].boba === true){
             document.getElementById("subtotal").insertAdjacentText('beforeend', " - With Boba");
@@ -141,7 +142,8 @@ window.onload = function reloadSubtotal(){
         document.getElementsByClassName("subtotal")[0].innerHTML = "Subtotal:";
         document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
         for(let i = 0; i < order.order_items.length; i++){
-            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', order.drinkNames[i]);
+            let tempNum = i+1;
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', tempNum + ". " + order.drinkNames[i]);
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
             if(order.order_items[i].boba === true){
                 document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - With Boba");
@@ -196,9 +198,10 @@ if(document.getElementsByClassName("sugar").length > 0){
     document.getElementsByClassName("sugar")[3].addEventListener('click', event => sugar(150));
 }
 
-function showCustomization(){
+function showCustomization(name){
     document.getElementById("customization").style.display = "inline-block";
     document.getElementsByClassName("subtotal")[0].style.display = "none";
+    document.getElementsByClassName("drinkName")[0].innerHTML = name;
 }
 
 function hideCustomization(){
@@ -250,4 +253,27 @@ function createOrder(order){
             console.error('Failed to create order:', err);
         });
     
+}
+
+var orderIndex;
+
+if(document.getElementsByClassName("remove").length > 0){
+    document.getElementsByClassName("remove")[0].addEventListener('click', event => {
+        orderIndex = document.getElementsByClassName("removeText")[0].value;
+        if(isNaN(parseInt(orderIndex))){
+            // idk maybe do something like warn the user i guess
+        }
+        else{
+            removeFromOrder(orderIndex);
+        }
+    });
+}
+
+function removeFromOrder(num){
+    if(num > 0){
+        order.order_items.splice(num-1, 1);
+        order.drinkNames.splice(num-1, 1);
+        localStorage.setItem("savedSubtotal", JSON.stringify(order));
+        displaySubtotal();
+    }
 }
