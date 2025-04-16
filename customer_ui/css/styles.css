@@ -456,3 +456,9 @@ a.button:hover {
 .finishOrder:hover{
     background-color: #994500;
 }
+
+.goog-te-gadget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
