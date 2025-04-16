@@ -6,9 +6,9 @@ body {
     background-color: antiquewhite;
 }
 img {
-    max-width: 100%; /* Ensure images are responsive */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Remove bottom space under images */
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 nav {
     display: flex; /* Use flexbox for horizontal layout */
