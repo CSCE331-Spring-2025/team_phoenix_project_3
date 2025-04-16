@@ -14,6 +14,30 @@
             <a href="/auth/google?role=cashier" class="button">I am a cashier</a>
             <a href="/auth/google" class="button">I am a customer</a>
             <p id="order-message"></p>
+
+            <!-- Weather Widget -->
+            <div id="weather-widget">
+                <h3>Weather in Galveston</h3>
+                <p id="weather-data">Loading...</p>
+            </div>
         </div>
+
+        <script>
+            async function fetchWeather() {
+                try {
+                    const res = await fetch('/weather/current?city=Galveston,US');
+                    const data = await res.json();
+                    document.getElementById('weather-data').textContent = 
+                        `Temperature: ${data.main.temp}°C, ${data.weather[0].description}`;
+                } catch (err) {
+                    console.error('Failed to fetch weather data:', err);
+                    document.getElementById('weather-data').textContent = 'Failed to load weather data.';
+                }
+            }
+        
+            fetchWeather();
+        </script>
+
+
     </body>
 </html>
