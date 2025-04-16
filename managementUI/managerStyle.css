@@ -5,7 +5,11 @@ body {
     font-family: Arial, sans-serif;
     background-color: antiquewhite;
 }
-
+img {
+    max-width: 100%; /* Ensure images are responsive */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove bottom space under images */
+}
 nav {
     display: flex; /* Use flexbox for horizontal layout */
     background-color: #ffaa00; /* Optional: Set a background color */
