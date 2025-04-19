@@ -70,7 +70,7 @@ a.button:hover {
 }
 
 .allDrinks{
-    display: none;
+    display: inline-block;
     background-color: rgb(255, 225, 193);
     width: 55%;
     height: 5000px;
@@ -455,4 +455,10 @@ a.button:hover {
 
 .finishOrder:hover{
     background-color: #994500;
+}
+
+.goog-te-gadget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

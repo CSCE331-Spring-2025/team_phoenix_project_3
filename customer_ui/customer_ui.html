@@ -8,8 +8,7 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <!-- LOG IN STATUS MSG -->
-    <p id="login-status" style="text-align: right; padding: 10px;"></p>
+
     
     <div class="customerSidebar">
         <button class="sidebarButtons" id="allBtn">All</button>
@@ -45,19 +44,21 @@
         <button class="sugar" id="sugar150">150% sugar</button>
         <button class="cancel">Cancel</button>
         <button class="addDrink">Add to cart</button>
-        <p class="bobaStatus">Please choose if you want boba</textarea>
-        <p class="sugarStatus">Please enter a sugar level</textarea>
+        <p class="bobaStatus">Please choose if you want boba</p>
+        <p class="sugarStatus">Please enter a sugar level</p>
     </div>
 
     <div class="subtotal" id="subtotal">
         Total: <br/>
     </div>
 
-    <div class="bottomBar">
-        <a href="customer_landing.html" class="back" id="back">Back</a>
+    <div class="bottomBar" style="display: flex; justify-content: space-between; align-items: center; padding: 0 10px;">
+        <a href="customer_landing.html" class="back" id="back">Back</a>z
+
+        <!-- LOG IN STATUS MSG -->
+        <p id="login-status" style="margin: 0; color: white; text-align: center; flex: 1;">Logged in as: ...</p>
+
         <a href="checkout.html" class="checkout">To Checkout</a>
-        <button class="remove">Remove from order:</button>
-        <input class="removeText"></input>
     </div>
 
     <script type="module" src="js/script.js"></script>
@@ -79,5 +80,19 @@
         }
         });
     </script>
+
+    <!-- GOOGLE TRANSLATE -->
+    <div id="google_translate_element" style="position: fixed; bottom: 50px; left: 10px; z-index: 999;"></div>
+
+    <script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+        //pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+        }, 'google_translate_element');
+    }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>

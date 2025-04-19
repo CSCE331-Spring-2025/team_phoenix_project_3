@@ -12,7 +12,7 @@ fetch('/menu/items')
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
-            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("allButtons")[i].innerHTML));
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => drinkName(data[i].item_name));
         }
         for(let i = 0; i < document.getElementsByClassName("ltoButtons").length; i++){
             document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("ltoButtons")[i].innerHTML));
@@ -28,7 +28,7 @@ fetch('/menu/items')
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
-            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => showCustomization(document.getElementsByClassName("allButtons")[i].innerHTML));
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => showCustomization(data[i].item_name));
         }
     })
     .catch((error) => console.error('Error:', error));
