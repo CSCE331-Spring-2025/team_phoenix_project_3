@@ -58,6 +58,8 @@ import menuRouter from './db/menu.mjs';
 app.use('/menu', menuRouter);
 import orderRouter from './db/orders.mjs';
 app.use('/order', orderRouter);
+import employeeRouter from './db/employee.mjs';
+app.use('/employee', employeeRouter);
 
 // starts server
 app.listen(PORT, () => {
