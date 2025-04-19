@@ -132,4 +132,24 @@ router.delete('/delete/:id', async (req, res) => {
 	}
 });
 
+router.get('/boba', async (req, res) => {
+	const result = await callSqlFunction('get_boba_info');
+	if (result.success) {
+		const { get_boba_info } = result.data[0];
+		res.status(200).json(get_boba_info);
+	} else {
+		res.status(500).send('Unable to get boba information.');
+	}
+});
+
+router.get('/sugar', async (req, res) => {
+	const result = await callSqlFunction('get_sugar_info');
+	if (result.success) {
+		const { get_sugar_info } = result.data[0];
+		res.status(200).json(get_sugar_info);
+	} else {
+		res.status(500).send('Unable to get sugar information.');
+	}
+});
+
 export default router;
