@@ -8,6 +8,9 @@ import authRoutes from './auth/routes.js'; // import auth routes
 
 import weatherRoutes from './weather/routes.js'; // import weather routes
 
+import chatbotRoutes from './chatbot/routes.js'; // import chatbot routes
+
+
 const app = express();
 
 // use environment variable or default to localhost:3000
@@ -42,6 +45,9 @@ console.log('Google Login API: routes mounted at /auth');
 
 app.use('/weather', weatherRoutes);
 console.log('Weather API: routes mounted at /weather');
+
+app.use('/chat', chatbotRoutes);
+console.log('Chatbot API: routes mounted at /chat');
 
 // landing page
 app.get('/', (req, res) => {
