@@ -27,7 +27,7 @@ router.get('/google/callback',
       } else if (role === 'cashier') {
           res.redirect('/cashier_ui.html');
       } else {
-          res.redirect('/customer_ui.html');
+          res.redirect('/customer_landing.html');
       }
     });
 
