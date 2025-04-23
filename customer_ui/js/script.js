@@ -302,6 +302,7 @@ if(document.getElementsByClassName("sugar").length > 0){
 }
 
 function showCustomization(name){
+    checkBobaStock();
     document.getElementById("customization").style.display = "inline-block";
     document.getElementsByClassName("subtotal")[0].style.display = "none";
     document.getElementsByClassName("drinkName")[0].innerHTML = name;
@@ -384,4 +385,27 @@ function removeFromOrder(num){
         localStorage.setItem("savedSubtotal", JSON.stringify(order));
         displaySubtotal();
     }
+}
+
+function checkBobaStock() {
+    fetch('/boba')
+        .then((res) => {
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
+            return res.json();
+        })
+        .then((data) => {
+            console.log('Boba info:', data);
+            if (data.quantity > 0) {
+                document.getElementsByClassName("withoutBoba")[0].style.display = "block";
+                document.getElementsByClassName("withBoba")[0].style.display = "block";
+                document.getElementsByClassName("bobaStatus")[0].style.display = "block";
+            } else {
+                document.getElementsByClassName("withoutBoba")[0].style.display = "none";
+                document.getElementsByClassName("withBoba")[0].style.display = "none";
+                document.getElementsByClassName("bobaStatus")[0].style.display = "none";
+            }
+        })
+        .catch((err) => {
+            console.error('Failed to fetch boba info:', err);
+        });
 }
