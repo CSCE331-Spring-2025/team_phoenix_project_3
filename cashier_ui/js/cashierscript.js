@@ -111,6 +111,8 @@ var currentCost = 0;
 
 var totalCost = 0;
 
+var employeeId = 0;
+
 function Drink(id, boba, sugar){
     this.id = id;
     this.boba = boba;
