@@ -1,0 +1,6 @@
+POST http://localhost:3000/chat/recommend
+Content-Type: application/json
+
+{
+  "prompt": "I want something sweet with boba"
+}

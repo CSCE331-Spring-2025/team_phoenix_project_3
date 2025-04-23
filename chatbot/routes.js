@@ -21,24 +21,37 @@ router.post('/recommend', async (req, res) => {
     const userMessage = req.body.prompt;
 
     try {
-        // Send user message to Hugging Face model
+        // Fetch real menu items from your own backend
+        const menuRes = await fetch('http://localhost:3000/menu/items');
+        const menuJson = await menuRes.json();
+        const drinkList = Array.isArray(menuJson) ? menuJson.map(item => item.item_name).join(', ') : '';
+
+        console.log("Drink list:", drinkList);//debugging
+        console.log("User message:", userMessage);//debugging
+
+        const fullPrompt = `Menu: ${drinkList}. Recommend a drink for: ${userMessage}`;
+
         const hfRes = await fetch(HF_API_URL, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${HF_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ inputs: userMessage })
+            body: JSON.stringify({ inputs: fullPrompt })
         });
 
         const data = await hfRes.json();
-        const reply = data.generated_text || "Hmm, I'm not sure what to suggest.";
+        const reply =
+          (Array.isArray(data) && data[0]?.generated_text) ||
+          data.generated_text ||
+          "I'm not sure what to suggest.";
 
-        res.json({ reply }); // Send response back to frontend
+        res.json({ reply });
     } catch (err) {
         console.error("Chatbot error:", err);
         res.status(500).json({ reply: "Sorry, I had trouble thinking of something!" });
     }
 });
+
 
 export default router;
