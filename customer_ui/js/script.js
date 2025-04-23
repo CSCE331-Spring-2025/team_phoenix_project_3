@@ -4,31 +4,101 @@ fetch('/menu/items')
         for(let i = 0; i < data.length; i++){
             var newButton = document.createElement("button");
             newButton.innerHTML = data[i].item_name;
-            newButton.className += "allButtons"
+            newButton.className += "allButtons";
             if(document.getElementById("allDrinks")) {
                 document.getElementById("allDrinks").appendChild(newButton);
             }
+
+            var newButtonCategory = document.createElement("button");
+            newButtonCategory.innerHTML = data[i].item_name;
+            if(data[i].category == "LTO"){
+                newButtonCategory.className += "ltoButtons";
+                if(document.getElementById("lto")) {
+                    document.getElementById("lto").appendChild(newButtonCategory);
+                }
+            }
+            else if(data[i].category == "Tea"){
+                newButtonCategory.className += "teaButtons";
+                if(document.getElementById("teas")){
+                    document.getElementById("teas").appendChild(newButtonCategory);
+                }
+            }
+            else if(data[i].category == "Milk Tea"){
+                newButtonCategory.className += "milkTeaButtons";
+                if(document.getElementById("milkTeas")){
+                    document.getElementById("milkTeas").appendChild(newButtonCategory);
+                }
+            }
+            else if(data[i].category == "Smoothie"){
+                newButtonCategory.className += "smoothieButtons";
+                if(document.getElementById("smoothies")){
+                    document.getElementById("smoothies").appendChild(newButtonCategory);
+                }
+            }
             newButton.addEventListener('click', event => drinkID(data[i].id));
+            newButtonCategory.addEventListener('click', event => drinkID(data[i].id));
         }
+
+        //price
+        //category
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
             document.getElementsByClassName("allButtons")[i].addEventListener('click', event => drinkName(data[i].item_name));
+            document.getElementsByClassName("allButtons")[i].addEventListener('click', event => drinkCost(data[i].price));
         }
-        for(let i = 0; i < document.getElementsByClassName("ltoButtons").length; i++){
-            document.getElementsByClassName("ltoButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("ltoButtons")[i].innerHTML));
-        }
-        for(let i = 0; i < document.getElementsByClassName("teaButtons").length; i++){
-            document.getElementsByClassName("teaButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("teaButtons")[i].innerHTML));
-        }
-        for(let i = 0; i < document.getElementsByClassName("milkTeaButtons").length; i++){
-            document.getElementsByClassName("milkTeaButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("milkTeaButtons")[i].innerHTML));
-        }
-        for(let i = 0; i < document.getElementsByClassName("smoothieButtons").length; i++){
-            document.getElementsByClassName("smoothieButtons")[i].addEventListener('click', event => drinkName(document.getElementsByClassName("smoothieButtons")[i].innerHTML));
+
+        var LTOIndex = 0;
+        var teaIndex = 0;
+        var milkTeaIndex = 0;
+        var smoothieIndex = 0;
+        for(let i = 0; i < data.length; i++){
+            if(data[i].category == "LTO"){
+                document.getElementsByClassName("ltoButtons")[LTOIndex].addEventListener('click', event => drinkName(data[i].item_name));
+                document.getElementsByClassName("ltoButtons")[LTOIndex].addEventListener('click', event => drinkCost(data[i].price));
+                LTOIndex++;
+            }
+            else if(data[i].category == "Tea"){
+                document.getElementsByClassName("teaButtons")[teaIndex].addEventListener('click', event => drinkName(data[i].item_name));
+                document.getElementsByClassName("teaButtons")[teaIndex].addEventListener('click', event => drinkCost(data[i].price));
+                teaIndex++;
+            }
+            else if(data[i].category == "Milk Tea"){
+                document.getElementsByClassName("milkTeaButtons")[milkTeaIndex].addEventListener('click', event => drinkName(data[i].item_name));
+                document.getElementsByClassName("milkTeaButtons")[milkTeaIndex].addEventListener('click', event => drinkCost(data[i].price));
+                milkTeaIndex++;
+            }
+            else if(data[i].category == "Smoothie"){
+                document.getElementsByClassName("smoothieButtons")[smoothieIndex].addEventListener('click', event => drinkName(data[i].item_name));
+                document.getElementsByClassName("smoothieButtons")[smoothieIndex].addEventListener('click', event => drinkCost(data[i].price));
+                smoothieIndex++;
+            }
         }
 
         for(let i = 0; i < document.getElementsByClassName("allButtons").length; i++){
             document.getElementsByClassName("allButtons")[i].addEventListener('click', event => showCustomization(data[i].item_name));
+        }
+        
+        LTOIndex = 0;
+        teaIndex = 0;
+        milkTeaIndex = 0;
+        smoothieIndex = 0;
+        for(let i = 0; i < data.length; i++){
+            if(data[i].category == "LTO"){
+                document.getElementsByClassName("ltoButtons")[LTOIndex].addEventListener('click', event => showCustomization(data[i].item_name));
+                LTOIndex++;
+            }
+            else if(data[i].category == "Tea"){
+                document.getElementsByClassName("teaButtons")[teaIndex].addEventListener('click', event => showCustomization(data[i].item_name));
+                teaIndex++;
+            }
+            else if(data[i].category == "Milk Tea"){
+                document.getElementsByClassName("milkTeaButtons")[milkTeaIndex].addEventListener('click', event => showCustomization(data[i].item_name));
+                milkTeaIndex++;
+            }
+            else if(data[i].category == "Smoothie"){
+                document.getElementsByClassName("smoothieButtons")[smoothieIndex].addEventListener('click', event => showCustomization(data[i].item_name));
+                smoothieIndex++;
+            }
         }
     })
     .catch((error) => console.error('Error:', error));
@@ -37,6 +107,9 @@ var currentSugar = 0;
 var currentBoba = false;
 var currentName = "";
 var currentId = -1;
+var currentCost = 0;
+
+var totalCost = 0;
 
 function Drink(id, boba, sugar){
     this.id = id;
@@ -47,7 +120,8 @@ function Drink(id, boba, sugar){
 const order = {
     employee_id: 30,
     order_items: [],
-    drinkNames: []
+    drinkNames: [],
+    drinkCosts: []
 }
 
 function ShowButtons(id){
@@ -83,7 +157,7 @@ function ShowButtons(id){
         ltoElement.style.display = "none";
         teaElement.style.display = "none";
         milkTeaElement.style.display = "inline-block";
-        smoothieElement.style.displsay = "none";
+        smoothieElement.style.display = "none";
     }
     else if(id === "smoothies"){
         allElement.style.display = "none";
@@ -104,8 +178,11 @@ if(document.getElementsByClassName("sidebarButtons").length > 0){
 
 function displaySubtotal(){
     document.getElementById("subtotal").innerHTML = "";
-    document.getElementById("subtotal").insertAdjacentText('beforeend', "Subtotal:");
+    document.getElementById("subtotal").insertAdjacentText('beforeend', "Order:");
     document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+    fetch('/order/items', {
+
+    });
     for(let i = 0; i < order.order_items.length; i++){
         let tempNum = i+1;
         document.getElementById("subtotal").insertAdjacentText('beforeend', tempNum + ". " + order.drinkNames[i]);
@@ -119,7 +196,20 @@ function displaySubtotal(){
         document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
         document.getElementById("subtotal").insertAdjacentText('beforeend', " - Sugar:" + order.order_items[i].sugar + "%");
         document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+        document.getElementById("subtotal").insertAdjacentText('beforeend', " - " + order.drinkCosts[i] + "$");
+        document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+
     }
+    document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+    totalCost = 0;
+    for(let i = 0; i < order.drinkCosts.length; i++){
+        totalCost += order.drinkCosts[i];
+    }
+    document.getElementById("subtotal").insertAdjacentText('beforeend', "Subtotal:");
+    document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+    document.getElementById("subtotal").insertAdjacentText('beforeend', " - " + totalCost + "$");
+    document.getElementById("subtotal").insertAdjacentElement('beforeend', document.createElement("br"));
+
     localStorage.setItem("savedSubtotal", JSON.stringify(order));
 }
 
@@ -127,6 +217,7 @@ function orderAppend(){
     const newDrink = new Drink(currentId, currentBoba, currentSugar);
     order.order_items.push(newDrink);
     order.drinkNames.push(currentName);
+    order.drinkCosts.push(currentCost);
 }
 
 let drinksArray = [];
@@ -138,8 +229,9 @@ window.onload = function reloadSubtotal(){
         orderItem = JSON.parse(localStorage.getItem("savedSubtotal"));
         order.order_items = orderItem.order_items;
         order.drinkNames = orderItem.drinkNames;
+        order.drinkCosts = orderItem.drinkCosts;
         console.log(orderItem);
-        document.getElementsByClassName("subtotal")[0].innerHTML = "Subtotal:";
+        document.getElementsByClassName("subtotal")[0].innerHTML = "Order:";
         document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
         for(let i = 0; i < order.order_items.length; i++){
             let tempNum = i+1;
@@ -154,7 +246,18 @@ window.onload = function reloadSubtotal(){
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
             document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - Sugar:" + order.order_items[i].sugar + "%");
             document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+            document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - " + order.drinkCosts[i] + "$");
+            document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
         }
+        document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+        totalCost = 0;
+        for(let i = 0; i < order.drinkCosts.length; i++){
+            totalCost += order.drinkCosts[i];
+        }
+        document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', "Subtotal:");
+        document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
+        document.getElementsByClassName("subtotal")[0].insertAdjacentText('beforeend', " - " + totalCost + "$");
+        document.getElementsByClassName("subtotal")[0].insertAdjacentElement('beforeend', document.createElement("br"));
     }
 }
 
@@ -221,6 +324,10 @@ function drinkName(name){
 
 function drinkID(id){
     currentId = id;
+}
+
+function drinkCost(cost){
+    currentCost = cost;
 }
 
 if(document.getElementsByClassName("addDrink").length > 0){
