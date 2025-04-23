@@ -35,4 +35,66 @@ function displayItemsByCategory(itemCategory) {
 
     const filteredItems = menuItemsData.filter(item => item.category == itemCategory && !item.is_deleted);
     
+    filteredItems.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = "menuItemCard";
+
+        itemDiv.innerHTML = `
+           <p><strong>${item.item_name}</strong></p>
+              <p>Price: ${item.price}</p>
+              <p>Category: ${item.category}</p>
+              <p>Ingredients: ${item.ingredients}</p>
+        `;
+        menuItemContainer.appendChild(itemDiv);
+    });
+}
+
+function addMenuItem(itemName, itemPrice, itemCategory, ingredients) {
+    fetch(`/manage/menu`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients })
+    })
+        .then(response => response.json())
+        .then(() => {
+            alert("Menu item added successfully!");
+            location.reload(); // Reload the page to see the updated menu items
+        })
+        .catch(err => console.error("Error adding menu item:", err));
+}
+
+function removeMenuItem(itemId) {
+    fetch(`/manage/menu/${itemId}`, {
+        method: 'DELETE'
+    })
+        .then(response => response.json())
+        .then(() => {
+            alert("Menu item removed successfully!");
+            location.reload(); // Reload the page to see the updated menu items
+        })
+        .catch(err => console.error("Error removing menu item:", err));
+}
+
+function updateMenuItem(itemId) {
+    const itemDiv = document.getElementById(`menuItem-${itemId}`);
+    const itemName = itemDiv.querySelector('.itemName').value;
+    const itemPrice = itemDiv.querySelector('.itemPrice').value;
+    const itemCategory = itemDiv.querySelector('.itemCategory').value;
+    const ingredients = itemDiv.querySelector('.ingredients').value;
+
+    fetch(`/manage/menu/${itemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients })
+    })
+        .then(response => response.json())
+        .then(() => {
+            alert("Menu item updated successfully!");
+            location.reload(); // Reload the page to see the updated menu items
+        })
+        .catch(err => console.error("Error updating menu item:", err));
 }
