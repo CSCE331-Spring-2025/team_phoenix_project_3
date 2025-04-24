@@ -38,9 +38,9 @@
     padding: 8px 12px;
     border-radius: 8px;
     max-width: 80%;
-    overflow-wrap: normal;
-    word-break: normal;
-    white-space: normal;
+    overflow-wrap: break-word;
+    /* word-break: break-word;
+    white-space: pre-wrap; */
 }
 
 .response-container.user {
