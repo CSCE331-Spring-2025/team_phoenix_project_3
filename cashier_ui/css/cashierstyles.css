@@ -37,9 +37,9 @@ a.button:hover {
     background-color: #2980b9;
 }
 
-/* This is the beginning of the elements for customer_ui.html */
+/* This is the beginning of the elements for cashier_ui.html */
 
-.customerSidebar{
+.cashierSidebar{
     background-color: #c87129;
     width: 15%;
     height: 5000px;

@@ -66,6 +66,8 @@ import orderRouter from './db/orders.mjs';
 app.use('/order', orderRouter);
 import employeeRouter from './db/employee.mjs';
 app.use('/employee', employeeRouter);
+import reportRouter from './db/reports.mjs';
+app.use('/report', reportRouter);
 
 // starts server
 app.listen(PORT, () => {
