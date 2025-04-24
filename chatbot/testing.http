@@ -2,5 +2,5 @@ POST http://localhost:3000/chat/recommend
 Content-Type: application/json
 
 {
-  "prompt": "I want something sweet with boba"
+  "prompt": "I want something rich, I hate pumpkins"
 }

@@ -8,28 +8,39 @@ Notes to understand these external APIs:
 - then in index.js just app.use('/chat', chatbotRoutes);
 
 */
-
 import express from 'express';
 
 const router = express.Router();
 
-const HF_API_URL = 'https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium';
-const HF_API_KEY = process.env.HUGGINGFACE_API_KEY; // Stored in .env
+const HF_API_URL = 'https://router.huggingface.co/novita/v3/openai/chat/completions';
+const HF_API_KEY = process.env.HUGGINGFACE_API_KEY; // Store your token in .env
 
 // POST /chat/recommend
 router.post('/recommend', async (req, res) => {
     const userMessage = req.body.prompt;
 
     try {
-        // Fetch real menu items from your own backend
+        // Fetch drink menu from your backend
         const menuRes = await fetch('http://localhost:3000/menu/items');
         const menuJson = await menuRes.json();
-        const drinkList = Array.isArray(menuJson) ? menuJson.map(item => item.item_name).join(', ') : '';
+        const drinkList = Array.isArray(menuJson)
+            ? menuJson.map(item => item.item_name).join(', ')
+            : '';
 
-        console.log("Drink list:", drinkList);//debugging
-        console.log("User message:", userMessage);//debugging
+        const prompt = `Here is our drink menu: ${drinkList}.
+Customer request: "${userMessage}"
+Please recommend one specific drink that matches the request.`;
 
-        const fullPrompt = `Menu: ${drinkList}. Recommend a drink for: ${userMessage}`;
+        const payload = {
+            provider: "novita",
+            model: "deepseek-ai/DeepSeek-V3-0324",
+            messages: [
+                {
+                    role: "user",
+                    content: prompt
+                }
+            ]
+        };
 
         const hfRes = await fetch(HF_API_URL, {
             method: 'POST',
@@ -37,21 +48,18 @@ router.post('/recommend', async (req, res) => {
                 Authorization: `Bearer ${HF_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ inputs: fullPrompt })
+            body: JSON.stringify(payload)
         });
 
         const data = await hfRes.json();
-        const reply =
-          (Array.isArray(data) && data[0]?.generated_text) ||
-          data.generated_text ||
-          "I'm not sure what to suggest.";
+        console.log("Raw response:", data);
 
+        const reply = data.choices?.[0]?.message?.content || "I'm not sure what to suggest.";
         res.json({ reply });
     } catch (err) {
         console.error("Chatbot error:", err);
         res.status(500).json({ reply: "Sorry, I had trouble thinking of something!" });
     }
 });
-
 
 export default router;
