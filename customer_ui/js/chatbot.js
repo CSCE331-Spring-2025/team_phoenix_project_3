@@ -55,10 +55,24 @@ function showResponse(response) {
   const botItem = createThreadItem(true);
   const responseEl = botItem.querySelector('.response');
   thread.appendChild(botItem);
-  responseEl.textContent = response;  // ← simpler and fixes wrapping
   scrollModuleToBottom();
-  toggleInput(true);
-  manageChatOverlay();
+
+  if (speechOn && 'speechSynthesis' in window) {
+    const speech = new SpeechSynthesisUtterance(response);
+    window.speechSynthesis.speak(speech);
+  }
+
+  let index = 0;
+  const intervalID = setInterval(() => {
+    if (index >= response.length) {
+      clearInterval(intervalID);
+      toggleInput(true);
+      manageChatOverlay();
+    } else {
+      responseEl.textContent = response.slice(0, index + 1);
+      index++;
+    }
+  }, 10); // adjust speed here
 }
 
 function manageChatOverlay() {
