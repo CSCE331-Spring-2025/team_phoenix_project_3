@@ -41,6 +41,13 @@
     overflow-wrap: break-word;
     /* word-break: break-word;
     white-space: pre-wrap; */
+    word-break: normal;
+    white-space: normal;
+}
+
+.response {
+    word-break: normal;
+    white-space: normal;
 }
 
 .response-container.user {
