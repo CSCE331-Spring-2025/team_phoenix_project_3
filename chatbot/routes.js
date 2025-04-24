@@ -6,62 +6,58 @@ Notes to understand these external APIs:
 
 - instead of directly stuffing every route in index.js, we can organize it in these separate files
 - then in index.js just app.use('/chat', chatbotRoutes);
-
+process.env.HUGGINGFACE_API_KEY
 */
 import express from 'express';
+import { InferenceClient } from "@huggingface/inference";
 
 const router = express.Router();
+const client = new InferenceClient(process.env.HUGGINGFACE_API_KEY);
 
-const HF_API_URL = 'https://router.huggingface.co/novita/v3/openai/chat/completions';
-const HF_API_KEY = process.env.HUGGINGFACE_API_KEY; // Store your token in .env
-
-// POST /chat/recommend
 router.post('/recommend', async (req, res) => {
-    const userMessage = req.body.prompt;
+  const userMessage = req.body.prompt;
 
-    try {
-        // fetch drink menu from the backend
-        const menuRes = await fetch('https://team-phoenix-project-3.onrender.com/menu/items');
-        const menuJson = await menuRes.json();
-        const drinkList = Array.isArray(menuJson)
-            ? menuJson.map(item => item.item_name).join(', ')
-            : '';
+  try {
+    const menuRes = await fetch('https://team-phoenix-project-3.onrender.com/menu/items');
+    const menuJson = await menuRes.json();
+    const drinkList = Array.isArray(menuJson)
+      ? menuJson.map(item => item.item_name).join(', ')
+      : '';
 
-        const prompt = `Here is our drink menu: ${drinkList}.
-                        Customer request: "${userMessage}"
-                        Please recommend one specific drink that matches the request.`;
+    const prompt = `
+        You are a friendly boba tea chatbot helping customers choose drinks from the menu.
 
-        const payload = {
-            provider: "novita",
-            model: "deepseek/deepseek-v3-0324",
-            messages: [
-                {
-                    role: "user",
-                    content: prompt
-                }
-            ]
-        };
+        Menu: ${drinkList}
+        Customer message: "${userMessage}"
 
-        const hfRes = await fetch(HF_API_URL, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${HF_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+        Reply with a clear recommendation that fits their request.
+        Speak directly to the customer (use "you", not "the customer").
+        Do not use any formatting, markdown, or asterisks.
+        Explain why the recommended drink is a good match in 1-2 sentences.
+        If the customer changes their request or adds to it, keep the conversation flowing naturally.
+    `;
 
-        const data = await hfRes.json();
-        console.log("Raw response:", data);
+    let out = '';
+    const stream = await client.chatCompletionStream({
+        provider: "cerebras",
+        model: "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.5,
+        top_p: 0.7,
+        max_tokens: 2048,
+      });
 
-        console.log("Message object:", data.choices[0].message);
-
-        const reply = data.choices?.[0]?.message?.content || "I'm not sure what to suggest.";
-        res.json({ reply });
-    } catch (err) {
-        console.error("Chatbot error:", err);
-        res.status(500).json({ reply: "Sorry, I had trouble thinking of something!" });
+    for await (const chunk of stream) {
+      const content = chunk.choices?.[0]?.delta?.content || '';
+      out += content;
     }
+
+    res.json({ reply: out || "I'm not sure what to suggest." });
+
+  } catch (err) {
+    console.error("Chatbot error:", err);
+    res.status(500).json({ reply: "Sorry, I had trouble thinking of something!" });
+  }
 });
 
 export default router;
