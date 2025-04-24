@@ -20,7 +20,7 @@ router.post('/recommend', async (req, res) => {
     const userMessage = req.body.prompt;
 
     try {
-        // Fetch drink menu from your backend
+        // fetch drink menu from the backend
         const menuRes = await fetch('http://localhost:3000/menu/items');
         const menuJson = await menuRes.json();
         const drinkList = Array.isArray(menuJson)
@@ -28,12 +28,12 @@ router.post('/recommend', async (req, res) => {
             : '';
 
         const prompt = `Here is our drink menu: ${drinkList}.
-Customer request: "${userMessage}"
-Please recommend one specific drink that matches the request.`;
+                        Customer request: "${userMessage}"
+                        Please recommend one specific drink that matches the request.`;
 
         const payload = {
             provider: "novita",
-            model: "deepseek-ai/DeepSeek-V3-0324",
+            model: "deepseek/deepseek-v3-0324",
             messages: [
                 {
                     role: "user",
@@ -53,6 +53,8 @@ Please recommend one specific drink that matches the request.`;
 
         const data = await hfRes.json();
         console.log("Raw response:", data);
+
+        console.log("Message object:", data.choices[0].message);
 
         const reply = data.choices?.[0]?.message?.content || "I'm not sure what to suggest.";
         res.json({ reply });
