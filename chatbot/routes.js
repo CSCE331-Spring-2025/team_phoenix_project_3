@@ -21,7 +21,7 @@ router.post('/recommend', async (req, res) => {
 
     try {
         // fetch drink menu from the backend
-        const menuRes = await fetch('http://localhost:3000/menu/items');
+        const menuRes = await fetch('https://team-phoenix-project-3.onrender.com/menu/items');
         const menuJson = await menuRes.json();
         const drinkList = Array.isArray(menuJson)
             ? menuJson.map(item => item.item_name).join(', ')
