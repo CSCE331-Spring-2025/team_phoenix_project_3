@@ -24,24 +24,28 @@ router.post('/recommend', async (req, res) => {
       ? menuJson.map(item => item.item_name).join(', ')
       : '';
 
-    const prompt = `
-        You are a friendly boba tea chatbot helping customers choose drinks from the menu.
-
-        Menu: ${drinkList}
-        Customer message: "${userMessage}"
-
-        Reply with a clear recommendation that fits their request.
-        Speak directly to the customer (use "you", not "the customer").
-        Do not use any formatting, markdown, or asterisks.
-        Explain why the recommended drink is a good match in 1-2 sentences.
-        If the customer changes their request or adds to it, keep the conversation flowing naturally.
-    `;
-
     let out = '';
     const stream = await client.chatCompletionStream({
         provider: "cerebras",
         model: "meta-llama/Llama-4-Scout-17B-16E-Instruct",
-        messages: [{ role: "user", content: prompt }],
+        messages: [
+          {
+            role: "system",
+            content: `You are a friendly boba tea chatbot helping customers choose drinks from the menu.
+      
+            Menu: ${drinkList}
+            
+            Reply with a clear recommendation that fits their request.
+            Speak directly to the customer (use "you", not "the customer").
+            Do not use any formatting, markdown, or asterisks.
+            Explain why the recommended drink is a good match in 1-2 sentences.
+            If the customer changes their request or adds to it, keep the conversation flowing naturally.`
+          },
+          {
+            role: "user",
+            content: userMessage
+          }
+        ],
         temperature: 0.5,
         top_p: 0.7,
         max_tokens: 2048,
