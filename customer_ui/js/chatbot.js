@@ -55,26 +55,10 @@ function showResponse(response) {
   const botItem = createThreadItem(true);
   const responseEl = botItem.querySelector('.response');
   thread.appendChild(botItem);
+  responseEl.textContent = response;  // ← simpler and fixes wrapping
   scrollModuleToBottom();
-
-  if (speechOn && 'speechSynthesis' in window) {
-    const speech = new SpeechSynthesisUtterance(response);
-    window.speechSynthesis.speak(speech);
-  }
-
-  let charsCompleted = 0;
-  const intervalID = setInterval(() => {
-    if (charsCompleted >= response.length) {
-      toggleInput(true);
-      manageChatOverlay();
-      clearInterval(intervalID);
-    } else {
-      const span = document.createElement('span');
-      span.classList.add('char');
-      span.innerHTML = response[charsCompleted++] === ' ' ? '&nbsp;' : response[charsCompleted - 1];
-      responseEl.appendChild(span);
-    }
-  }, 5);
+  toggleInput(true);
+  manageChatOverlay();
 }
 
 function manageChatOverlay() {
