@@ -46,4 +46,14 @@ router.delete('/delete/:id', async (req, res) => {
 	}
 });
 
+router.get('/data/:email', async (req, res) => {
+	const result = await callSqlFunction('get_employee_by_email', [req.params.email]);
+	if (result.success) {
+		const { get_employee_by_email } = result.data[0];
+		res.status(200).json(get_employee_by_email);
+	} else {
+		res.status(400).send('Unable to fetch employees.');
+	}
+});
+
 export default router;
