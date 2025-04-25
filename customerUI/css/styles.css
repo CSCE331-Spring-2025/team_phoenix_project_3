@@ -1,0 +1,503 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: linear-gradient(-225deg,#c87129 0,#9f5b23 29%,#704018 67%,#48280e 100%);
+    background-color: rgb(255, 225, 193);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    flex-direction: column;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: 0 auto; /* center the container horizontally */
+}
+
+a.button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+}
+
+a.button:hover {
+    background-color: #2980b9;
+}
+
+/* This is the beginning of the elements for customer_ui.html */
+
+.customerSidebar{
+    background-color: #c87129;
+    width: 15%;
+    height: 5000px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    text-align: center; 
+    vertical-align: middle; 
+    padding: 0px;
+}
+
+.sidebarButtons{
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.sidebarButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.allDrinks{
+    display: inline-block;
+    background-color: rgb(255, 225, 193);
+    width: 55%;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 15%;
+}
+
+.allButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.allButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.limitedTimeOffers{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 55%;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 15%;
+}
+
+.ltoButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.ltoButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.teas{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 55%;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 15%;
+}
+
+.teaButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.teaButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.milkTeas{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 55%;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 15%;
+}
+
+.milkTeaButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.milkTeaButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.smoothies{
+    display: none;
+    background-color: rgb(255, 225, 193);
+    width: 55%;
+    height: 5000px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0px;
+    left: 15%;
+}
+
+.smoothieButtons{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+}
+
+.smoothieButtons:hover{
+    background-color: #994500;
+    transform: scale(1.1);
+}
+
+.customization{
+    display: none;
+    position: fixed;
+    width: 30%;
+    height: 100%;
+    right: 0%;
+    background-color: #c87129;
+}
+
+.drinkName{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.withoutBoba{
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 10%;
+    left: 10%
+}
+
+.withBoba{
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 10%;
+    right: 10%
+}
+
+.bobaStatus{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 20%;
+}
+
+#sugar0{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    left: 10%
+}
+
+#sugar50{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    left: 30%
+}
+
+#sugar100{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    right: 30%
+}
+
+#sugar150{
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    top: 30%;
+    right: 10%
+}
+
+.sugarStatus{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 40%;
+}
+
+.cancel{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    bottom: 10%;
+    left: 10%
+}
+
+.addDrink{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    bottom: 10%;
+    right: 10%
+}
+
+/* note: subtotal is shared between customer_ui.html and checkout.html, while finalTotal is checkout.html specific */
+.subtotal{
+    position: fixed;
+    width: 30%;
+    height: 92.5%;
+    top: 0%;
+    right: 0%;
+    background-color: #c87129;
+    overflow-y: auto;
+    padding-left: 5px;
+}
+
+#finalTotal{
+    left: 0%;
+    right: auto;
+}
+
+/* bottomBar is also shared between customer_ui.html and checkout.html */
+.bottomBar{
+    height: 7.5%; 
+    position: fixed; 
+    bottom:0%;
+    width:100%; 
+    background-color: #393838; 
+}
+
+.back{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 10%;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.back:hover{
+    background-color: #994500;
+}
+
+.checkout{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 10%;
+    line-height: 40px;
+    text-align: center;
+    right: 0%;
+    text-decoration: none;
+}
+
+.checkout:hover{
+    background-color: #994500;
+}
+
+.remove{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 10%;
+    line-height: 40px;
+    text-align: center;
+    right: 30%;
+    text-decoration: none;
+}
+
+.remove:hover{
+    background-color: #994500;
+}
+
+.removeText{
+    position:fixed;
+    width: 10%;
+    line-height: 40px;
+    right: 19.5%;
+}
+
+/* This is the beginning of the elements for checkout.html */
+
+.backCheckout{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.backCheckout:hover{
+    background-color: #994500;
+}
+
+.finishOrder{
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #ad4e00;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    line-height: 40px;
+    text-align: center;
+    right: 0%;
+    text-decoration: none;
+}
+
+.finishOrder:hover{
+    background-color: #994500;
+}
+
+.goog-te-gadget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cartItemEntry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff0e0;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border: 1px solid #c87129;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.removeItemBtn {
+    background-color: #ad4e00;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.removeItemBtn:hover {
+    background-color: #994500;
+}
