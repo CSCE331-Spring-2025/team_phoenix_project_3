@@ -388,7 +388,7 @@ function removeFromOrder(num){
 }
 
 function checkBobaStock() {
-    fetch('/boba')
+    fetch('/inventory/boba')
         .then((res) => {
             if (!res.ok) throw new Error(`Server error: ${res.status}`);
             return res.json();
