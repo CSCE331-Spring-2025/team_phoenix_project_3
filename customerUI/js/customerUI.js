@@ -173,6 +173,7 @@ window.onload = () => {
 	const saved = localStorage.getItem('savedCart');
 	if (saved) {
 		order = JSON.parse(saved);
+        // console.log(JSON.stringify(order));
 		updateCartDisplay();
 	}
 
@@ -198,8 +199,8 @@ window.onload = () => {
 			const val = parseInt(btn.id.replace('sugar', ''));
 			currentDrink.sugar = val;
 			const sgrLvl = sugarIntToString(val);
-			console.log(btn);
-			console.log(sgrLvl);
+			// console.log(btn);
+			// console.log(sgrLvl);
 			document.querySelector(
 				'.sugarStatus'
 			).textContent = `Sugar level: ${sgrLvl}`;

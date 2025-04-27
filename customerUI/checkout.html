@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Checkout</title>
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+	<body>
+		<!-- Header -->
+		<header class="headerBar">
+			<div class="headerLeft">
+				<img src="../images/logo_circle.png" alt="Logo" class="logoImage" />
+				<h1 class="shopName">Phoenix Boba Shop</h1>
+			</div>
+			<p id="login-status" class="loginStatus">Loading...</p>
+		</header>
+
+		<div class="checkoutMain">
+			<div class="leftPanel">
+				<h2>Order Summary:</h2>
+				<!-- Spacer grows -->
+				<div class="leftPanelSpacer"></div>
+				<div id="checkoutTotals"></div>
+				<!-- Subtotal/Tax/Total -->
+			</div>
+
+			<div class="checkoutPanel" id="checkoutPanel">
+				<!-- Drinks listed dynamically -->
+			</div>
+
+			<div class="rightPanel">
+				<img
+					src="images/fun-poster.png"
+					alt="Event Poster"
+					class="posterImage" />
+			</div>
+		</div>
+
+		<!-- Bottom Bar -->
+		<div class="bottomBar">
+			<a href="customerUI.html" class="backCheckout">Back</a>
+			<button class="finishOrder" id="finishOrder">Finish Order</button>
+		</div>
+
+		<!-- JS -->
+		<script type="module" src="js/checkout.js"></script>
+
+		<!-- GOOGLE AUTH CONNECTION (K's code, untouched) -->
+		<script>
+			window.addEventListener('DOMContentLoaded', async () => {
+				try {
+					const res = await fetch('/auth/user');
+					const data = await res.json();
+					const message =
+						data.name === 'Guest'
+							? 'You are not logged in.'
+							: `Logged in as: ${data.name}`;
+					document.getElementById('login-status').textContent = message;
+				} catch (err) {
+					console.error('Failed to fetch user info:', err);
+					document.getElementById('login-status').textContent =
+						'Login status unknown.';
+				}
+			});
+		</script>
+
+		<!-- GOOGLE TRANSLATE (K's code, do not touch) -->
+		<div
+			id="google_translate_element"
+			style="position: fixed; bottom: 80px; left: 35%; z-index: 999"></div>
+		<script>
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement(
+					{
+						layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+					},
+					'google_translate_element'
+				);
+			}
+		</script>
+		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	</body>
+</html>
