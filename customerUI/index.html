@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Customer</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/chatbot.css" />
+	</head>
+	<body>
+		<div class="container">
+			<h2>Welcome would you like to:</h2>
+			<a href="customerUI.html" class="button">Place an order</a>
+			<a href="../" class="button">Go back</a>
+		</div>
+
+		<!-- GOOGLE TRANSLATE -->
+		<div
+			id="google_translate_element"
+			style="position: fixed; bottom: 50px; left: 10px; z-index: 999"></div>
+
+		<script>
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement(
+					{
+						//pageLanguage: 'en',
+						layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+					},
+					'google_translate_element'
+				);
+			}
+		</script>
+		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+		<!-- Chatbot UI -->
+		<div class="chat-container">
+			<div class="chat-module" onscroll="manageChatOverlay()">
+				<div class="thread">
+					<div class="thread-item">
+						<div class="avatar">🧋</div>
+						<div class="response-container">
+							<div class="response">Hi! Ask me for a drink rec 😊</div>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-overlay overlay-hidden"></div>
+			</div>
+			<form
+				class="form-prompt"
+				onsubmit="event.preventDefault();sendInput();return false;">
+				<div class="user-prompt-indicator">&gt;</div>
+				<input
+					class="user-prompt"
+					type="text"
+					data-role="user-input"
+					autofocus />
+				<div class="user-mic-toggle"></div>
+			</form>
+		</div>
+
+		<script src="js/chatbot.js"></script>
+
+		<script>
+			async function getDrinkRecommendation() {
+				const prompt = document.getElementById('chat-prompt').value;
+
+				const res = await fetch('/chat/recommend', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ prompt }),
+				});
+
+				const data = await res.json();
+				document.getElementById('chat-response').textContent = data.reply;
+			}
+		</script>
+	</body>
+</html>

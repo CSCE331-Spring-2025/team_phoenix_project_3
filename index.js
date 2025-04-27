@@ -69,6 +69,9 @@ app.use('/employee', employeeRouter);
 import reportRouter from './db/reports.mjs';
 app.use('/report', reportRouter);
 
+// testing new customer UI
+app.use('/customer', express.static('customerUI'));
+
 // starts server
 app.listen(PORT, () => {
 	console.log(`Server running on http://localhost:${PORT}`);

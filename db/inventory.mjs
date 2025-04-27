@@ -1,4 +1,4 @@
-import { fetchData, insertData, updateData, deleteData } from './utils.js';
+import { fetchData, insertData, updateData, deleteData, callSqlFunction } from './utils.js';
 import express from 'express';
 
 const router = express.Router();
