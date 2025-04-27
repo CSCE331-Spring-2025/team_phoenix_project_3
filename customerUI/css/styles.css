@@ -109,6 +109,7 @@ a.button:hover {
 .menu{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-rows: repeat(auto-fill,120px);
     justify-items: center;
     gap: 20px;
     background-color: #ffe1c1;

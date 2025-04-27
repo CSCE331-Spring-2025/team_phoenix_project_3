@@ -25,7 +25,7 @@ function loadCart() {
 
 	const cartItems = document.createElement('div');
 	cartItems.classList.add('cartItems');
-    cartItems.classList.add('checkoutItems');
+	cartItems.classList.add('checkoutItems');
 
 	const cart = JSON.parse(localStorage.getItem('savedCart')) || { drinks: [] };
 
@@ -35,15 +35,20 @@ function loadCart() {
 
 		const totalsSection = document.createElement('div');
 		totalsSection.innerHTML = `
-			<p class="checkoutsSubtotal">
-				Subtotal: $0.00<br/>
-				Tax: $0.00<br/>
-			</p>
-			<p class="checkoutTotal">
-				<strong>Total: $0.00</strong>
-			</p>
+			<div class="checkoutsSubtotal">
+				<span class="checkoutLabel">Subtotal:</span>
+				<span class="checkoutAmount">$0.00</span>
+			</div>
+			<div class="checkoutsTax">
+				<span class="checkoutLabel">Tax:</span>
+				<span class="checkoutAmount">$0.00</span>
+			</div>
+			<div class="checkoutTotal">
+				<span class="checkoutLabel">Total:</span>
+				<span class="checkoutAmount">$0.00</span>
+			</div>
 		`;
-		cartPanel.appendChild(totalsSection);
+		checkoutTotals.appendChild(totalsSection);
 		return;
 	}
 

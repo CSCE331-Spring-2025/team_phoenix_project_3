@@ -179,6 +179,26 @@ window.onload = () => {
 		updateCartDisplay();
 	}
 
+	document.querySelector('#allBtn').onclick = () => {
+		displayMenu();
+	}
+
+	document.querySelector('#ltoBtn').onclick = () => {
+		displayMenu('LTO');
+	}
+
+	document.querySelector('#teaBtn').onclick = () => {
+		displayMenu('Tea');
+	}
+
+	document.querySelector('#milkTeaBtn').onclick = () => {
+		displayMenu('Milk Tea');
+	}
+
+	document.querySelector('#smoothieBtn').onclick = () => {
+		displayMenu('Smoothie');
+	}
+
 	document.querySelector('.addDrink').onclick = () => {
 		addDrinkToOrder({ ...currentDrink });
 		hideCustomization();
