@@ -5,98 +5,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Customer</title>
 		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/chatbot.css" />
 	</head>
 	<body>
-		<!-- Header -->
-		<header
-			style="
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				padding: 10px 20px;
-				background-color: #ad4e00;
-				color: white;
-			">
-			<div style="display: flex; align-items: center">
-				<img
-					src="logo-placeholder.png"
-					alt="Logo"
-					style="height: 40px; margin-right: 15px" />
-				<h1 style="margin: 0">Phoenix Boba Shop</h1>
-			</div>
-			<p id="login-status" style="margin: 0">Loading...</p>
-		</header>
-
-		<!-- Sidebar -->
-		<div class="customerSidebar">
-			<button class="sidebarButtons" id="allBtn">All</button>
-			<button class="sidebarButtons" id="ltoBtn">Limited Time Offers</button>
-			<button class="sidebarButtons" id="teaBtn">Teas</button>
-			<button class="sidebarButtons" id="milkTeaBtn">Milk Teas</button>
-			<button class="sidebarButtons" id="smoothieBtn">Smoothies</button>
+		<div class="container">
+			<h2>Welcome would you like to:</h2>
+			<a href="customerUI.html" class="button">Place an order</a>
+			<a href="../" class="button">Go back</a>
 		</div>
 
-		<!-- Menu Categories -->
-		<div class="allDrinks" id="allDrinks"></div>
-		<div class="limitedTimeOffers" id="lto"></div>
-		<div class="teas" id="teas"></div>
-		<div class="milkTeas" id="milkTeas"></div>
-		<div class="smoothies" id="smoothies"></div>
-
-		<!-- Customization Panel -->
-		<div class="customization" id="customization">
-			<h1 class="drinkName">Drink Name</h1>
-			<button class="withoutBoba">Without Boba</button>
-			<button class="withBoba">With Boba</button>
-			<button class="sugar" id="sugar0">0% sugar</button>
-			<button class="sugar" id="sugar50">50% sugar</button>
-			<button class="sugar" id="sugar100">100% sugar</button>
-			<button class="sugar" id="sugar150">150% sugar</button>
-			<button class="cancel">Cancel</button>
-			<button class="addDrink">Add to cart</button>
-			<p class="bobaStatus">Please choose if you want boba</p>
-			<p class="sugarStatus">Please enter a sugar level</p>
-		</div>
-
-		<!-- Cart Panel -->
-		<div class="cartPanel" id="cartPanel"></div>
-
-		<!-- Bottom bar -->
-		<div class="bottomBar">
-			<a href="customer_landing.html" class="back" id="back">Back</a>
-			<a href="checkout.html" class="checkout">To Checkout</a>
-		</div>
-
-		<!-- New modular script -->
-		<script type="module" src="js/customerUI.js"></script>
-
-		<!-- GOOGLE AUTH CONNECTION (K's code, untouched) -->
-		<script>
-			window.addEventListener('DOMContentLoaded', async () => {
-				try {
-					const res = await fetch('/auth/user');
-					const data = await res.json();
-					const message =
-						data.name === 'Guest'
-							? 'You are not logged in.'
-							: `Logged in as: ${data.name}`;
-					document.getElementById('login-status').textContent = message;
-				} catch (err) {
-					console.error('Failed to fetch user info:', err);
-					document.getElementById('login-status').textContent =
-						'Login status unknown.';
-				}
-			});
-		</script>
-
-		<!-- GOOGLE TRANSLATE (K's code, untouched) -->
+		<!-- GOOGLE TRANSLATE -->
 		<div
 			id="google_translate_element"
-			style="position: fixed; bottom: 80px; left: 10px; z-index: 999"></div>
+			style="position: fixed; bottom: 50px; left: 10px; z-index: 999"></div>
+
 		<script>
 			function googleTranslateElementInit() {
 				new google.translate.TranslateElement(
 					{
+						//pageLanguage: 'en',
 						layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
 					},
 					'google_translate_element'
@@ -104,5 +31,48 @@
 			}
 		</script>
 		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+		<!-- Chatbot UI -->
+		<div class="chat-container">
+			<div class="chat-module" onscroll="manageChatOverlay()">
+				<div class="thread">
+					<div class="thread-item">
+						<div class="avatar">🧋</div>
+						<div class="response-container">
+							<div class="response">Hi! Ask me for a drink rec 😊</div>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-overlay overlay-hidden"></div>
+			</div>
+			<form
+				class="form-prompt"
+				onsubmit="event.preventDefault();sendInput();return false;">
+				<div class="user-prompt-indicator">&gt;</div>
+				<input
+					class="user-prompt"
+					type="text"
+					data-role="user-input"
+					autofocus />
+				<div class="user-mic-toggle"></div>
+			</form>
+		</div>
+
+		<script src="js/chatbot.js"></script>
+
+		<script>
+			async function getDrinkRecommendation() {
+				const prompt = document.getElementById('chat-prompt').value;
+
+				const res = await fetch('/chat/recommend', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ prompt }),
+				});
+
+				const data = await res.json();
+				document.getElementById('chat-response').textContent = data.reply;
+			}
+		</script>
 	</body>
 </html>
