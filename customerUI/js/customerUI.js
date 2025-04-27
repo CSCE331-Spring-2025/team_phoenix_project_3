@@ -110,7 +110,9 @@ function addDrinkToOrder(drink) {
 document.getElementById('cartPanel').addEventListener('click', function (e) {
 	if (e.target.classList.contains('removeItemBtn')) {
 		const idToRemove = parseInt(e.target.dataset.id);
-		order.order_items = order.order_items.filter((drink) => drink.id !== idToRemove);
+		order.order_items = order.order_items.filter(
+			(drink) => drink.id !== idToRemove
+		);
 		localStorage.setItem('savedCart', JSON.stringify(order));
 		updateCartDisplay();
 	}
@@ -170,34 +172,51 @@ async function displayMenu(category = '') {
 	});
 }
 
+function backOut() {
+	const saved = localStorage.getItem('savedCart');
+	const savedParsed = JSON.parse(saved);
+	if (
+		!saved ||
+		savedParsed.order_items.length == 0 ||
+		confirm('Would you like to cancel the order?')
+	) {
+		localStorage.removeItem('savedCart');
+		window.location.href = 'index.html';
+	}
+}
+
 window.onload = () => {
 	displayMenu();
 	const saved = localStorage.getItem('savedCart');
 	if (saved) {
 		order = JSON.parse(saved);
-        // console.log(JSON.stringify(order));
-		updateCartDisplay();
+		// console.log(JSON.stringify(order));
 	}
+	updateCartDisplay();
+
+	document.querySelector('#back').onclick = () => {
+		backOut();
+	};
 
 	document.querySelector('#allBtn').onclick = () => {
 		displayMenu();
-	}
+	};
 
 	document.querySelector('#ltoBtn').onclick = () => {
 		displayMenu('LTO');
-	}
+	};
 
 	document.querySelector('#teaBtn').onclick = () => {
 		displayMenu('Tea');
-	}
+	};
 
 	document.querySelector('#milkTeaBtn').onclick = () => {
 		displayMenu('Milk Tea');
-	}
+	};
 
 	document.querySelector('#smoothieBtn').onclick = () => {
 		displayMenu('Smoothie');
-	}
+	};
 
 	document.querySelector('.addDrink').onclick = () => {
 		addDrinkToOrder({ ...currentDrink });
