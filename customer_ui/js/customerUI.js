@@ -172,6 +172,13 @@ async function displayMenu(category = '') {
 	});
 }
 
+function selectMenu(id) {
+	document.querySelectorAll('.sidebarButtons').forEach((btn) => {
+		btn.classList.remove('active');
+	});
+	document.querySelector(id).classList.add('active');
+}
+
 function backOut() {
 	const saved = localStorage.getItem('savedCart');
 	const savedParsed = JSON.parse(saved);
@@ -199,22 +206,27 @@ window.onload = () => {
 	};
 
 	document.querySelector('#allBtn').onclick = () => {
+		selectMenu('#allBtn');
 		displayMenu();
 	};
 
 	document.querySelector('#ltoBtn').onclick = () => {
+		selectMenu('#ltoBtn');
 		displayMenu('LTO');
 	};
 
 	document.querySelector('#teaBtn').onclick = () => {
+		selectMenu('#teaBtn');
 		displayMenu('Tea');
 	};
 
 	document.querySelector('#milkTeaBtn').onclick = () => {
+		selectMenu('#milkTeaBtn');
 		displayMenu('Milk Tea');
 	};
 
 	document.querySelector('#smoothieBtn').onclick = () => {
+		selectMenu('#smoothieBtn');
 		displayMenu('Smoothie');
 	};
 
