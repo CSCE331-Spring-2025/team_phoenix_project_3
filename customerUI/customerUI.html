@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Customer</title>
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+	<body>
+		<!-- Header -->
+		<header class="headerBar">
+			<div class="headerLeft">
+				<img src="../images/logo_circle.png" alt="Logo" class="logoImage" />
+				<span class="shopName">Phoenix Boba Shop</span>
+			</div>
+			<p id="login-status" class="loginStatus">Loading...</p>
+		</header>
+
+		<div class="mainContent">
+			<!-- Sidebar -->
+			<div class="customerSidebar">
+				<button class="sidebarButtons" id="allBtn">All</button>
+				<button class="sidebarButtons" id="ltoBtn">Limited Time Offers</button>
+				<button class="sidebarButtons" id="teaBtn">Teas</button>
+				<button class="sidebarButtons" id="milkTeaBtn">Milk Teas</button>
+				<button class="sidebarButtons" id="smoothieBtn">Smoothies</button>
+			</div>
+
+			<!-- Menu -->
+			<div class="menu" id="menu"></div>
+
+			<!-- Customization Panel -->
+			<div class="customization" id="customization">
+				<div class="drinkC">
+					<h1 class="drinkName">Drink Name</h1>
+					<span class="drinkPrice"></span>
+				</div>
+
+				<div class="bobaOptions">
+					<button class="withoutBoba">Without Boba</button>
+					<button class="withBoba">With Boba</button>
+				</div>
+
+				<p class="bobaStatus">Please choose if you want boba</p>
+
+				<div class="sugarOptions">
+					<button class="sugar" id="sugar0">Zero sugar</button>
+					<button class="sugar" id="sugar50">Half sugar</button>
+					<button class="sugar" id="sugar100">Regular sugar</button>
+					<button class="sugar" id="sugar150">Extra sugar</button>
+				</div>
+
+				<p class="sugarStatus">Please enter a sugar level</p>
+
+				<div class="actionOptions">
+					<button class="cancel">Cancel</button>
+					<button class="addDrink">Add to cart</button>
+				</div>
+			</div>
+
+			<!-- Cart Panel -->
+			<div class="cartPanel" id="cartPanel"></div>
+		</div>
+
+		<!-- Bottom bar -->
+		<div class="bottomBar">
+			<a href="index.html" class="back" id="back">Back</a>
+			<a href="checkout.html" class="checkout">To Checkout</a>
+		</div>
+
+		<!-- New modular script -->
+		<script type="module" src="js/customerUI.js"></script>
+
+		<!-- GOOGLE AUTH CONNECTION (K's code, untouched) -->
+		<script>
+			window.addEventListener('DOMContentLoaded', async () => {
+				try {
+					const res = await fetch('/auth/user');
+					const data = await res.json();
+					const message =
+						data.name === 'Guest'
+							? 'You are not logged in.'
+							: `Logged in as: ${data.name}`;
+					document.getElementById('login-status').textContent = message;
+				} catch (err) {
+					console.error('Failed to fetch user info:', err);
+					document.getElementById('login-status').textContent =
+						'Login status unknown.';
+				}
+			});
+		</script>
+
+		<!-- GOOGLE TRANSLATE (K's code, untouched) -->
+		<div
+			id="google_translate_element"
+			style="position: fixed; bottom: 80px; left: 10px; z-index: 999"></div>
+		<script>
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement(
+					{
+						layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+					},
+					'google_translate_element'
+				);
+			}
+		</script>
+		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	</body>
+</html>
