@@ -181,7 +181,7 @@ function backOut() {
 		confirm('Would you like to cancel the order?')
 	) {
 		localStorage.removeItem('savedCart');
-		window.location.href = 'index.html';
+		window.location.href = 'customer_landing.html';
 	}
 }
 

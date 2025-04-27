@@ -127,7 +127,7 @@ async function finishOrder() {
 			`Order placed successfully! Your order number is ${hour}-${orderNumber}.`
 		);
 		localStorage.removeItem('savedCart');
-		window.location.href = 'index.html';
+		window.location.href = 'customer_landing.html';
 	} else {
 		alert(
 			'Failed to place order. Please try again or ask an employee for assistance.'
