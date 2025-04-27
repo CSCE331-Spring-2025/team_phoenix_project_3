@@ -131,6 +131,8 @@ function hideCustomization() {
 		'Please choose if you want boba';
 	document.querySelector('.sugarStatus').textContent =
 		'Please enter a sugar level';
+	currentDrink.boba = false;
+	currentDrink.sugar = 100;
 	document.getElementById('customization').style.display = 'none';
 	document.querySelector('.cartPanel').style.display = 'inline-block';
 }
