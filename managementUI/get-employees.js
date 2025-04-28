@@ -1,7 +1,7 @@
 let employeesData = [];
 
 // Fetch all employees
-fetch('/data')
+fetch('/employees/data')
   .then((response) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -44,7 +44,7 @@ function updateEmployee(employeeId) {
   const email = employeeDiv.querySelector('.email').value;
   const isManager = employeeDiv.querySelector('.isManager').checked;
 
-    fetch(`/edit/${employeeId}`, {
+    fetch(`/employees/edit/${employeeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ function updateEmployee(employeeId) {
   }
 
   function deleteEmployee(employeeId) {
-    fetch(`/delete/${employeeId}`, {
+    fetch(`/employees/delete/${employeeId}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -81,7 +81,7 @@ function addEmployee() {
   const email = document.getElementById('email').value;
   const isManager = document.getElementById('isManager').checked;
 
-    fetch('/create', {
+    fetch('/employees/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
