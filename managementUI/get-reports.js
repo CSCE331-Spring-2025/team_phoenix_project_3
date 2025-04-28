@@ -14,26 +14,34 @@
 }*/
 
 function displayXReport(hourData) {
-    console.log("Hour Data:", hourData); // Log the data to inspect its structure
-
     const xReportContainer = document.getElementById('xReportContainer');
     xReportContainer.innerHTML = '<h2>X-Report (Hourly Data)</h2>';
 
-    if (!hourData || typeof hourData.total_sales === 'undefined') {
-        xReportContainer.innerHTML += `<p>Error: Missing or invalid data for X-Report.</p>`;
-        console.error("Invalid hourData:", hourData);
+    // Check if hourData is an object
+    if (!hourData || typeof hourData !== 'object') {
+        xReportContainer.innerHTML += `<p>Error: X-Report data is not in the expected format.</p>`;
+        console.error("Invalid X-Report data:", hourData);
         return;
     }
 
-    xReportContainer.innerHTML = `
-        <div class="report-item">
-            <p><strong>Hour:</strong> ${hourData.hour}</p>
-            <p><strong>Total Sales:</strong> $${hourData.total_sales.toFixed(2)}</p>
-            <p><strong>Credit Card Sales:</strong> 100%</p>
-            <p><strong>Cash Sales:</strong> 0%</p>
-            <hr>
-        </div>
-    `;
+    // Iterate over the keys of the object
+    Object.keys(hourData).forEach((hour) => {
+        const totalSales = parseFloat(hourData[hour]); // Convert the sales value to a number
+        if (isNaN(totalSales)) {
+            console.error(`Invalid sales value for hour ${hour}:`, hourData[hour]);
+            return;
+        }
+
+        xReportContainer.innerHTML += `
+            <div class="report-item">
+                <p><strong>Hour:</strong> ${hour}</p>
+                <p><strong>Total Sales:</strong> $${totalSales.toFixed(2)}</p>
+                <p><strong>Credit Card Sales:</strong> 100%</p>
+                <p><strong>Cash Sales:</strong> 0%</p>
+                <hr>
+            </div>
+        `;
+    });
 }
 
 // Function to display Z-Report
