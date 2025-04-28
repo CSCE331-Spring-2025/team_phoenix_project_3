@@ -1,9 +1,16 @@
 let employeesData = [];
 
+// Fetch all employees
 fetch('/data')
-  .then((response) => response.json())
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then((data) => {
     employeesData = data;
+    console.log("Employees data loaded:", employeesData);
     displayAllEmployees();
   })
   .catch((err) => console.error("Error loading employees:", err));
@@ -13,10 +20,10 @@ function displayAllEmployees() {
   employeeContainer.innerHTML = '';
 
   employeesData
-    .filter(employee => !employee.is_deleted)
-    .forEach(employee => {
+    .filter((employee) => !employee.is_deleted)
+    .forEach((employee) => {
       const employeeDiv = document.createElement('div');
-      employeeDiv.className = "employeeCard";
+      employeeDiv.className = 'employeeCard';
 
       employeeDiv.innerHTML = `
         <p><strong>${employee.first_name} ${employee.last_name}</strong></p>
@@ -29,12 +36,13 @@ function displayAllEmployees() {
     });
 }
 
-  function updateEmployee(employeeId) {
-    const employeeDiv = document.getElementById(`employee-${employeeId}`);
-    const firstName = employeeDiv.querySelector('.firstName').value;
-    const lastName = employeeDiv.querySelector('.lastName').value;
-    const email = employeeDiv.querySelector('.email').value;
-    const isManager = employeeDiv.querySelector('.isManager').checked;
+// Update an employee
+function updateEmployee(employeeId) {
+  const employeeDiv = document.getElementById(`employee-${employeeId}`);
+  const firstName = employeeDiv.querySelector('.firstName').value;
+  const lastName = employeeDiv.querySelector('.lastName').value;
+  const email = employeeDiv.querySelector('.email').value;
+  const isManager = employeeDiv.querySelector('.isManager').checked;
 
     fetch(`/edit/${employeeId}`, {
       method: 'PUT',
@@ -66,11 +74,12 @@ function displayAllEmployees() {
       .catch(err => console.error("Error deleting employee:", err));
   }
 
-  function addEmployee() {
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const isManager = document.getElementById('isManager').checked;
+// Add a new employee
+function addEmployee() {
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const email = document.getElementById('email').value;
+  const isManager = document.getElementById('isManager').checked;
 
     fetch('/create', {
       method: 'POST',

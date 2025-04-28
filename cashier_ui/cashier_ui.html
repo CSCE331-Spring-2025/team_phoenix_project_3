@@ -1,100 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer</title>
-    <link rel="stylesheet" href="css/cashierstyles.css">
-    <link rel="shortcut icon" href="#">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Customer</title>
+		<link rel="stylesheet" href="css/cashierstyles.css" />
+	</head>
+	<body>
+		<!-- Header -->
+		<header class="headerBar">
+			<div class="headerLeft">
+				<img src="../images/logo_circle.png" alt="Logo" class="logoImage" />
+				<span class="shopName">Phoenix Boba Shop</span>
+			</div>
+			<p id="login-status" class="loginStatus">Loading...</p>
+		</header>
 
-    
-    <div class="cashierSidebar">
-        <button class="sidebarButtons" id="allBtn">All</button>
-        <button class="sidebarButtons" id="ltoBtn">Limited Time Offers</button>
-        <button class="sidebarButtons" id="teaBtn">Teas</button>
-        <button class="sidebarButtons" id="milkTeaBtn">Milk Teas</button>
-        <button class="sidebarButtons" id="smoothieBtn">Smoothies</button>
-    </div>
+		<div class="mainContent">
+			<!-- Sidebar -->
+			<div class="customerSidebar">
+				<button class="sidebarButtons" id="allBtn" data-menu="">All</button>
+				<button class="sidebarButtons" id="ltoBtn" data-menu="LTO">
+					Limited Time Offers
+				</button>
+				<button class="sidebarButtons" id="teaBtn" data-menu="Tea">Teas</button>
+				<button class="sidebarButtons" id="milkTeaBtn" data-menu="Milk Tea">
+					Milk Teas
+				</button>
+				<button class="sidebarButtons" id="smoothieBtn" data-menu="Smoothie">
+					Smoothies
+				</button>
+			</div>
 
-    <div class="allDrinks" id="allDrinks">
+			<!-- Menu -->
+			<div class="menu" id="menu"></div>
 
-    </div>
+			<!-- Customization Panel -->
+			<div class="customization" id="customization">
+				<div class="drinkC">
+					<h1 class="drinkName">Drink Name</h1>
+					<span class="drinkPrice"></span>
+				</div>
 
-    <div class="limitedTimeOffers" id="lto">
-    </div>
+				<div class="bobaOptions">
+					<button class="withoutBoba">Without Boba</button>
+					<button class="withBoba">With Boba</button>
+				</div>
 
-    <div class="teas" id="teas">
-    </div>
+				<p class="bobaStatus">Please choose if you want boba</p>
 
-    <div class="milkTeas" id="milkTeas">
-    </div>
+				<div class="sugarOptions">
+					<button class="sugar" id="sugar0">Zero sugar</button>
+					<button class="sugar" id="sugar50">Half sugar</button>
+				</div>
+				<div class="sugarOptions">
+					<button class="sugar" id="sugar100">Regular sugar</button>
+					<button class="sugar" id="sugar150">Extra sugar</button>
+				</div>
 
-    <div class="smoothies" id="smoothies">
-    </div>
+				<p class="sugarStatus">Please enter a sugar level</p>
 
-    <div class="customization" id="customization">
-        <h1 class="drinkName">Drink Name</h1>
-        <button class="withoutBoba">Without Boba</button>
-        <button class="withBoba">With Boba</button>
-        <button class="sugar" id="sugar0">0% sugar</button>
-        <button class="sugar" id="sugar50">50% sugar</button>
-        <button class="sugar" id="sugar100">100% sugar</button>
-        <button class="sugar" id="sugar150">150% sugar</button>
-        <button class="cancel">Cancel</button>
-        <button class="addDrink">Add to cart</button>
-        <p class="bobaStatus">Please choose if you want boba</p>
-        <p class="sugarStatus">Please enter a sugar level</p>
-    </div>
+				<div class="spacer"></div>
 
-    <div class="subtotal" id="subtotal">
-        
-    </div>
+				<div class="actionOptions">
+					<button class="cancel">Cancel</button>
+					<button class="addDrink">Add to cart</button>
+				</div>
+			</div>
 
-    <div class="bottomBar" style="display: flex; justify-content: space-between; align-items: center; padding: 0 10px;">
-        <a href="cashier_landing.html" class="back" id="back">Back</a>z
+			<!-- Cart Panel -->
+			<div class="cartPanel" id="cartPanel"></div>
+		</div>
 
-        <!-- LOG IN STATUS MSG -->
-        <p id="login-status" style="margin: 0; color: white; text-align: center; flex: 1;">Logged in as: ...</p>
+		<!-- Bottom bar -->
+		<div class="bottomBar">
+			<a class="back" id="back">Back</a>
+			<a href="cashiercheckout.html" class="checkout">To Checkout</a>
+		</div>
 
-        <a href="cashiercheckout.html" class="checkout">To Checkout</a>
-        <button class="remove">Remove from order:</button>
-        <input class="removeText"></input>
-    </div>
+		<!-- New modular script -->
+		<script type="module" src="js/cashierscript.js"></script>
 
-    <script type="module" src="js/cashierscript.js"></script>
-
-
-    <!-- GOOGLE AUTH CONNECTION -->
-    <script>
-        window.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const res = await fetch('/auth/user');
-            const data = await res.json();
-            const message = data.name === "Guest"
-            ? "You are not logged in."
-            : `Logged in as: ${data.name}`;
-            document.getElementById('login-status').textContent = message;
-        } catch (err) {
-            console.error("Failed to fetch user info:", err);
-            document.getElementById('login-status').textContent = "Login status unknown.";
-        }
-        });
-    </script>
-
-    <!-- GOOGLE TRANSLATE -->
-    <!-- <div id="google_translate_element" style="position: fixed; bottom: 80px; left: 10px; z-index: 999;"></div>
-
-    <script>
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-        //pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-        }, 'google_translate_element');
-    }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
-
-</body>
+		<!-- GOOGLE AUTH CONNECTION -->
+		<script>
+			window.addEventListener('DOMContentLoaded', async () => {
+				try {
+					const res = await fetch('/auth/user');
+					const data = await res.json();
+					const message =
+						data.name === 'Guest'
+							? 'You are not logged in.'
+							: `Logged in as: ${data.name}`;
+					document.getElementById('login-status').textContent = message;
+				} catch (err) {
+					console.error('Failed to fetch user info:', err);
+					document.getElementById('login-status').textContent =
+						'Login status unknown.';
+				}
+			});
+		</script>
+	</body>
 </html>
