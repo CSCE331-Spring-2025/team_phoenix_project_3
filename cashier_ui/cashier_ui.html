@@ -86,11 +86,18 @@
 			window.addEventListener('DOMContentLoaded', async () => {
 				try {
 					const res = await fetch('/auth/user');
-					const data = await res.json();
+					const { name, email } = await res.json();
+					const { id } = await fetch(`/employee/data/${email}`)
+						.then((response) => response.json())
+						.catch((err) => console.error('Error finding employee:', err));
+					if (!id) {
+						alert('Unauthorized access!');
+						window.location.href = '/';
+					}
 					const message =
-						data.name === 'Guest'
+						name === 'Guest'
 							? 'You are not logged in.'
-							: `Logged in as: ${data.name}`;
+							: `Logged in as: ${name}`;
 					document.getElementById('login-status').textContent = message;
 				} catch (err) {
 					console.error('Failed to fetch user info:', err);
