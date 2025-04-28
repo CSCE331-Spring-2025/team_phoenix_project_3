@@ -35,7 +35,7 @@ function displayZReport(zReportData) {
 // Fetch and display X-Report
 async function fetchXReport() {
     try {
-        const xResponse = await fetch('/reports/x', {
+        const xResponse = await fetch('/report/x', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
@@ -53,7 +53,7 @@ async function fetchXReport() {
 // Fetch and display Z-Report
 async function fetchZReport() {
     try {
-        const zResponse = await fetch('/reports/z', {
+        const zResponse = await fetch('/report/z', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
