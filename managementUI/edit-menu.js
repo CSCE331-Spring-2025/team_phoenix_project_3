@@ -5,7 +5,7 @@ let currentCategory = null;
 const menuItemDropdown = document.getElementById('menuItemDropdown');
 const menuItemContainer = document.getElementById('menuItemContainer');
 
-fetch('/menu/items')
+fetch('/items')
     .then((response) => response.json())
     .then((data) => {
         menuItemsData = data;
