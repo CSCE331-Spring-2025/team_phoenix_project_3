@@ -1,4 +1,10 @@
-import { fetchData, insertData, updateData, deleteData, callSqlFunction } from './utils.js';
+import {
+	fetchData,
+	insertData,
+	updateData,
+	deleteData,
+	callSqlFunction,
+} from './utils.js';
 import express from 'express';
 
 const router = express.Router();
@@ -147,6 +153,26 @@ router.get('/sugar', async (req, res) => {
 	if (result.success) {
 		const { get_sugar_info } = result.data[0];
 		res.status(200).json(get_sugar_info);
+	} else {
+		res.status(500).send('Unable to get sugar information.');
+	}
+});
+
+router.get('/supplier/:id', async (req, res) => {
+	const result = await callSqlFunction('get_supplier', [req.params.id]);
+	if (result.success) {
+		const { get_supplier } = result.data[0];
+		res.status(200).json(get_supplier);
+	} else {
+		res.status(500).send('Unable to get sugar information.');
+	}
+});
+
+router.get('/suppliers', async (req, res) => {
+	const result = await callSqlFunction('get_suppliers');
+	if (result.success) {
+		const { get_suppliers } = result.data[0];
+		res.status(200).json(get_suppliers);
 	} else {
 		res.status(500).send('Unable to get sugar information.');
 	}
