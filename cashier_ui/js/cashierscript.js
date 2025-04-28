@@ -409,3 +409,22 @@ function checkBobaStock() {
             console.error('Failed to fetch boba info:', err);
         });
 }
+
+window.onload = async() => {
+    const res = await fetch('/auth/user');
+    const data = await res.json();
+    await getEmployee(data.email).id;
+};
+
+function getEmployee( email ) {
+    let curr_employee = {};
+    fetch(`/employee/data/${email}`)
+        .then(async(res) => {
+            curr_employee = await res.json();
+            order.employee_id = curr_employee.id;
+        })
+        .catch((err) => {
+            console.error('Failed to fetch employee:', err);
+        });
+   return curr_employee;
+}
