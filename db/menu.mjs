@@ -13,6 +13,16 @@ router.get('/items', async (req, res) => {
 	}
 });
 
+router.get('/ingredients/:id', async (req, res) => {
+	const result = await callSqlFunction('get_ingredients', [req.params.id]);
+	if (result.success) {
+		const { get_ingredients } = result.data[0];
+		res.status(200).json(get_ingredients);
+	} else {
+		res.status(400).send('Unable to fetch menu items.');
+	}
+})
+
 router.post('/create', async (req, res) => {
 	const result = await callSqlFunction('create_menu_item', [req.body]);
 	if (result.success) {
