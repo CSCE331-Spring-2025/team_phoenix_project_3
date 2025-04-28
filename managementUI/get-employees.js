@@ -10,6 +10,7 @@ fetch('/data')
   })
   .then((data) => {
     employeesData = data;
+    console.log("Employees data loaded:", employeesData);
     displayAllEmployees();
   })
   .catch((err) => console.error("Error loading employees:", err));
