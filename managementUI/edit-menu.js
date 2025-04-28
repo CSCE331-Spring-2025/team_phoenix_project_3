@@ -44,7 +44,7 @@ function displayItemsByCategory(itemCategory) {
             <p><strong>${item.item_name}</strong></p>
             <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
             <p>Category: ${item.category}</p>
-            <p>Ingredients: ${item.ingredients.join(', ')}</p>
+            <p>Ingredients: ${item.ingredients}</p>
             <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
             <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
@@ -110,3 +110,7 @@ function updateMenuItem(itemId) {
         })
         .catch(err => console.error("Error updating menu item:", err));
 }
+
+window.addMenuItem = addMenuItem;
+window.removeMenuItem = removeMenuItem;
+window.updateMenuItem = updateMenuItem;
