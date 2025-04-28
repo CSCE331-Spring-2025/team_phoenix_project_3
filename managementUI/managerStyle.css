@@ -76,3 +76,25 @@ main {
 .inventory-item button:hover {
     background-color: #ff6600;
 }
+
+button {
+    padding: 10px 20px;
+    background-color: #ffaa00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #ff6600;
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #cc5200;
+    transform: scale(0.95);
+}
