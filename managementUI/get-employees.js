@@ -1,6 +1,6 @@
 let employeesData = [];
 
-fetch('/employees')
+fetch('/data')
   .then((response) => response.json())
   .then((data) => {
     employeesData = data;
@@ -36,7 +36,7 @@ function displayAllEmployees() {
     const email = employeeDiv.querySelector('.email').value;
     const isManager = employeeDiv.querySelector('.isManager').checked;
 
-    fetch(`/employees/${employeeId}`, {
+    fetch(`/data/${employeeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ function displayAllEmployees() {
   }
 
   function deleteEmployee(employeeId) {
-    fetch(`/employees/${employeeId}`, {
+    fetch(`/data/${employeeId}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -72,7 +72,7 @@ function displayAllEmployees() {
     const email = document.getElementById('email').value;
     const isManager = document.getElementById('isManager').checked;
 
-    fetch('/employees', {
+    fetch('/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
