@@ -1,5 +1,5 @@
 // Function to display X-Report
-function displayXReport(hourData) {
+/*function displayXReport(hourData) {
     const xReportContainer = document.getElementById('xReportContainer');
     xReportContainer.innerHTML = '<h2>X-Report (Hourly Data)</h2>';
     xReportContainer.innerHTML =`
@@ -11,6 +11,29 @@ function displayXReport(hourData) {
                 <hr>
             </div>
         `;;
+}*/
+
+function displayXReport(hourData) {
+    console.log("Hour Data:", hourData); // Log the data to inspect its structure
+
+    const xReportContainer = document.getElementById('xReportContainer');
+    xReportContainer.innerHTML = '<h2>X-Report (Hourly Data)</h2>';
+
+    if (!hourData || typeof hourData.total_sales === 'undefined') {
+        xReportContainer.innerHTML += `<p>Error: Missing or invalid data for X-Report.</p>`;
+        console.error("Invalid hourData:", hourData);
+        return;
+    }
+
+    xReportContainer.innerHTML = `
+        <div class="report-item">
+            <p><strong>Hour:</strong> ${hourData.hour}</p>
+            <p><strong>Total Sales:</strong> $${hourData.total_sales.toFixed(2)}</p>
+            <p><strong>Credit Card Sales:</strong> 100%</p>
+            <p><strong>Cash Sales:</strong> 0%</p>
+            <hr>
+        </div>
+    `;
 }
 
 // Function to display Z-Report
