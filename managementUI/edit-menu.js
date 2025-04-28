@@ -35,7 +35,11 @@ function displayItemsByCategory(itemCategory) {
 
     const filteredItems = menuItemsData.filter(item => item.category == itemCategory && !item.is_deleted);
     
-    filteredItems.forEach(item => {
+    filteredItems.forEach(async (item) => {
+        const ingredients = await fetch(`/menu/ingredients/${item.id}`)
+            .then(response => response.json())
+            .catch(err => `Error ingredients: ${err}`);
+        console.log(ingredients);
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
         itemDiv.id = `menuItem-${item.id}`; // Unique ID for each menu item
@@ -44,7 +48,7 @@ function displayItemsByCategory(itemCategory) {
             <p><strong>${item.item_name}</strong></p>
             <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
             <p>Category: ${item.category}</p>
-            <p>Ingredients: ${item.ingredients}</p>
+            <p>Ingredients: ${ingredients}</p>
             <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
             <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
