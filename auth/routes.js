@@ -34,7 +34,11 @@ router.get('/google/callback',
 // Route to get user info
 router.get('/user', (req, res) => {
     if (req.user) {
-        res.json({ name: req.user.displayName, role: req.session.role });
+        res.json({
+            name: req.user.displayName,
+            email: req.user.emails[0].value,
+            role: req.session.role,
+        });
     } else {
         res.json({ name: "Guest" });
     }
