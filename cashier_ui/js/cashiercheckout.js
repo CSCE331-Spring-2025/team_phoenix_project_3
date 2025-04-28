@@ -127,7 +127,7 @@ async function finishOrder() {
             `Order placed successfully! Your order number is ${hour}-${orderNumber}.`
         );
         localStorage.removeItem('savedCart');
-        window.location.href = 'cashier_landing.html';
+        window.location.href = '/';
     } else {
         alert(
             'Failed to place order. Please try again or ask an employee for assistance.'

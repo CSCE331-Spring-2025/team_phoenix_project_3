@@ -188,7 +188,7 @@ function backOut() {
 		confirm('Would you like to cancel the order?')
 	) {
 		localStorage.removeItem('savedCart');
-		window.location.href = 'cashier_landing.html';
+		window.location.href = '/';
 	}
 }
 
