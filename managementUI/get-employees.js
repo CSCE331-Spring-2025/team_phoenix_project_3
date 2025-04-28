@@ -44,43 +44,35 @@ function updateEmployee(employeeId) {
   const email = employeeDiv.querySelector('.email').value;
   const isManager = employeeDiv.querySelector('.isManager').checked;
 
-  fetch(`/edit/${employeeId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+    fetch(`/edit/${employeeId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager })
     })
-    .then(() => {
-      alert('Employee updated successfully!');
-      location.reload(); // Reload the page to see the updated employee details
-    })
-    .catch((err) => console.error('Error updating employee:', err));
-}
+      .then(response => response.json())
+      .then(() => {
+        alert("Employee updated successfully!");
+        // displayEmployeeDetails(employeeId);
+        location.reload(); // Reload the page to see the updated employee details
+      })
+      .catch(err => console.error("Error updating employee:", err));
+  }
 
-// Delete an employee
-function deleteEmployee(employeeId) {
-  fetch(`/delete/${employeeId}`, {
-    method: 'DELETE',
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+  function deleteEmployee(employeeId) {
+    fetch(`/delete/${employeeId}`, {
+      method: 'DELETE'
     })
-    .then(() => {
-      alert('Employee deleted successfully!');
-      location.reload(); // Reload the page to see the updated employee list
-    })
-    .catch((err) => console.error('Error deleting employee:', err));
-}
+      .then(response => response.json())
+      .then(() => {
+        alert("Employee deleted successfully!");
+        const employeeContainer = document.getElementById('employeeContainer');
+        employeeContainer.innerHTML = '';
+        location.reload(); // Reload the page to see the updated employee list
+      })
+      .catch(err => console.error("Error deleting employee:", err));
+  }
 
 // Add a new employee
 function addEmployee() {
@@ -89,22 +81,17 @@ function addEmployee() {
   const email = document.getElementById('email').value;
   const isManager = document.getElementById('isManager').checked;
 
-  fetch('/create', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+    fetch('/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager })
     })
-    .then(() => {
-      alert('Employee added successfully!');
-      location.reload(); // Reload the page to see the new employee in the list
-    })
-    .catch((err) => console.error('Error adding employee:', err));
-}
+      .then(response => response.json())
+      .then(() => {
+        alert("Employee added successfully!");
+        location.reload(); // Reload the page to see the new employee in the dropdown
+      })
+      .catch(err => console.error("Error adding employee:", err));
+  }
