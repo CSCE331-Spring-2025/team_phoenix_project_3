@@ -38,25 +38,34 @@ function displayItemsByCategory(itemCategory) {
     filteredItems.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
+        itemDiv.id = `menuItem-${item.id}`; // Unique ID for each menu item
 
         itemDiv.innerHTML = `
-           <p><strong>${item.item_name}</strong></p>
-              <p>Price: ${item.price.toFixed(2)}</p>
-              <p>Category: ${item.category}</p>
-              <p>Ingredients: ${item.ingredients}</p>
+            <p><strong>${item.item_name}</strong></p>
+            <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
+            <p>Category: ${item.category}</p>
+            <p>Ingredients: ${item.ingredients}</p>
+            <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
+            <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
         menuItemContainer.appendChild(itemDiv);
     });
 }
 
-function addMenuItem(itemName, itemPrice, itemCategory, ingredients) {
-    // fecth (`/manage/menu`, {)
+function addMenuItem() {
+    const itemName = document.getElementById('newItemName').value;
+    const itemPrice = parseFloat(document.getElementById('newItemPrice').value);
+    const itemCategory = document.getElementById('newItemCategory').value;
+    const ingredients = document.getElementById('newItemIngredients').value
+        .split(',')
+        .map(id => parseInt(id.trim())); // Convert comma-separated string to an array of integers
+
     fetch(`/menu/create`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients })
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients }),
     })
         .then(response => response.json())
         .then(() => {
@@ -101,3 +110,7 @@ function updateMenuItem(itemId) {
         })
         .catch(err => console.error("Error updating menu item:", err));
 }
+
+window.addMenuItem = addMenuItem;
+window.removeMenuItem = removeMenuItem;
+window.updateMenuItem = updateMenuItem;

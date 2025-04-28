@@ -10,7 +10,16 @@ img {
     height: auto;
     display: block;
 }
+header {
+    margin: 0; /* Remove default margin */
+    padding: 10px 0; /* Reduce padding for less whitespace */
+    text-align: center; /* Center-align the title */
+}
+
 nav {
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex; /* Use flexbox for horizontal layout */
     background-color: #ffaa00; /* Optional: Set a background color */
     padding: 10px;
@@ -75,4 +84,26 @@ main {
 
 .inventory-item button:hover {
     background-color: #ff6600;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #ffaa00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #ff6600;
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #cc5200;
+    transform: scale(0.95);
 }

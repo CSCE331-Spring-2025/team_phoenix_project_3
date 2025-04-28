@@ -1,9 +1,8 @@
 // Function to display X-Report
-function displayXReport(xReportData) {
+function displayXReport(hourData) {
     const xReportContainer = document.getElementById('xReportContainer');
     xReportContainer.innerHTML = '<h2>X-Report (Hourly Data)</h2>';
-    xReportData.forEach((hourData) => {
-        xReportContainer.innerHTML += `
+    xReportContainer.innerHTML =`
             <div class="report-item">
                 <p><strong>Hour:</strong> ${hourData.hour}</p>
                 <p><strong>Total Sales:</strong> $${hourData.total_sales.toFixed(2)}</p>
@@ -11,8 +10,7 @@ function displayXReport(xReportData) {
                 <p><strong>Cash Sales:</strong> 0%</p>
                 <hr>
             </div>
-        `;
-    });
+        `;;
 }
 
 // Function to display Z-Report
@@ -35,12 +33,13 @@ function displayZReport(zReportData) {
 // Fetch and display X-Report
 async function fetchXReport() {
     try {
-        const xResponse = await fetch('/reports/x', {
+        const xResponse = await fetch('/report/x', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
         if (xResponse.ok) {
             const xReportData = await xResponse.json();
+            console.log("X-Report Data:", xReportData); // Debugging line
             displayXReport(xReportData);
         } else {
             console.error("Failed to fetch X-Report.");
@@ -53,7 +52,7 @@ async function fetchXReport() {
 // Fetch and display Z-Report
 async function fetchZReport() {
     try {
-        const zResponse = await fetch('/reports/z', {
+        const zResponse = await fetch('/report/z', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });

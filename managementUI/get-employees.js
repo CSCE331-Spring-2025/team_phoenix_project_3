@@ -26,9 +26,12 @@ function displayAllEmployees() {
       employeeDiv.className = 'employeeCard';
 
       employeeDiv.innerHTML = `
-        <p><strong>${employee.first_name} ${employee.last_name}</strong></p>
-        <p>Are they a manager?: ${employee.is_manager}</p>
-        <p>Email: ${employee.email}</p>
+        <p><strong>Employee ID:</strong> ${employee.id}</p>
+        <label>First Name: <input type="text" class="firstName" value="${employee.first_name}"></label>
+        <label>Last Name: <input type="text" class="lastName" value="${employee.last_name}"></label>
+        <label>Email: <input type="email" class="email" value="${employee.email}"></label>
+        <label>Manager: <input type="checkbox" class="isManager" ${employee.is_manager ? 'checked' : ''}></label>
+        <button class="updateBtn" onclick="updateEmployee(${employee.id})">Update</button>
         <button class="deleteBtn" onclick="deleteEmployee(${employee.id})">Delete</button>
       `;
 
@@ -51,13 +54,17 @@ function updateEmployee(employeeId) {
       },
       body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager })
     })
-      .then(response => response.json())
-      .then(() => {
-        alert("Employee updated successfully!");
-        // displayEmployeeDetails(employeeId);
-        location.reload(); // Reload the page to see the updated employee details
-      })
-      .catch(err => console.error("Error updating employee:", err));
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(() => {
+      alert('Employee updated successfully!');
+      location.reload(); // Reload the page to see the updated employee details
+    })
+    .catch((err) => console.error('Error updating employee:', err));
   }
 
   function deleteEmployee(employeeId) {
