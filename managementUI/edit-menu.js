@@ -11,22 +11,22 @@ fetch('/menu/items')
         menuItemsData = data;
         console.log("Menu items data loaded:", menuItemsData);
         data.forEach(item => {
-            if (!item.is_deleted && item.menu_item_id) {
-                categorySet.add(item.menu_item_id);
+            if (!item.is_deleted) { //&& item.menu_item_id
+                categorySet.add(item.category);
             }
         });
 
-        for (let menuItem of categorySet) {
+        for (let category of categorySet) {
             const option = document.createElement('option');
-            option.value = menuItem;
-            option.textContent = `Menu Item ${menuItem}`;
+            option.value = category
+            option.textContent = category;
             menuItemDropdown.appendChild(option);
         }
     })
     .catch((err) => console.error("Error loading menu items:", err));
 
 menuItemDropdown.addEventListener('change', () => {
-    currentMenuItem = menuItemDropdown.value;
+    const currentCategory = menuItemDropdown.value;
     displayItemsByCategory(currentCategory);
 });
 
@@ -41,7 +41,7 @@ function displayItemsByCategory(itemCategory) {
 
         itemDiv.innerHTML = `
            <p><strong>${item.item_name}</strong></p>
-              <p>Price: ${item.price}</p>
+              <p>Price: ${item.price.toFixed(2)}</p>
               <p>Category: ${item.category}</p>
               <p>Ingredients: ${item.ingredients}</p>
         `;
