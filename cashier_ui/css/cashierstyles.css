@@ -7,17 +7,18 @@ e: bottomBar
 f: headerBar
  */
  :root {
-    --color-a: #D7263D;
-    --color-b: #dd8034;
-    --color-c: #6C1A1A;
+    --color-a: #a8a8a8;
+    --color-b: #2c2c2c;
+    --color-c: #a1a1a1;
     --color-d: #FFF6E5;
     --color-e: #2E2E2E;
-    --color-f: #6C1A1A;
+    --color-f: #000000;
 }
 
 body, button, input, select, textarea {
     font-family: 'Times New Roman', Times, serif;
     font-size: 16px;
+    color: white;
 }
 
 

@@ -9,7 +9,7 @@ fetch('/menu/items')
     .then((response) => response.json())
     .then((data) => {
         menuItemsData = data;
-
+        console.log("Menu items data loaded:", menuItemsData);
         data.forEach(item => {
             if (!item.is_deleted && item.menu_item_id) {
                 categorySet.add(item.menu_item_id);
