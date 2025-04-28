@@ -25,7 +25,7 @@ router.get('/google/callback',
       if (role === 'manager') {
           res.redirect('/delivery.html');
       } else if (role === 'cashier') {
-          res.redirect('/cashier_ui.html');
+          res.redirect('/cashier_landing.html');
       } else {
           res.redirect('/customer_landing.html');
       }
@@ -42,6 +42,15 @@ router.get('/user', (req, res) => {
     } else {
         res.json({ name: "Guest" });
     }
+});
+
+// Route to log out the user
+router.get('/logout', (req, res) => {
+    req.logout(err => {
+        if (err) { console.error('Logout error:', err); }
+        req.session.destroy();
+        res.redirect('/');
+    });
 });
 
 export default router;
