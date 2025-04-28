@@ -36,7 +36,7 @@ function displayAllEmployees() {
     const email = employeeDiv.querySelector('.email').value;
     const isManager = employeeDiv.querySelector('.isManager').checked;
 
-    fetch(`/data/${employeeId}`, {
+    fetch(`/edit/${employeeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ function displayAllEmployees() {
   }
 
   function deleteEmployee(employeeId) {
-    fetch(`/data/${employeeId}`, {
+    fetch(`/delete/${employeeId}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -72,7 +72,7 @@ function displayAllEmployees() {
     const email = document.getElementById('email').value;
     const isManager = document.getElementById('isManager').checked;
 
-    fetch('/data', {
+    fetch('/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
