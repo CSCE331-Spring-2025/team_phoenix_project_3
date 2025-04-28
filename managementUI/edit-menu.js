@@ -18,7 +18,7 @@ fetch('/menu/items')
 
         for (let category of categorySet) {
             const option = document.createElement('option');
-            option.value = categorySet;
+            option.value = category
             option.textContent = category;
             menuItemDropdown.appendChild(option);
         }
