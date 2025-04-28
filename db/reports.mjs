@@ -17,7 +17,7 @@ router.get('/x', async (req, res) => {
 });
 
 // Z-Report
-router.get('/x', async (req, res) => {
+router.get('/z', async (req, res) => {
 	const { day } = req.body;
 	const paramAry = day ? [day] : [];
 	const result = await callSqlFunction('z_report', paramAry);
