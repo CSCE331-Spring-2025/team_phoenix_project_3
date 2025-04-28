@@ -36,9 +36,12 @@ function displayItemsByCategory(itemCategory) {
     const filteredItems = menuItemsData.filter(item => item.category == itemCategory && !item.is_deleted);
     
     filteredItems.forEach(async (item) => {
-        const ingredients = await fetch(`/menu/ingredients/${item.id}`)
+        const ingredientsList = await fetch(`/menu/ingredients/${item.id}`)
             .then(response => response.json())
             .catch(err => `Error ingredients: ${err}`);
+        const ingredients = ingredientsList.array.forEach(element => {
+            element.ingredients
+        });
         console.log(ingredients);
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
