@@ -11,7 +11,7 @@ fetch('/menu/items')
         menuItemsData = data;
         console.log("Menu items data loaded:", menuItemsData);
         data.forEach(item => {
-            if (!item.is_deleted && item.menu_item_id) {
+            if (!item.is_deleted) { //&& item.menu_item_id
                 categorySet.add(item.category);
             }
         });
