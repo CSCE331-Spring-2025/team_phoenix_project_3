@@ -41,6 +41,7 @@ async function fetchXReport() {
         });
         if (xResponse.ok) {
             const xReportData = await xResponse.json();
+            console.log("X-Report Data:", xReportData); // Debugging line
             displayXReport(xReportData);
         } else {
             console.error("Failed to fetch X-Report.");
