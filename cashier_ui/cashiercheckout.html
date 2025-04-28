@@ -1,34 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer</title>
-    <link rel="stylesheet" href="css/cashierstyles.css">
-</head>
-<body>
-    <div class="subtotal" id="finalTotal">
-        Total: <br/>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Checkout</title>
+		<link rel="stylesheet" href="css/cashierstyles.css" />
+	</head>
+	<body>
+		<!-- Header -->
+		<header class="headerBar">
+			<div class="headerLeft">
+				<img src="../images/logo_circle.png" alt="Logo" class="logoImage" />
+				<h1 class="shopName">Phoenix Boba Shop</h1>
+			</div>
+			<p id="login-status" class="loginStatus">Loading...</p>
+		</header>
 
-    <div class="bottomBar">
-        <a href="cashier_ui.html" class="backCheckout">Back</a>
-        <a href="cashier_landing.html" class="finishOrder" id="finishOrder">Finish Order</a>
-    </div>
+		<div class="checkoutMain">
+			<div class="leftPanel">
+				<h2>Order Summary:</h2>
+				<!-- Spacer grows -->
+				<div class="leftPanelSpacer"></div>
+				<div id="checkoutTotals"></div>
+				<!-- Subtotal/Tax/Total -->
+			</div>
 
-    <script type="module" src="js/cashierscript.js"></script>
+			<div class="checkoutPanel" id="checkoutPanel">
+				<!-- Drinks listed dynamically -->
+			</div>
 
-    <!-- GOOGLE TRANSLATE -->
-    <!-- <div id="google_translate_element" style="position: fixed; bottom: 50px; left: 10px; z-index: 999;"></div>
+			<div class="rightPanel">
+				<img
+					src="images/fun-poster.png"
+					alt="Event Poster"
+					class="posterImage" />
+			</div>
+		</div>
 
-    <script>
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-        //pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-        }, 'google_translate_element');
-    }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
-</body>
+		<!-- Bottom Bar -->
+		<div class="bottomBar">
+			<a href="cashier_ui.html" class="backCheckout">Back</a>
+			<button class="finishOrder" id="finishOrder">Finish Order</button>
+		</div>
+
+		<!-- JS -->
+		<script type="module" src="js/cashiercheckout.js"></script>
+
+		<!-- GOOGLE AUTH CONNECTION -->
+		<script>
+			window.addEventListener('DOMContentLoaded', async () => {
+				try {
+					const res = await fetch('/auth/user');
+					const data = await res.json();
+					const message =
+						data.name === 'Guest'
+							? 'You are not logged in.'
+							: `Logged in as: ${data.name}`;
+					document.getElementById('login-status').textContent = message;
+				} catch (err) {
+					console.error('Failed to fetch user info:', err);
+					document.getElementById('login-status').textContent =
+						'Login status unknown.';
+				}
+			});
+		</script>
+	</body>
 </html>
