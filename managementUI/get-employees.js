@@ -102,3 +102,6 @@ function addEmployee() {
       })
       .catch(err => console.error("Error adding employee:", err));
   }
+
+  window.updateEmployee = updateEmployee;
+  window.deleteEmployee = deleteEmployee;
