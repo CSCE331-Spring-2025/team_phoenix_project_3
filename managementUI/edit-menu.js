@@ -51,7 +51,7 @@ function displayItemsByCategory(itemCategory) {
 
 function addMenuItem(itemName, itemPrice, itemCategory, ingredients) {
     // fecth (`/manage/menu`, {)
-    fetch(`/create`, {
+    fetch(`/menu/create`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ function addMenuItem(itemName, itemPrice, itemCategory, ingredients) {
 
 function removeMenuItem(itemId) {
     //fecth (`/manage/menu/${itemId}`, {)
-    fetch(`/delete/${itemId}`, {
+    fetch(`/menu/delete/${itemId}`, {
         method: 'DELETE'
     })
         .then(response => response.json())
@@ -87,7 +87,7 @@ function updateMenuItem(itemId) {
     const ingredients = itemDiv.querySelector('.ingredients').value;
 
     // fecth (`/manage/menu/${itemId}`, {)
-    fetch(`/edit/${itemId}`, {
+    fetch(`/menu/edit/${itemId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
