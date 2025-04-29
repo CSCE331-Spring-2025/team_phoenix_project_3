@@ -2,8 +2,8 @@ body {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: antiquewhite;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(129, 129, 129);
 }
 img {
     max-width: 100%;
@@ -13,13 +13,17 @@ img {
 header {
     margin: 0; /* Remove default margin */
     padding: 10px 0; /* Reduce padding for less whitespace */
+    color: rgb(0, 0, 0);
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(129, 129, 129);
 }
 
 nav {
-    display: flex; /* Use flexbox for horizontal layout */
-    background-color: #ffaa00; /* Optional: Set a background color */
+    display: flex;
+    background-color: black;
+    color: white;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: Add a shadow for better visibility */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 nav ul {
@@ -35,15 +39,15 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #333; /* Optional: Set the link color */
-    font-weight: bold; /* Optional: Make the text bold */
-    transition: bakcground-color 0.3s ease-in-out; /* Optional: Add a transition effect */
-    padding: 5px 10px; /* Optional: Add padding for better click area */
-    border-radius: 5px; /* Optional: Add rounded corners */
+    color: white;
+    font-weight: bold;
+    transition: bakcground-color 0.3s ease-in-out;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 nav ul li a:hover {
-    color: #ff6600; /* Optional: Change color on hover */
+    color: #ff6600;
 }
 
 main {
@@ -84,7 +88,7 @@ main {
 
 button {
     padding: 10px 20px;
-    background-color: #ffaa00;
+    background-color: #4c4c4c;
     color: white;
     border: none;
     border-radius: 5px;
