@@ -14,6 +14,7 @@ f: headerBar
     --color-d: #ffecc9;
     --color-e: #2E2E2E;
     --color-f: #6C1A1A;
+    --color-g: #fff5e1;
 }
 
 body, button, input, select, textarea {
@@ -207,7 +208,7 @@ a.button:hover {
     width: 15%;
     background-color: var(--color-b);
     padding: 0px 5px;
-    color: var(--color-d);
+    color: var(--color-g);
 }
 
 .cartItem.checkoutItem {
@@ -489,6 +490,7 @@ a.button:hover {
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    color: var(--color-g);
 }
 
 .leftPanelSpacer {
