@@ -293,3 +293,8 @@ function getEmployee( email ) {
         });
    return curr_employee;
 }
+
+async function checkBoba(){
+	const bobaStock = await API.getBobaStock();
+	return bobaStock;
+}
