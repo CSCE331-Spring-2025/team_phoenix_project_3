@@ -13,7 +13,7 @@ fetch('/inventory/items')
 
     data.forEach(item => {
       if (!item.is_deleted && item.supplier_id) {
-        suppliersSet.add(item.supplier_name);
+        suppliersSet.add(item.name);
       }
     });
     console.log("Suppliers Set:", suppliersSet); // debugging line
