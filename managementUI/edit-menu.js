@@ -39,6 +39,7 @@ function displayItemsByCategory(itemCategory) {
         const ingredientsList = await fetch(`/menu/ingredients/${item.id}`)
             .then(response => response.json())
             .catch(err => `Error ingredients: ${err}`);
+        console.log("Ingredients List:", ingredientsList); // debugging line
         const ingredients = ingredientsList.array.forEach(element => {
             element.ingredients
         });
