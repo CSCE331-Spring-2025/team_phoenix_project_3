@@ -237,9 +237,19 @@ window.onload = () => {
 
 	document.querySelector('.cancel').onclick = () => hideCustomization();
 
-	document.querySelector('.withBoba').onclick = () => {
-		currentDrink.boba = true;
-		document.querySelector('.bobaStatus').textContent = 'Includes Boba';
+	document.querySelector('.withBoba').onclick = async () => {
+		const bobaInfo = await checkBoba();
+	    if(bobaInfo.quantity < 1){
+			alert(
+				'Out of boba stock. Please notify a manager to restock boba or order new boba supplies.'
+			);
+			currentDrink.boba = false;
+			document.querySelector('.bobaStatus').textContent = 'Includes No Boba';
+		}
+		else{
+			currentDrink.boba = true;
+			document.querySelector('.bobaStatus').textContent = 'Includes Boba';
+		}
 	};
 
 	document.querySelector('.withoutBoba').onclick = () => {
@@ -282,4 +292,9 @@ function getEmployee( email ) {
             console.error('Failed to fetch employee:', err);
         });
    return curr_employee;
+}
+
+async function checkBoba(){
+	const bobaStock = await API.getBobaStock();
+	return bobaStock;
 }
