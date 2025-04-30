@@ -237,9 +237,19 @@ window.onload = () => {
 
 	document.querySelector('.cancel').onclick = () => hideCustomization();
 
-	document.querySelector('.withBoba').onclick = () => {
-		currentDrink.boba = true;
-		document.querySelector('.bobaStatus').textContent = 'Includes Boba';
+	document.querySelector('.withBoba').onclick = async () => {
+		const bobaInfo = await checkBoba();
+	    if(bobaInfo.quantity < 1){
+			alert(
+				'Out of boba stock. Please notify a manager or employee.'
+			);
+			currentDrink.boba = false;
+			document.querySelector('.bobaStatus').textContent = 'Includes No Boba';
+		}
+		else{
+			currentDrink.boba = true;
+			document.querySelector('.bobaStatus').textContent = 'Includes Boba';
+		}
 	};
 
 	document.querySelector('.withoutBoba').onclick = () => {
@@ -260,3 +270,8 @@ window.onload = () => {
 		};
 	});
 };
+
+async function checkBoba(){
+	const bobaStock = await API.getBobaStock();
+	return bobaStock;
+}
