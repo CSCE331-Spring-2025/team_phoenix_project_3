@@ -16,11 +16,11 @@ fetch('/inventory/items')
         suppliersSet.add(item.supplier_id);
       }
     });
-
+    console.log("Suppliers Set:", suppliersSet); // debugging line
     for (let supplier of suppliersSet) {
       const option = document.createElement('option');
       option.value = supplier;
-      option.textContent = `Supplier ${supplier}`;
+      option.textContent = `${supplier.name}`;
       supplierDropdown.appendChild(option);
     }
   })
