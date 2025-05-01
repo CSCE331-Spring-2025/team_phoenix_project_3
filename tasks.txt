@@ -1,0 +1,54 @@
+
+view menu
+    clickable buttons for each menu item
+        populate buttons from {menu_items} table
+        takes user to customization panel
+    clickable buttons for each category
+        populate from list of categories?
+
+customization for drinks
+    check boba quantity
+    check sugar quantity
+
+place orders
+    add items to put in order
+    remove items from order 
+    display subtotal / total
+    send order info to {orders} table
+
+inventory managment
+    display all inventory items
+    add new inventory item
+    delete inventory item
+    edit inventory item
+
+supplier managment
+    display suppliers
+    add new supplier
+    delete supplier
+    edit supplier
+        name
+        phone
+        email
+
+menu managment
+    display menu items and ingerdients
+    add new menu item
+    delete menu item
+    eidt menu item
+        item_name
+        price
+        ingerdients
+    
+order managment
+    view order history
+
+x-report
+    hourly sales (sort by hour)
+
+z-report
+    total sales for day
+
+
+
+
