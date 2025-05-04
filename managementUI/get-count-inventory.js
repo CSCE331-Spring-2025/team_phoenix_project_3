@@ -1,22 +1,21 @@
 let inventoryData = [];
-const suppliersMap = new Map(); // Changed to Map to store supplier names and IDs
+const suppliersMap = new Map(); // Map to store supplier IDs and names
 let currentSupplier = null;
 
 const supplierDropdown = document.getElementById('supplierDropdown');
 const inventoryContainer = document.getElementById('inventoryContainer');
 
-// Fetch all inventory items and populate supplier dropdown
-fetch('/inventory/items')
+// Fetch supplier data and populate the dropdown
+fetch('/inventory/suppliers')
   .then((response) => response.json())
-  .then((data) => {
-    inventoryData = data;
+  .then((suppliers) => {
+    console.log("Suppliers Data:", suppliers); // Debugging line
 
-    data.forEach(item => {
-      if (!item.is_deleted && item.supplier_id) {
-        suppliersMap.set(item.supplier_id, item.supplier_name);
-      }
+    suppliers.forEach(supplier => {
+      suppliersMap.set(supplier.id, supplier.supplier_name); // Map supplier ID to name
     });
-    console.log("Suppliers Map:", suppliersMap); // debugging line
+
+    // Populate the dropdown with supplier names
     for (let [supplierID, supplierName] of suppliersMap) {
       const option = document.createElement('option');
       option.value = supplierID;
@@ -24,8 +23,18 @@ fetch('/inventory/items')
       supplierDropdown.appendChild(option);
     }
   })
+  .catch((err) => console.error("Error loading suppliers:", err));
+
+// Fetch inventory data
+fetch('/inventory/items')
+  .then((response) => response.json())
+  .then((data) => {
+    inventoryData = data;
+    console.log("Inventory Data:", inventoryData); // Debugging line
+  })
   .catch((err) => console.error("Error loading inventory:", err));
 
+// Handle supplier selection
 supplierDropdown.addEventListener('change', () => {
   currentSupplier = supplierDropdown.value;
   displayItemsBySupplier(currentSupplier);
