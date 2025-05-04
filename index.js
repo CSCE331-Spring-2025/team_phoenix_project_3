@@ -34,38 +34,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const managerPages = [
-	'/delivery.html',
-	'/employees.html',
-	'/inventory.html',
-	'/menuItems.html',
-	'/orders.html',
-	'/reports.html',
-];
-  
-const cashierPages = [
-	'/cashier_ui.html',
-	'/cashier_checkout.html',
-	'/cashiercheckout.html',
-];
-
-// protect Manager and Cashier pages
-managerPages.forEach((page) => {
-	app.get(`${page}`, authManager, (req, res) => {
-		res.sendFile(path.join(__dirname, 'managementUI', page));
-	});
-});
-
-cashierPages.forEach((page) => {
-	app.get(`${page}`, authCashier, (req, res) => {
-		res.sendFile(path.join(__dirname, 'cashier_ui', page));
-	});
-});
 
 // deliver static files from the 3 UI directories to the browser.
 app.use(express.static(path.join(__dirname, 'customer_ui')));
-app.use('/cashier_ui', express.static(path.join(__dirname, 'cashier_ui')));
-app.use('/managementUI', express.static(path.join(__dirname, 'managementUI')));
+app.use('/cashier_ui', authCashier, express.static(path.join(__dirname, 'cashier_ui')));
+app.use('/managementUI', authManager, express.static(path.join(__dirname, 'managementUI')));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
