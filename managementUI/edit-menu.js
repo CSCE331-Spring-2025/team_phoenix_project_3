@@ -85,7 +85,7 @@ function addMenuItem() {
 
     // Map ingredient names to their corresponding IDs
     const ingredients = ingredientNames.map(name => {
-        const ingredient = availableIngredients.find(ing => ing.name.toLowerCase() === name);
+        const ingredient = availableIngredients.find(ing => ing.item_name.toLowerCase() === name);
         return ingredient ? ingredient.id : null; // Return the ID or null if not found
     }).filter(id => id !== null); // Remove any null values
 

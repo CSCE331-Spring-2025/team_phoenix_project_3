@@ -24,7 +24,7 @@ function displayAllEmployees() {
     .forEach((employee) => {
       const employeeDiv = document.createElement('div');
       employeeDiv.className = 'employeeCard';
-
+      employeeDiv.id = `employee-${employee.id}`; // Unique ID for each employee
       employeeDiv.innerHTML = `
         <p><strong>Employee ID:</strong> ${employee.id}</p>
         <label>First Name: <input type="text" class="firstName" value="${employee.first_name}"></label>
@@ -42,6 +42,12 @@ function displayAllEmployees() {
 // Update an employee
 function updateEmployee(employeeId) {
   const employeeDiv = document.getElementById(`employee-${employeeId}`);
+  if (!employeeDiv) {
+    console.error(`Employee div with ID "employee-${employeeId}" not found.`);
+    alert("Failed to find the employee card. Please refresh the page.");
+    return;
+  }
+  
   const firstName = employeeDiv.querySelector('.firstName').value;
   const lastName = employeeDiv.querySelector('.lastName').value;
   const email = employeeDiv.querySelector('.email').value;
