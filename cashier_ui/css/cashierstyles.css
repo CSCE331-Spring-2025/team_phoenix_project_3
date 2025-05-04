@@ -93,6 +93,7 @@ a.button:hover {
     width: 80%;
     height: 50px;
     text-align: center;
+    transition: transform .2s;
 }
 
 .sidebarButtons:hover{
@@ -125,6 +126,7 @@ a.button:hover {
     background-color: var(--color-a);
     color: white;
     cursor: pointer;
+    transition: transform .2s;
 }
 
 .allButtons:hover{
@@ -161,6 +163,7 @@ a.button:hover {
     border: 2px solid black;
     border-radius: 4px;
     cursor: pointer;
+    transition: transform .2s;
 }
 .withoutBoba:hover,
 .withBoba:hover,
@@ -253,10 +256,12 @@ a.button:hover {
     line-height: 40px;
     text-align: center;
     text-decoration: none;
+    transition: transform .2s;
 }
 
 .back:hover{
     background-color: var(--color-c);
+    transform: scale(1.1);
 }
 
 .checkout{
@@ -274,10 +279,12 @@ a.button:hover {
     width: auto;          /* Let width grow with content */
     min-width: 10%;     /* Optional: minimum starting width */
     padding: 0 20px;      /* Add some breathing space on sides */
+    transition: transform .2s;
 }
 
 .checkout:hover{
     background-color: var(--color-c);
+    transform: scale(1.1);
 }
 
 .remove{
@@ -292,10 +299,12 @@ a.button:hover {
     text-align: center;
     right: 30%;
     text-decoration: none;
+    transition: transform .2s;
 }
 
 .remove:hover{
     background-color: var(--color-c);
+    transform: scale(1.1);
 }
 
 .removeText{
@@ -318,10 +327,12 @@ a.button:hover {
     line-height: 40px;
     text-align: center;
     text-decoration: none;
+    transition: transform .2s;
 }
 
 .backCheckout:hover{
     background-color: var(--color-c);
+    transform: scale(1.1);
 }
 
 .finishOrder{
@@ -336,10 +347,12 @@ a.button:hover {
     text-align: center;
     right: calc(0% + 40px);
     text-decoration: none;
+    transition: transform .2s;
 }
 
 .finishOrder:hover{
     background-color: var(--color-c);
+    transform: scale(1.1);
 }
 
 .goog-te-gadget {
