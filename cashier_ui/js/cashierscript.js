@@ -258,15 +258,27 @@ window.onload = () => {
 	};
 
 	document.querySelectorAll('.sugar').forEach((btn) => {
-		btn.onclick = () => {
-			const val = parseInt(btn.id.replace('sugar', ''));
-			currentDrink.sugar = val;
-			const sgrLvl = sugarIntToString(val);
-			// console.log(btn);
-			// console.log(sgrLvl);
-			document.querySelector(
-				'.sugarStatus'
-			).textContent = `Sugar level: ${sgrLvl}`;
+		btn.onclick = async () => {
+			const sugarInfo = await checkSugar();
+			if(sugarInfo.quantity < 1){
+				alert(
+					'Out of boba stock. Please notify a manager to restock sugar or order new sugar supplies.'
+				);
+				currentDrink.sugar = 0;
+				document.querySelector(
+					'.sugarStatus'
+				).textContent = `Sugar level: Zero`;
+			}
+			else{
+				const val = parseInt(btn.id.replace('sugar', ''));
+				currentDrink.sugar = val;
+				const sgrLvl = sugarIntToString(val);
+				// console.log(btn);
+				// console.log(sgrLvl);
+				document.querySelector(
+					'.sugarStatus'
+				).textContent = `Sugar level: ${sgrLvl}`;
+			}
 		};
 	});
 };
@@ -297,4 +309,9 @@ function getEmployee( email ) {
 async function checkBoba(){
 	const bobaStock = await API.getBobaStock();
 	return bobaStock;
+}
+
+async function checkSugar(){
+	const sugarStock = await API.getSugarStock();
+	return sugarStock;
 }
