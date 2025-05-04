@@ -150,17 +150,28 @@ function removeMenuItem(itemId) {
 function updateMenuItem(itemId) {
     const itemDiv = document.getElementById(`menuItem-${itemId}`);
     const itemName = itemDiv.querySelector('.itemName').value;
-    const itemPrice = itemDiv.querySelector('.itemPrice').value;
+    const itemPrice = parseFloat(itemDiv.querySelector('.itemPrice').value);
     const itemCategory = itemDiv.querySelector('.itemCategory').value;
-    const ingredients = itemDiv.querySelector('.ingredients').value;
+    const ingredientNames = itemDiv.querySelector('.ingredients').value
+        .split(',')
+        .map(name => name.trim().toLowerCase()); // Convert comma-separated string to an array of names
+    // Map ingredient names to their corresponding IDs
+    const ingredients = ingredientNames.map(name => {
+        const ingredient = availableIngredients.find(ing => ing.item_name.toLowerCase() === name);
+        return ingredient ? ingredient.id : null; // Return the ID or null if not found
+    }).filter(id => id !== null); // Remove any null values
 
-    // fecth (`/manage/menu/${itemId}`, {)
+    if (ingredients.length !== ingredientNames.length) {
+        alert("Some ingredients could not be found. Please check the names.");
+        return;
+    }
+
     fetch(`/menu/edit/${itemId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients })
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients }),
     })
         .then(response => response.json())
         .then(() => {
