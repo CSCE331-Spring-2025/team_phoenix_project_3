@@ -83,8 +83,8 @@ function authManager(req, res, next) {
 
 // restrict cashier-only access
 function authCashier(req, res, next) {
-    if (req.session.role !== 'cashier') {
-        return res.status(403).send('Sorry Cashiers only!');
+    if (req.session.role !== 'cashier' && req.session.role !== 'manager') {
+        return res.status(403).sendFile(path.join(__dirname, '../cashier_ui/403.html'));
     }
     next();
 }
