@@ -1,6 +1,12 @@
 import express from 'express';
 import passport from './passport.js';
+
 import { callSqlFunction } from '../db/utils.js';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
@@ -68,9 +74,9 @@ router.get('/logout', (req, res) => {
 
 // restrict manager-only access
 function authManager(req, res, next) {
-    console.log('authManager called. Session role:', req.session.role);
+    console.log('authManager called. Session role:', req.session.role); // debug log
     if (req.session.role !== 'manager') {
-        return res.status(403).send('Sorry Managers only!');
+        return res.status(403).sendFile(path.join(__dirname, '../managementUI/403.html'));
     }
     next();
 }
