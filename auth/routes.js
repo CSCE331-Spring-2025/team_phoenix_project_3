@@ -66,4 +66,23 @@ router.get('/logout', (req, res) => {
     });
 });
 
+// restrict manager-only access
+function authManager(req, res, next) {
+    console.log('authManager called. Session role:', req.session.role);
+    if (req.session.role !== 'manager') {
+        return res.status(403).send('Sorry Managers only!');
+    }
+    next();
+}
+
+// restrict cashier-only access
+function authCashier(req, res, next) {
+    if (req.session.role !== 'cashier') {
+        return res.status(403).send('Sorry Cashiers only!');
+    }
+    next();
+}
+
+export {authManager, authCashier};
+
 export default router;

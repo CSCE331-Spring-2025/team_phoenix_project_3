@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'; // convert file URL to path
 import session from 'express-session'; // for session management
 import passport from './auth/passport.js'; // import passport configuration
 import authRoutes from './auth/routes.js'; // import auth routes
+import { authManager, authCashier } from './auth/routes.js';
 
 import weatherRoutes from './weather/routes.js'; // import weather routes
 
