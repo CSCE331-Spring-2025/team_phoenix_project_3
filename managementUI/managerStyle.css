@@ -30,6 +30,7 @@ header {
 nav {
     display: flex;
     position: sticky; /* Make the nav bar sticky */
+    top: 0; /* Stick to the top of the viewport */
     background-color: black;
     color: white;
     padding: 10px;

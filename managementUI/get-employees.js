@@ -47,14 +47,14 @@ function updateEmployee(employeeId) {
     alert("Failed to find the employee card. Please refresh the page.");
     return;
   }
-  
+
   const firstName = employeeDiv.querySelector('.firstName').value;
   const lastName = employeeDiv.querySelector('.lastName').value;
   const email = employeeDiv.querySelector('.email').value;
   const isManager = employeeDiv.querySelector('.isManager').checked;
 
     fetch(`/employee/edit/${employeeId}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },

@@ -92,7 +92,7 @@ window.updateQuantity = async function (itemId) {
   }
 };
 
-async function addSupplier() {
+window.addSupplier = async function () {
   const supplierIdInput = document.getElementById('supplierIdInput');
   const supplierNameInput = document.getElementById('supplierNameInput');
   const supplierPhoneInput = document.getElementById('supplierPhoneInput');
@@ -173,10 +173,14 @@ fetch('/inventory/suppliers')
   })
   .catch((err) => console.error("Error loading suppliers:", err));
 
-async function addInventoryItem() {
-  const itemName = prompt("Enter the Item Name:");
-  const itemQuantity = parseInt(prompt("Enter the Quantity:"));
-  const supplierId = parseInt(prompt("Enter the Supplier ID:"));
+window.addInventoryItem = async function () {
+  const itemNameInput = document.getElementById('itemNameInput');
+  const itemQuantityInput = document.getElementById('itemQuantityInput');
+  const itemSupplierIdInput = document.getElementById('itemSupplierIdInput');
+
+  const itemName = itemNameInput.value.trim();
+  const itemQuantity = parseInt(itemQuantityInput.value);
+  const supplierId = parseInt(itemSupplierIdInput.value);
 
   // Validate inputs
   if (!itemName || isNaN(itemQuantity) || isNaN(supplierId)) {
@@ -198,7 +202,7 @@ async function addInventoryItem() {
   }
 
   try {
-    const response = await fetch('/inventory/items/create', {
+    const response = await fetch('/inventory/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -220,8 +224,13 @@ async function addInventoryItem() {
     if (currentSupplier === supplierId.toString()) {
       displayItemsBySupplier(currentSupplier);
     }
-  } catch (err) {
+
+    // Clear the input fields
+    itemNameInput.value = '';
+    itemQuantityInput.value = '';
+    itemSupplierIdInput.value = '';
+   } catch (err) {
     console.error("Error adding inventory item:", err);
     alert("Failed to add inventory item. Please try again.");
   }
-}
+};
