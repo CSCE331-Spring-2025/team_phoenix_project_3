@@ -19,7 +19,7 @@ async function fetchDailySales() {
 
             saleDiv.innerHTML = `
                 <p><strong>Date:</strong> ${new Date(sale.date).toLocaleDateString()}</p>
-                <p><strong>Total Sales:</strong> $${sale.total_sales.toFixed(2)}</p>
+                <p><strong>Total Sales:</strong> $${sale.total_sales}</p>
                 <p><strong>Total Orders:</strong> ${sale.total_orders}</p>
             `;
 

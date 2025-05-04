@@ -46,7 +46,7 @@ function displayItemsByCategory(itemCategory) {
         */
         // Extract and join the ingredients into a string
         const ingredients = ingredientsList.map(ingredient => ingredient.ingredients).join(', ');
-        
+
         console.log(ingredients);
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
@@ -64,6 +64,52 @@ function displayItemsByCategory(itemCategory) {
     });
 }
 
+let availableIngredients = [];
+
+// Fetch available ingredients
+fetch('/menu/ingredients')
+    .then(response => response.json())
+    .then(data => {
+        availableIngredients = data; // Store the list of ingredients
+        console.log("Available Ingredients:", availableIngredients); // Debugging line
+    })
+    .catch(err => console.error("Error loading ingredients:", err));
+
+function addMenuItem() {
+    const itemName = document.getElementById('newItemName').value;
+    const itemPrice = parseFloat(document.getElementById('newItemPrice').value);
+    const itemCategory = document.getElementById('newItemCategory').value;
+    const ingredientNames = document.getElementById('newItemIngredients').value
+        .split(',')
+        .map(name => name.trim().toLowerCase()); // Convert comma-separated string to an array of names
+
+    // Map ingredient names to their corresponding IDs
+    const ingredients = ingredientNames.map(name => {
+        const ingredient = availableIngredients.find(ing => ing.name.toLowerCase() === name);
+        return ingredient ? ingredient.id : null; // Return the ID or null if not found
+    }).filter(id => id !== null); // Remove any null values
+
+    if (ingredients.length !== ingredientNames.length) {
+        alert("Some ingredients could not be found. Please check the names.");
+        return;
+    }
+
+    fetch(`/menu/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients }),
+    })
+        .then(response => response.json())
+        .then(() => {
+            alert("Menu item added successfully!");
+            location.reload(); // Reload the page to see the updated menu items
+        })
+        .catch(err => console.error("Error adding menu item:", err));
+}
+
+/*
 function addMenuItem() {
     const itemName = document.getElementById('newItemName').value;
     const itemPrice = parseFloat(document.getElementById('newItemPrice').value);
@@ -86,6 +132,7 @@ function addMenuItem() {
         })
         .catch(err => console.error("Error adding menu item:", err));
 }
+*/
 
 function removeMenuItem(itemId) {
     //fecth (`/manage/menu/${itemId}`, {)
