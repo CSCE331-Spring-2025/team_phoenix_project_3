@@ -1,5 +1,5 @@
 let inventoryData = [];
-let suppliersSet = new Set();
+const suppliersMap = new Map(); // Changed to Map to store supplier names and IDs
 let currentSupplier = null;
 
 const supplierDropdown = document.getElementById('supplierDropdown');
@@ -13,14 +13,14 @@ fetch('/inventory/items')
 
     data.forEach(item => {
       if (!item.is_deleted && item.supplier_id) {
-        suppliersSet.add(item.supplier_id);
+        suppliersMap.add(item.supplier_id, item.supplier_name);
       }
     });
-
-    for (let supplier of suppliersSet) {
+    console.log("Suppliers Map:", suppliersMap); // debugging line
+    for (let [supplierID, supplierName] of suppliersSet) {
       const option = document.createElement('option');
-      option.value = supplier;
-      option.textContent = `${supplier.supplier_name}`;
+      option.value = supplierID;
+      option.textContent = supplierName;
       supplierDropdown.appendChild(option);
     }
   })
