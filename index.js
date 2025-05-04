@@ -5,11 +5,11 @@ import { fileURLToPath } from 'url'; // convert file URL to path
 import session from 'express-session'; // for session management
 import passport from './auth/passport.js'; // import passport configuration
 import authRoutes from './auth/routes.js'; // import auth routes
+import { authManager, authCashier } from './auth/routes.js';
 
 import weatherRoutes from './weather/routes.js'; // import weather routes
 
 import chatbotRoutes from './chatbot/routes.js'; // import chatbot routes
-
 
 const app = express();
 
@@ -34,11 +34,41 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const managerPages = [
+	'/delivery.html',
+	'/employees.html',
+	'/inventory.html',
+	'/menuItems.html',
+	'/orders.html',
+	'/reports.html',
+];
+  
+const cashierPages = [
+	'/cashier_ui.html',
+	'/cashier_checkout.html',
+	'/cashiercheckout.html',
+];
+
+// protect Manager and Cashier pages
+managerPages.forEach((page) => {
+	app.get(`${page}`, authManager, (req, res) => {
+		res.sendFile(path.join(__dirname, 'managementUI', page));
+	});
+});
+
+cashierPages.forEach((page) => {
+	app.get(`${page}`, authCashier, (req, res) => {
+		res.sendFile(path.join(__dirname, 'cashier_ui', page));
+	});
+});
+
 // deliver static files from the 3 UI directories to the browser.
 app.use(express.static(path.join(__dirname, 'customer_ui')));
-app.use(express.static(path.join(__dirname, 'managementUI')));
-app.use(express.static(path.join(__dirname, 'cashier_ui')));
+app.use('/cashier_ui', express.static(path.join(__dirname, 'cashier_ui')));
+app.use('/managementUI', express.static(path.join(__dirname, 'managementUI')));
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 app.use('/auth', authRoutes);
 console.log('Google Login API: routes mounted at /auth');
