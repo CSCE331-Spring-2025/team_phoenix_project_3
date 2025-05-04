@@ -17,7 +17,7 @@ fetch('/inventory/items')
       }
     });
     console.log("Suppliers Map:", suppliersMap); // debugging line
-    for (let [supplierID, supplierName] of suppliersSet) {
+    for (let [supplierID, supplierName] of suppliersMap) {
       const option = document.createElement('option');
       option.value = supplierID;
       option.textContent = supplierName;
