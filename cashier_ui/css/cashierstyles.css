@@ -184,6 +184,7 @@ a.button:hover {
     gap: 20px;
     overflow-y: auto;
     background-color: var(--color-b);
+    color: var(--color-g);
 }
 
 /* note: cartPanel is shared between customerUI.html and checkout.html, while finalTotal is checkout.html specific */
