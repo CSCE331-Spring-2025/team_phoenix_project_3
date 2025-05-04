@@ -189,7 +189,10 @@ window.addInventoryItem = async function () {
   }
 
   // Check if the item name already exists in the inventory
-  const existingItem = inventoryData.find(item => item.item_name.toLowerCase() === itemName.toLowerCase());
+  const existingItem = inventoryData.find(item => {
+    return item && item.item_name.toLowerCase() === itemName.toLowerCase();
+  });
+  console.log("Item Name Input:", itemName); // Debugging line
   if (existingItem) {
     alert(`An item with the name "${itemName}" already exists in the inventory.`);
     return;
