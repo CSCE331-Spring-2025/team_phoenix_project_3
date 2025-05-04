@@ -11,7 +11,6 @@ import weatherRoutes from './weather/routes.js'; // import weather routes
 
 import chatbotRoutes from './chatbot/routes.js'; // import chatbot routes
 
-
 const app = express();
 
 // use environment variable or default to localhost:3000
@@ -35,11 +34,50 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const managerPages = [
+	'/delivery.html',
+	'/employees.html',
+	'/inventory.html',
+	'/menuItems.html',
+	'/orders.html',
+	'/reports.html',
+];
+  
+const cashierPages = [
+	'/cashier_ui.html',
+	'/cashier_checkout.html',
+	'/cashiercheckout.html',
+];
+
 // deliver static files from the 3 UI directories to the browser.
 app.use(express.static(path.join(__dirname, 'customer_ui')));
-app.use(express.static(path.join(__dirname, 'managementUI')));
-app.use(express.static(path.join(__dirname, 'cashier_ui')));
+
+app.use((req, res, next) => {
+	if (cashierPages.includes(req.path)) { return next(); }
+	express.static(path.join(__dirname, 'cashier_ui'))(req, res, next);
+});
+
+app.use((req, res, next) => {
+	if (managerPages.includes(req.path)) { return next();}
+	express.static(path.join(__dirname, 'managementUI'))(req, res, next);
+});
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// protect Manager and Cashier pages
+managerPages.forEach((page) => {
+	app.get(`${page}`, authManager, (req, res) => {
+		res.sendFile(path.join(__dirname, 'managementUI', page));
+	});
+});
+
+cashierPages.forEach((page) => {
+	app.get(`${page}`, authCashier, (req, res) => {
+		res.sendFile(path.join(__dirname, 'cashier_ui', page));
+	});
+});
+
+console.log('Manager and Cashier pages are protected');
 
 app.use('/auth', authRoutes);
 console.log('Google Login API: routes mounted at /auth');
