@@ -16,29 +16,21 @@
     <!-- LOG IN STATUS MSG -->
     <p id="login-status" style="text-align: right; padding: 10px;"></p>
 
-
     <!-- GOOGLE AUTH CONNECTION -->
     <script>
         window.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const res = await fetch('/auth/user');
-        const { name, email } = await res.json();
-        const { is_manager } = await fetch(`/employee/data/${email}`)
-            .then((response) => response.json())
-            .catch((err) => console.error('Error finding employee:', err));
-        if (!is_manager) {
-            alert('Unauthorized access!');
-            window.location.href = '/';
+        try {
+            const res = await fetch('/auth/user');
+            const { name } = await res.json();
+            const message = name === 'Guest'
+                ? 'You are not logged in.'
+                : `Logged in as: ${name}`;
+            document.getElementById('login-status').textContent = message;
+        } catch (err) {
+            console.error('Failed to fetch user info:', err);
+            document.getElementById('login-status').textContent = 'Login status unknown.';
         }
-        const message =
-            name === 'Guest' ? 'You are not logged in.' : `Logged in as: ${name}`;
-        document.getElementById('login-status').textContent = message;
-    } catch (err) {
-        console.error('Failed to fetch user info:', err);
-        document.getElementById('login-status').textContent =
-            'Login status unknown.';
-    }
-});
+        });
     </script>
     <nav>
         <ul>
