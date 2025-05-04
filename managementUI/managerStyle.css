@@ -17,7 +17,16 @@ header {
     font-family: 'Times New Roman', Times, serif;
     background-color: rgb(129, 129, 129);
 }
+.header-content {
+    display: flex;
+    /*align-items: center; */
+    gap: 15px; /* spacing between logo and title */
+}
 
+.logo {
+    height: 50px; /* adjust as needed */
+    width: auto;
+}
 nav {
     display: flex;
     background-color: black;
