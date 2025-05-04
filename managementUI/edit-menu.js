@@ -36,18 +36,18 @@ function displayItemsByCategory(itemCategory) {
     const filteredItems = menuItemsData.filter(item => item.category == itemCategory && !item.is_deleted);
     
     filteredItems.forEach(async (item) => {
-        const ingredientsList = await fetch(`/menu/ingredients/${item.id}`)
+        const ingredients = await fetch(`/menu/ingredients/${item.id}`)
             .then(response => response.json())
             .catch(err => `Error ingredients: ${err}`);
-        console.log("Ingredients List:", ingredientsList); // debugging line
+        console.log("Ingredients List:", ingredients); // debugging line
         /*const ingredients = ingredientsList.array.forEach(element => {
             element.ingredients
         });
         */
         // Extract and join the ingredients into a string
-        const ingredients = ingredientsList.map(ingredient => ingredient.ingredients).join(', ');
+        // const ingredients = ingredientsList.map(ingredient => ingredient.ingredients).join(', ');
 
-        console.log(ingredients);
+        // console.log(ingredients);
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
         itemDiv.id = `menuItem-${item.id}`; // Unique ID for each menu item
@@ -56,7 +56,7 @@ function displayItemsByCategory(itemCategory) {
             <p><strong>${item.item_name}</strong></p>
             <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
             <p>Category: ${item.category}</p>
-            <p>Ingredients: ${ingredients}</p>
+            <p>Ingredients: ${ingredients.join(', ')}</p>
             <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
             <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
