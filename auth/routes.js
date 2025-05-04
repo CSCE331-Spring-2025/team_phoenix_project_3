@@ -23,11 +23,11 @@ router.get('/google/callback',
       console.log("Google callback received role (state):", role);
   
       if (role === 'manager') {
-          res.redirect('/delivery.html');
+          res.redirect('/');
       } else if (role === 'cashier') {
-          res.redirect('/cashier_landing.html');
+          res.redirect('/');
       } else {
-          res.redirect('/customer_landing.html');
+          res.redirect('/');
       }
     });
 
