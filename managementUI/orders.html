@@ -46,8 +46,12 @@
     </nav>
     <main>
         <h2>Manage Orders</h2>
-        <div id="orderDetailsContainer">
+        <div id="viewOrderSection">
+            <label for="orderIdInput">Enter Order ID:</label>
+            <input type="number" id="orderIdInput" placeholder="Enter Order ID" />
+            <button onclick="fetchOrderDetails()">View Order</button>
         </div>
+        <div id="orderDetailsContainer"></div>
     </main>
     <script type="module" src="manage-orders.js"></script>
 </body>

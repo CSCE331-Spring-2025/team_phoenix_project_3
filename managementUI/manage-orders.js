@@ -1,5 +1,14 @@
-// Fetch and display order details
-async function viewOrderDetails(orderId) {
+// Fetch and display order details based on entered order ID
+async function fetchOrderDetails() {
+    const orderIdInput = document.getElementById('orderIdInput');
+    const orderId = parseInt(orderIdInput.value);
+
+    // Validate the input
+    if (isNaN(orderId) || orderId <= 0) {
+        alert("Please enter a valid Order ID.");
+        return;
+    }
+
     try {
         const response = await fetch(`/order/items/${orderId}`);
         if (!response.ok) throw new Error(`Failed to fetch details for order #${orderId}.`);
@@ -7,7 +16,7 @@ async function viewOrderDetails(orderId) {
         const orderItems = await response.json();
         console.log(`Order #${orderId} Details:`, orderItems); // Debugging line
 
-        // Display order details in a modal or a separate section
+        // Display order details in the container
         const orderDetailsContainer = document.getElementById('orderDetailsContainer');
         orderDetailsContainer.innerHTML = `
             <h3>Order #${orderId} Details</h3>
@@ -24,5 +33,4 @@ async function viewOrderDetails(orderId) {
         alert(`Failed to load details for order #${orderId}.`);
     }
 }
-
 
