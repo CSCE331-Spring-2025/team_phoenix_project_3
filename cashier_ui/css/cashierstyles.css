@@ -162,6 +162,13 @@ a.button:hover {
     border-radius: 4px;
     cursor: pointer;
 }
+.withoutBoba:hover,
+.withBoba:hover,
+.sugar:hover,
+.cancel:hover,
+.addDrink:hover {
+    transform: scale(1.1);
+}
 .drinkC {
     text-align: center;
     justify-items: center;
