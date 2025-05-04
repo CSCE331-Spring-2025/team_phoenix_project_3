@@ -29,6 +29,7 @@ header {
 }
 nav {
     display: flex;
+    position: sticky; /* Make the nav bar sticky */
     background-color: black;
     color: white;
     padding: 10px;
