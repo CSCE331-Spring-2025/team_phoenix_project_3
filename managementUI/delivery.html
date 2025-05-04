@@ -57,6 +57,32 @@
             <option value="">--Select a Supplier--</option>
         </select>
         <div id="inventoryContainer"></div>
+        <h3>Add New Supplier</h3>
+        <div id="addSupplierSection">
+            <label for="supplierIdInput">Supplier ID:</label>
+            <input type="number" id="supplierIdInput" placeholder="Enter Supplier ID" />
+            <br />
+            <label for="supplierNameInput">Supplier Name:</label>
+            <input type="text" id="supplierNameInput" placeholder="Enter Supplier Name" />
+            <br />
+            <label for="supplierPhoneInput">Phone Number:</label>
+            <input type="text" id="supplierPhoneInput" placeholder="Enter Phone Number" />
+            <br />
+            <button onclick="addSupplier()">Add Supplier</button>
+        </div>
+        <h3>Add New Inventory Item</h3>
+        <div id="addInventoryItemSection">
+            <label for="itemNameInput">Item Name:</label>
+            <input type="text" id="itemNameInput" placeholder="Enter Item Name" />
+            <br />
+            <label for="itemQuantityInput">Quantity:</label>
+            <input type="number" id="itemQuantityInput" placeholder="Enter Quantity" />
+            <br />
+            <label for="itemSupplierIdInput">Supplier ID:</label>
+            <input type="number" id="itemSupplierIdInput" placeholder="Enter Supplier ID" />
+            <br />
+            <button onclick="addInventoryItem()">Add Inventory Item</button>
+        </div>
     </main>
     <script type="module" src="delivery-script.js"></script>
 </body>

@@ -91,3 +91,148 @@ window.updateQuantity = async function (itemId) {
     alert("Failed to update item quantity.");
   }
 };
+
+async function addSupplier() {
+  const supplierIdInput = document.getElementById('supplierIdInput');
+  const supplierNameInput = document.getElementById('supplierNameInput');
+  const supplierPhoneInput = document.getElementById('supplierPhoneInput');
+
+  const supplierId = parseInt(supplierIdInput.value);
+  const supplierName = supplierNameInput.value.trim();
+  const phoneNumber = supplierPhoneInput.value.trim();
+
+  // Validate inputs
+  if (isNaN(supplierId) || !supplierName || !phoneNumber) {
+    alert("Please provide valid inputs for all fields.");
+    return;
+  }
+
+  // Check if the supplier ID already exists
+  if (suppliersMap.has(supplierId)) {
+    alert(`Supplier ID ${supplierId} is already taken. Please choose a different ID.`);
+    return;
+  }
+
+  try {
+    const response = await fetch('/inventory/suppliers/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: supplierId,
+        supplier_name: supplierName,
+        phone_number: phoneNumber,
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Failed to add supplier. Status: ${response.status}`);
+
+    const newSupplier = await response.json();
+    alert(`Supplier "${newSupplier.supplier_name}" added successfully!`);
+
+    // Update the dropdown with the new supplier
+    const option = document.createElement('option');
+    option.value = newSupplier.id;
+    option.textContent = newSupplier.supplier_name;
+    supplierDropdown.appendChild(option);
+
+    // Update the suppliersMap and supplier ID list
+    suppliersMap.set(newSupplier.id, newSupplier.supplier_name);
+    updateSupplierIdList();
+
+    // Clear the input fields
+    supplierIdInput.value = '';
+    supplierNameInput.value = '';
+    supplierPhoneInput.value = '';
+  } catch (err) {
+    console.error("Error adding supplier:", err);
+    alert("Failed to add supplier. Please try again.");
+  }
+}
+
+function updateSupplierIdList() {
+  const supplierIdList = document.getElementById('supplierIdList');
+  supplierIdList.innerHTML = '';
+
+  for (let supplierId of suppliersMap.keys()) {
+    const listItem = document.createElement('li');
+    listItem.textContent = supplierId;
+    supplierIdList.appendChild(listItem);
+  }
+}
+
+function updateSupplierIdList() {
+  const supplierIdList = document.getElementById('supplierIdList');
+  supplierIdList.innerHTML = '';
+
+  for (let supplierId of suppliersMap.keys()) {
+    const listItem = document.createElement('li');
+    listItem.textContent = supplierId;
+    supplierIdList.appendChild(listItem);
+  }
+}
+
+// Call this function after fetching suppliers
+fetch('/inventory/suppliers')
+  .then((response) => response.json())
+  .then((suppliers) => {
+    suppliers.forEach(supplier => {
+      suppliersMap.set(supplier.id, supplier.supplier_name);
+    });
+    updateSupplierIdList(); // Update the list in the UI
+  })
+  .catch((err) => console.error("Error loading suppliers:", err));
+
+async function addInventoryItem() {
+  const itemName = prompt("Enter the Item Name:");
+  const itemQuantity = parseInt(prompt("Enter the Quantity:"));
+  const supplierId = parseInt(prompt("Enter the Supplier ID:"));
+
+  // Validate inputs
+  if (!itemName || isNaN(itemQuantity) || isNaN(supplierId)) {
+    alert("Please provide valid inputs for all fields.");
+    return;
+  }
+
+  // Check if the item name already exists in the inventory
+  const existingItem = inventoryData.find(item => item.item_name.toLowerCase() === itemName.toLowerCase());
+  if (existingItem) {
+    alert(`An item with the name "${itemName}" already exists in the inventory.`);
+    return;
+  }
+
+  // Check if the supplier ID exists
+  if (!suppliersMap.has(supplierId)) {
+    alert(`Supplier ID ${supplierId} does not exist. Please provide a valid Supplier ID.`);
+    return;
+  }
+
+  try {
+    const response = await fetch('/inventory/items/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        item_name: itemName,
+        quantity: itemQuantity,
+        supplier_id: supplierId,
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Failed to add inventory item. Status: ${response.status}`);
+
+    const newItem = await response.json();
+    alert(`Item "${newItem.item_name}" added successfully!`);
+
+    // Update the inventory data and re-render the items
+    inventoryData.push(newItem);
+    if (currentSupplier === supplierId.toString()) {
+      displayItemsBySupplier(currentSupplier);
+    }
+  } catch (err) {
+    console.error("Error adding inventory item:", err);
+    alert("Failed to add inventory item. Please try again.");
+  }
+}
