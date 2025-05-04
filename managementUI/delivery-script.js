@@ -92,7 +92,7 @@ window.updateQuantity = async function (itemId) {
   }
 };
 
-async function addSupplier() {
+window.addSupplier = async function () {
   const supplierIdInput = document.getElementById('supplierIdInput');
   const supplierNameInput = document.getElementById('supplierNameInput');
   const supplierPhoneInput = document.getElementById('supplierPhoneInput');
@@ -173,7 +173,7 @@ fetch('/inventory/suppliers')
   })
   .catch((err) => console.error("Error loading suppliers:", err));
 
-async function addInventoryItem() {
+window.addInventoryItem = async function () {
   const itemName = prompt("Enter the Item Name:");
   const itemQuantity = parseInt(prompt("Enter the Quantity:"));
   const supplierId = parseInt(prompt("Enter the Supplier ID:"));
