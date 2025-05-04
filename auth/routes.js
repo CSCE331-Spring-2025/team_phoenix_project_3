@@ -19,7 +19,7 @@ router.get('/google', (req, res, next) => {
 // handle Google OAuth callback
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
+    async (req, res) => {
         const role = req.query.state || 'customer'; // google sends the 'state' back here
         const email = req.user.emails[0].value;
         console.log("Google callback received role:", role);
