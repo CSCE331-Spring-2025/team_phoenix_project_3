@@ -67,7 +67,7 @@ function displayItemsByCategory(itemCategory) {
 let availableIngredients = [];
 
 // Fetch available ingredients
-fetch('/menu/ingredients')
+fetch('/inventory/items')
     .then(response => response.json())
     .then(data => {
         availableIngredients = data; // Store the list of ingredients
