@@ -162,17 +162,6 @@ function updateSupplierIdList() {
   }
 }
 
-function updateSupplierIdList() {
-  const supplierIdList = document.getElementById('supplierIdList');
-  supplierIdList.innerHTML = '';
-
-  for (let supplierId of suppliersMap.keys()) {
-    const listItem = document.createElement('li');
-    listItem.textContent = supplierId;
-    supplierIdList.appendChild(listItem);
-  }
-}
-
 // Call this function after fetching suppliers
 fetch('/inventory/suppliers')
   .then((response) => response.json())
