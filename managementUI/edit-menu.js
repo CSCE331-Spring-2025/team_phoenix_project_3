@@ -40,9 +40,13 @@ function displayItemsByCategory(itemCategory) {
             .then(response => response.json())
             .catch(err => `Error ingredients: ${err}`);
         console.log("Ingredients List:", ingredientsList); // debugging line
-        const ingredients = ingredientsList.array.forEach(element => {
+        /*const ingredients = ingredientsList.array.forEach(element => {
             element.ingredients
         });
+        */
+        // Extract and join the ingredients into a string
+        const ingredients = ingredientsList.map(ingredient => ingredient.ingredients).join(', ');
+        
         console.log(ingredients);
         const itemDiv = document.createElement('div');
         itemDiv.className = "menuItemCard";
