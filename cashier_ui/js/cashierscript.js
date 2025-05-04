@@ -1,4 +1,3 @@
-// customerUI.js
 import * as API from './api.js';
 
 let order = {
@@ -188,7 +187,7 @@ function backOut() {
 		confirm('Would you like to cancel the order?')
 	) {
 		localStorage.removeItem('savedCart');
-		window.location.href = '/';
+		window.location.href = '../';
 	}
 }
 
