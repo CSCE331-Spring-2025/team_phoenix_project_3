@@ -49,21 +49,6 @@ const cashierPages = [
 	'/cashiercheckout.html',
 ];
 
-// deliver static files from the 3 UI directories to the browser.
-app.use(express.static(path.join(__dirname, 'customer_ui')));
-
-app.use((req, res, next) => {
-	if (cashierPages.includes(req.path)) { return next(); }
-	express.static(path.join(__dirname, 'cashier_ui'))(req, res, next);
-});
-
-app.use((req, res, next) => {
-	if (managerPages.includes(req.path)) { return next();}
-	express.static(path.join(__dirname, 'managementUI'))(req, res, next);
-});
-
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
 // protect Manager and Cashier pages
 managerPages.forEach((page) => {
 	app.get(`${page}`, authManager, (req, res) => {
@@ -77,7 +62,13 @@ cashierPages.forEach((page) => {
 	});
 });
 
-console.log('Manager and Cashier pages are protected');
+// deliver static files from the 3 UI directories to the browser.
+app.use(express.static(path.join(__dirname, 'customer_ui')));
+app.use('/cashier_ui', express.static(path.join(__dirname, 'cashier_ui')));
+app.use('/managementUI', express.static(path.join(__dirname, 'managementUI')));
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 app.use('/auth', authRoutes);
 console.log('Google Login API: routes mounted at /auth');
