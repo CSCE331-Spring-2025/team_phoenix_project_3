@@ -202,7 +202,7 @@ window.addInventoryItem = async function () {
   }
 
   try {
-    const response = await fetch('/inventory/items/create', {
+    const response = await fetch('/inventory/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
