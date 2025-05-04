@@ -174,9 +174,13 @@ fetch('/inventory/suppliers')
   .catch((err) => console.error("Error loading suppliers:", err));
 
 window.addInventoryItem = async function () {
-  const itemName = prompt("Enter the Item Name:");
-  const itemQuantity = parseInt(prompt("Enter the Quantity:"));
-  const supplierId = parseInt(prompt("Enter the Supplier ID:"));
+  const itemNameInput = document.getElementById('itemNameInput');
+  const itemQuantityInput = document.getElementById('itemQuantityInput');
+  const itemSupplierIdInput = document.getElementById('itemSupplierIdInput');
+
+  const itemName = itemNameInput.value.trim();
+  const itemQuantity = parseInt(itemQuantityInput.value);
+  const supplierId = parseInt(itemSupplierIdInput.value);
 
   // Validate inputs
   if (!itemName || isNaN(itemQuantity) || isNaN(supplierId)) {
@@ -220,8 +224,13 @@ window.addInventoryItem = async function () {
     if (currentSupplier === supplierId.toString()) {
       displayItemsBySupplier(currentSupplier);
     }
-  } catch (err) {
+
+    // Clear the input fields
+    itemNameInput.value = '';
+    itemQuantityInput.value = '';
+    itemSupplierIdInput.value = '';
+   } catch (err) {
     console.error("Error adding inventory item:", err);
     alert("Failed to add inventory item. Please try again.");
   }
-}
+};
