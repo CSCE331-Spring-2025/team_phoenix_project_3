@@ -13,7 +13,7 @@ fetch('/inventory/items')
 
     data.forEach(item => {
       if (!item.is_deleted && item.supplier_id) {
-        suppliersMap.add(item.supplier_id, item.supplier_name);
+        suppliersMap.set(item.supplier_id, item.supplier_name);
       }
     });
     console.log("Suppliers Map:", suppliersMap); // debugging line
