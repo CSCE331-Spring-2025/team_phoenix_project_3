@@ -12,7 +12,7 @@ img {
 }
 header {
     margin: 0; /* Remove default margin */
-    padding: 10px 0; /* Reduce padding for less whitespace */
+    padding: 5px 0; /* Reduce padding for less whitespace */
     color: rgb(0, 0, 0);
     font-family: 'Times New Roman', Times, serif;
     background-color: rgb(129, 129, 129);

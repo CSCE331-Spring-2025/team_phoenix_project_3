@@ -1,5 +1,5 @@
 // Fetch and display order details based on entered order ID
-async function fetchOrderDetails() {
+window.fetchOrderDetails = async function () {
     const orderIdInput = document.getElementById('orderIdInput');
     const orderId = parseInt(orderIdInput.value);
 
