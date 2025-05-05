@@ -14,7 +14,7 @@ router.get('/data', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-	const result = await callSqlFunction('create_employee', req.body);
+	const result = await callSqlFunction('create_employee', [req.body]);
 	if (result.success) {
 		const { create_employee } = result.data[0];
 		res.status(200).json(create_employee);

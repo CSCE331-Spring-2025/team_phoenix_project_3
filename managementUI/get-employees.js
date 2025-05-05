@@ -99,7 +99,7 @@ window.addEmployee = function () {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ first_name: firstName, last_name: lastName, email, is_manager: isManager })
+      body: JSON.stringify({ first_name: firstName, last_name: lastName, email: email, is_manager: isManager })
     })
       .then(response => response.json())
       .then(() => {
