@@ -166,6 +166,9 @@ function updateMenuItem(itemId) {
         return;
     }
 
+    const payload = { item_name: itemName, price: itemPrice, category: itemCategory, ingredients };
+    console.log("Update Payload:", payload); // Debugging line
+
     fetch(`/menu/edit/${itemId}`, {
         method: 'PATCH',
         headers: {
@@ -173,7 +176,14 @@ function updateMenuItem(itemId) {
         },
         body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients: ingredients }),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.error || 'Failed to update menu item.');
+                });
+            }
+            return response.json();
+        })
         .then(() => {
             alert("Menu item updated successfully!");
             location.reload(); // Reload the page to see the updated menu items

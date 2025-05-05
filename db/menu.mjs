@@ -62,7 +62,7 @@ router.patch('/edit/:id', async (req, res) => {
     console.log('Request Body:', req.body); // Debugging line
 
     try {
-        const result = await updateData('menu_items', req.body, { id: menuItemId });
+        const result = await updateData('menu_items', { item_name, price, category }, { id: menuItemId });
         console.log('Update Result:', result); // Debugging line
 
         if (result.success) {
