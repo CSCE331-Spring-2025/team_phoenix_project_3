@@ -130,6 +130,7 @@ window.addSupplier = async function () {
     if (!response.ok) throw new Error(`Failed to add supplier. Status: ${response.status}`);
 
     const newSupplier = await response.json();
+    newSupplier.supplier_name = supplierName; // Ensure the name is set correctly
     alert(`Supplier "${newSupplier.supplier_name}" added successfully!`);
 
     // Update the dropdown with the new supplier
@@ -282,8 +283,10 @@ function displayAllSuppliers() {
 
               supplierDiv.innerHTML = `
                   <p><strong>ID:</strong> ${supplier.id}</p>
-                  <p><strong>Name:</strong> ${supplier.supplier_name}</p>
-                  <p><strong>Phone Number:</strong> ${supplier.phone_number}</p>
+                  <label>Name: <input type="text" class="supplierName" value="${supplier.supplier_name}" /></label>
+                  <label>Phone Number: <input type="text" class="supplierPhone" value="${supplier.phone_number}" /></label>
+                  <button class="updateBtn" onclick="updateSupplier(${supplier.id})">Update</button>
+                  <button class="deleteBtn" onclick="deleteSupplier(${supplier.id})">Delete</button>
               `;
 
               supplierListContainer.appendChild(supplierDiv);
@@ -294,6 +297,64 @@ function displayAllSuppliers() {
           supplierListContainer.innerHTML = '<p>Failed to load suppliers. Please try again later.</p>';
       });
 }
+
+// Function to update supplier information
+window.updateSupplier = async function (supplierId) {
+  const supplierDiv = document.querySelector(`.supplierCard input[value="${supplierId}"]`).parentElement;
+  const supplierNameInput = supplierDiv.querySelector('.supplierName');
+  const supplierPhoneInput = supplierDiv.querySelector('.supplierPhone');
+
+  const supplierName = supplierNameInput.value.trim();
+  const phoneNumber = supplierPhoneInput.value.trim();
+
+  // Validate inputs
+  if (!supplierName || !phoneNumber) {
+      alert("Please provide valid inputs for all fields.");
+      return;
+  }
+
+  try {
+      const response = await fetch(`/suppliers/edit/${supplierId}`, {
+          method: 'PATCH',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              supplier_name: supplierName,
+              phone_number: phoneNumber,
+          }),
+      });
+
+      if (!response.ok) throw new Error(`Failed to update supplier. Status: ${response.status}`);
+
+      alert(`Supplier with ID ${supplierId} updated successfully!`);
+      displayAllSuppliers(); // Refresh the supplier list
+  } catch (err) {
+      console.error("Error updating supplier:", err);
+      alert("Failed to update supplier. Please try again.");
+  }
+};
+
+// Function to delete a supplier
+window.deleteSupplier = async function (supplierId) {
+  if (!confirm(`Are you sure you want to delete supplier with ID ${supplierId}?`)) {
+      return;
+  }
+
+  try {
+      const response = await fetch(`/suppliers/delete/${supplierId}`, {
+          method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error(`Failed to delete supplier. Status: ${response.status}`);
+
+      alert(`Supplier with ID ${supplierId} deleted successfully!`);
+      displayAllSuppliers(); // Refresh the supplier list
+  } catch (err) {
+      console.error("Error deleting supplier:", err);
+      alert("Failed to delete supplier. Please try again.");
+  }
+};
 
 // Call this function after fetching suppliers
 document.addEventListener('DOMContentLoaded', displayAllSuppliers);

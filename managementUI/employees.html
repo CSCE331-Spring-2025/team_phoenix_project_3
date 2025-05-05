@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="header-content">
-            <img src="images/logo.png" alt="Phoenix Boba Shop Logo" class="logo">
+            <img src="../images/logo_circle.png" alt="Phoenix Boba Shop Logo" class="logo">
             <h1>Phoenix Boba Shop</h1>
         </div>
     </header>
@@ -46,6 +46,22 @@
     </nav>
     <main>
         <h2>Manage Employees</h2>
+        <h3>Add New Employee</h3>
+        <div id="addEmployeeSection">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" placeholder="Enter First Name" />
+            <br />
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" placeholder="Enter Last Name" />
+            <br />
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter Email" />
+            <br />
+            <label for="isManager">Manager:</label>
+            <input type="checkbox" id="isManager" />
+            <br />
+            <button onclick="addEmployee()">Add Employee</button>
+        </div>
         <div id="employeeContainer"></div>
     </main>
     <script type="module" src="get-employees.js"></script>

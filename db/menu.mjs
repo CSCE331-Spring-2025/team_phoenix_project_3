@@ -34,14 +34,28 @@ router.post('/create', async (req, res) => {
 });
 
 router.patch('/edit/:id', async (req, res) => {
-	const result = await updateData('menu_items', req.body, {
-		id: req.params.id,
-	});
-	if (result.success) {
-		res.status(200).json(result.data[0]);
-	} else {
-		res.status(500).send('Failed to update item.');
-	}
+	//const result = await updateData('menu_items', req.body, {
+		//id: req.params.id,
+	//});
+	//if (result.success) {
+		//res.status(200).json(result.data[0]);
+	//} else {
+	//	res.status(500).send('Failed to update item.');
+	//}
+	try {
+        const result = await updateData('menu_items', req.body, {
+            id: req.params.id,
+        });
+
+        if (result.success) {
+            res.status(200).json({ message: 'Menu item updated successfully.', data: result.data[0] });
+        } else {
+            res.status(500).json({ error: 'Failed to update item.' });
+        }
+    } catch (err) {
+        console.error('Error updating menu item:', err);
+        res.status(500).json({ error: 'Server error.' });
+    }
 });
 
 router.delete('/delete/:id', async (req, res) => {
