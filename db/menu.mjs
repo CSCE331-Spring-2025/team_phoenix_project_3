@@ -42,10 +42,28 @@ router.patch('/edit/:id', async (req, res) => {
 	//} else {
 	//	res.status(500).send('Failed to update item.');
 	//}
-	try {
-        const result = await updateData('menu_items', req.body, {
-            id: req.params.id,
-        });
+	
+	//try {
+      //  const result = await updateData('menu_items', req.body, {
+        //    id: req.params.id,
+        //});
+
+        //if (result.success) {
+          //  res.status(200).json({ message: 'Menu item updated successfully.', data: result.data[0] });
+        //} else {
+          //  res.status(500).json({ error: 'Failed to update item.' });
+        //}
+    //} catch (err) {
+      //  console.error('Error updating menu item:', err);
+      //  res.status(500).json({ error: 'Server error.' });
+    //}
+	const menuItemId = parseInt(req.params.id, 10);
+    console.log('Request Params:', req.params); // Debugging line
+    console.log('Request Body:', req.body); // Debugging line
+
+    try {
+        const result = await updateData('menu_items', req.body, { id: menuItemId });
+        console.log('Update Result:', result); // Debugging line
 
         if (result.success) {
             res.status(200).json({ message: 'Menu item updated successfully.', data: result.data[0] });
