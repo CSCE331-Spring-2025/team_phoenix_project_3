@@ -88,7 +88,7 @@ function updateEmployee(employeeId) {
   }
 
 // Add a new employee
-function addEmployee() {
+window.addEmployee = function () {
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
   const email = document.getElementById('email').value;
