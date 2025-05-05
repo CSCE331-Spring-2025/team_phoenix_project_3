@@ -343,7 +343,7 @@ window.deleteSupplier = async function (supplierId) {
   }
 
   try {
-      const response = await fetch(`/suppliers/delete/${supplierId}`, {
+      const response = await fetch(`/suppliers/delete?id=${supplierId}`, {
           method: 'DELETE',
       });
 
