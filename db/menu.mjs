@@ -59,8 +59,11 @@ router.patch('/edit/:id', async (req, res) => {
     //}
 	const menuItemId = parseInt(req.params.id, 10);
     console.log('Request Params:', req.params); // Debugging line
-    console.log('Request Body:', req.body); // Debugging line
+    const { item_name, price, category, ingredients } = req.body; // Destructure fields from req.body
 
+	console.log('Request Params:', req.params); // Debugging line
+    console.log('Request Body:', req.body); // Debugging line
+	
     try {
         const result = await updateData('menu_items', { item_name, price, category }, { id: menuItemId });
         console.log('Update Result:', result); // Debugging line
