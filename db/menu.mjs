@@ -21,7 +21,7 @@ router.get('/ingredients/:id', async (req, res) => {
 	} else {
 		res.status(400).send('Unable to fetch menu items.');
 	}
-})
+});
 
 router.post('/create', async (req, res) => {
 	const result = await callSqlFunction('create_menu_item', [req.body]);
@@ -34,49 +34,16 @@ router.post('/create', async (req, res) => {
 });
 
 router.patch('/edit/:id', async (req, res) => {
-	//const result = await updateData('menu_items', req.body, {
-		//id: req.params.id,
-	//});
-	//if (result.success) {
-		//res.status(200).json(result.data[0]);
-	//} else {
-	//	res.status(500).send('Failed to update item.');
-	//}
-	
-	//try {
-      //  const result = await updateData('menu_items', req.body, {
-        //    id: req.params.id,
-        //});
-
-        //if (result.success) {
-          //  res.status(200).json({ message: 'Menu item updated successfully.', data: result.data[0] });
-        //} else {
-          //  res.status(500).json({ error: 'Failed to update item.' });
-        //}
-    //} catch (err) {
-      //  console.error('Error updating menu item:', err);
-      //  res.status(500).json({ error: 'Server error.' });
-    //}
-	const menuItemId = parseInt(req.params.id, 10);
-    console.log('Request Params:', req.params); // Debugging line
-    const { item_name, price, category, ingredients } = req.body; // Destructure fields from req.body
-
-	console.log('Request Params:', req.params); // Debugging line
-    console.log('Request Body:', req.body); // Debugging line
-	
-    try {
-        const result = await updateData('menu_items', { item_name, price, category }, { id: menuItemId });
-        console.log('Update Result:', result); // Debugging line
-
-        if (result.success) {
-            res.status(200).json({ message: 'Menu item updated successfully.', data: result.data[0] });
-        } else {
-            res.status(500).json({ error: 'Failed to update item.' });
-        }
-    } catch (err) {
-        console.error('Error updating menu item:', err);
-        res.status(500).json({ error: 'Server error.' });
-    }
+	const result = await callSqlFunction('edit_menu_item', [
+		req.params.id,
+		req.body,
+	]);
+	if (result.success) {
+		const { edit_menu_item } = result.data[0];
+		res.status(201).json(edit_menu_item);
+	} else {
+		res.status(400).send('Unable to edit menu item.');
+	}
 });
 
 router.delete('/delete/:id', async (req, res) => {
