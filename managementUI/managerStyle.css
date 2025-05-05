@@ -100,6 +100,7 @@ main {
 button {
     padding: 10px 20px;
     background-color: #4c4c4c;
+    font-family: 'Times New Roman', Times, serif;
     color: white;
     border: none;
     border-radius: 5px;

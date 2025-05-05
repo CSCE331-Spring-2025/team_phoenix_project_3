@@ -57,7 +57,7 @@ function displayItemsByCategory(itemCategory) {
             <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
             <p>Category: <input type="string" class="itemCategory" value="${item.category}"</p>
             <p>Ingredients: <input type="text" class="ingredients" value="${ingredients.join(', ')}"></p>
-            <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
+            <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Item</button>
             <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
         menuItemContainer.appendChild(itemDiv);

@@ -280,6 +280,7 @@ function displayAllSuppliers() {
           suppliers.forEach(supplier => {
               const supplierDiv = document.createElement('div');
               supplierDiv.className = 'supplierCard';
+              supplierDiv.setAttribute('data-id', supplier.id); // Unique ID for each supplier
 
               supplierDiv.innerHTML = `
                   <p><strong>ID:</strong> ${supplier.id}</p>
