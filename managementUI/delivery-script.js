@@ -321,7 +321,7 @@ window.updateSupplier = async function (supplierId) {
   }
 
   try {
-      const response = await fetch(`/suppliers/edit/${supplierId}`, {
+      const response = await fetch(`/suppliers/edit?id=${supplierId}`, {
           method: 'PATCH',
           headers: {
               'Content-Type': 'application/json',
