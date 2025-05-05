@@ -171,7 +171,7 @@ function updateMenuItem(itemId) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients }),
+        body: JSON.stringify({ item_name: itemName, price: itemPrice, category: itemCategory, ingredients: ingredients }),
     })
         .then(response => response.json())
         .then(() => {
