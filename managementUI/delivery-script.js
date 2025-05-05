@@ -53,6 +53,7 @@ function displayItemsBySupplier(supplierId) {
       <p><strong>${item.item_name}</strong> (Current: ${item.quantity})</p>
       <input type="number" id="input-${item.id}" placeholder="Quantity to add" min="0" />
       <button class="deliverBtn" onclick="updateQuantity(${item.id})">Deliver</button>
+      <button class="deleteBtn" onclick="deleteInventoryItem(${item.id})">Delete</button>
     `;
 
     inventoryContainer.appendChild(itemDiv);
@@ -114,7 +115,7 @@ window.addSupplier = async function () {
   }
 
   try {
-    const response = await fetch('/inventory/suppliers/create', {
+    const response = await fetch('/suppliers/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -237,3 +238,62 @@ window.addInventoryItem = async function () {
     alert("Failed to add inventory item. Please try again.");
   }
 };
+
+window.deleteInventoryItem = async function (itemId) {
+  if (!confirm(`Are you sure you want to delete this item?`)) {
+      return;
+  }
+
+  try {
+      const response = await fetch(`/inventory/delete/${itemId}`, {
+          method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error(`Failed to delete inventory item. Status: ${response.status}`);
+
+      alert(`Item with ID ${itemId} deleted successfully!`);
+
+      // Remove the item from the local inventory data
+      inventoryData = inventoryData.filter(item => item.id !== itemId);
+
+      // Re-render the items for the current supplier
+      displayItemsBySupplier(currentSupplier);
+  } catch (err) {
+      console.error("Error deleting inventory item:", err);
+      alert("Failed to delete inventory item. Please try again.");
+  }
+};
+
+function displayAllSuppliers() {
+  const supplierListContainer = document.getElementById('supplierListContainer');
+  supplierListContainer.innerHTML = ''; // Clear the container
+
+  fetch('/inventory/suppliers')
+      .then(response => response.json())
+      .then(suppliers => {
+          if (suppliers.length === 0) {
+              supplierListContainer.innerHTML = '<p>No suppliers found.</p>';
+              return;
+          }
+
+          suppliers.forEach(supplier => {
+              const supplierDiv = document.createElement('div');
+              supplierDiv.className = 'supplierCard';
+
+              supplierDiv.innerHTML = `
+                  <p><strong>ID:</strong> ${supplier.id}</p>
+                  <p><strong>Name:</strong> ${supplier.supplier_name}</p>
+                  <p><strong>Phone Number:</strong> ${supplier.phone_number}</p>
+              `;
+
+              supplierListContainer.appendChild(supplierDiv);
+          });
+      })
+      .catch(err => {
+          console.error('Error fetching suppliers:', err);
+          supplierListContainer.innerHTML = '<p>Failed to load suppliers. Please try again later.</p>';
+      });
+}
+
+// Call this function after fetching suppliers
+document.addEventListener('DOMContentLoaded', displayAllSuppliers);

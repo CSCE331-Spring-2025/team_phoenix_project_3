@@ -53,10 +53,10 @@ function displayItemsByCategory(itemCategory) {
         itemDiv.id = `menuItem-${item.id}`; // Unique ID for each menu item
 
         itemDiv.innerHTML = `
-            <p><strong>${item.item_name}</strong></p>
+            <p><strong>Item Name: </strong> <input type="text" class="itemName" value="${item.item_name}"></p>
             <label>Price: <input type="number" class="itemPrice" value="${item.price.toFixed(2)}"></label>
-            <p>Category: ${item.category}</p>
-            <p>Ingredients: ${ingredients.join(', ')}</p>
+            <p>Category: <input type="string" class="itemCategory" value="${item.category}"</p>
+            <p>Ingredients: <input type="text" class="ingredients" value="${ingredients.join(', ')}"></p>
             <button class="updateBtn" onclick="updateMenuItem(${item.id})">Update Price</button>
             <button class="deleteBtn" onclick="removeMenuItem(${item.id})">Remove Item</button>
         `;
