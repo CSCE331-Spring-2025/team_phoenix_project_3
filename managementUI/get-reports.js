@@ -50,7 +50,7 @@ function displayZReport(zReportData) {
     zReportContainer.innerHTML = `
         <h2>Z-Report (Daily Summary)</h2>
         <p><strong>Store Name: Phoenix Boba Shop</strong></p>
-        <p><strong>Address:</strong>Address: 123 Boba Street, Galveston, TX</p>
+        <p><strong>Address:</strong> 123 Boba Street, Galveston, TX</p>
         <p><strong>Terminal ID:</strong> POS-01</p>
         <p><strong>Register ID:</strong> Reg-07</p>
         <p><strong>Total Sales:</strong> $${zReportData.total_sales.toFixed(2)}</p>
