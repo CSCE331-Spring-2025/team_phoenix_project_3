@@ -301,7 +301,13 @@ function displayAllSuppliers() {
 
 // Function to update supplier information
 window.updateSupplier = async function (supplierId) {
-  const supplierDiv = document.querySelector(`.supplierCard input[value="${supplierId}"]`).parentElement;
+  //const supplierDiv = document.querySelector(`.supplierCard input[value="${supplierId}"]`).parentElement;
+  const supplierDiv = document.querySelector(`.supplierCard[data-id="${supplierId}"]`);
+  if (!supplierDiv) {
+      alert(`Supplier with ID ${supplierId} not found.`);
+      return;
+  }
+
   const supplierNameInput = supplierDiv.querySelector('.supplierName');
   const supplierPhoneInput = supplierDiv.querySelector('.supplierPhone');
 
@@ -315,7 +321,7 @@ window.updateSupplier = async function (supplierId) {
   }
 
   try {
-      const response = await fetch(`/suppliers/edit/${supplierId}`, {
+      const response = await fetch(`/suppliers/edit?id=${supplierId}`, {
           method: 'PATCH',
           headers: {
               'Content-Type': 'application/json',
